@@ -1,0 +1,21 @@
+﻿
+@media (max-width:480px) {
+    .nav_product_v2 {
+        display: block !important;
+    }
+
+        .nav_product_v2 ul li a {
+            padding: 5px !important;
+            font-size: 13px !important;
+            font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+            font-weight: 400 !important;
+        }
+        .nav_product_v2 a {
+            position: relative !important;
+        }
+}
+@media (max-width:800px){
+    .breadcrumb_background{
+        bottom: 25px;
+    }
+}

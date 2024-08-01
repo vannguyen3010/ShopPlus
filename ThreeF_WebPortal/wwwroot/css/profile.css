@@ -1,0 +1,210 @@
+﻿.glow-on-hover {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 10px;
+    }
+
+    .glow-on-hover:active {
+        color: #000
+    }
+
+        .glow-on-hover:active:after {
+            background: transparent;
+        }
+
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #111;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+    }
+
+@keyframes glowing {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
+
+.snip1582 {
+    background-image: linear-gradient(110deg, #58BA47 0%,#197a00 );
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'BenchNine', Arial, sans-serif;
+    font-size: 1em;
+    font-size: 22px;
+    line-height: 1em;
+    margin: 15px 40px;
+    outline: none;
+    padding: 12px 40px 10px;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+    .snip1582:before,
+    .snip1582:after {
+        border-color: transparent;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+        border-style: solid;
+        border-width: 0;
+        content: "";
+        height: 24px;
+        position: absolute;
+        width: 24px;
+    }
+
+    .snip1582:before {
+        border-color: #c47135;
+        border-top-width: 2px;
+        left: 0px;
+        top: -5px;
+    }
+
+    .snip1582:after {
+        border-bottom-width: 2px;
+        border-color: #c47135;
+        bottom: -5px;
+        right: 0px;
+    }
+
+    .snip1582:hover,
+    .snip1582.hover {
+        background-image: linear-gradient(110deg, #58BA47 0%,#197a00 );
+    }
+
+        .snip1582:hover:before,
+        .snip1582.hover:before,
+        .snip1582:hover:after,
+        .snip1582.hover:after {
+            height: 100%;
+            width: 100%;
+        }
+
+
+
+.snip1583 {
+    background-image: linear-gradient(110deg, #382a0b 0%,#7a5400 );
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'BenchNine', Arial, sans-serif;
+    font-size: 1em;
+    font-size: 22px;
+    line-height: 1em;
+    margin: 15px 40px;
+    outline: none;
+    padding: 12px 40px 10px;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+    .snip1583:before,
+    .snip1583:after {
+        border-color: transparent;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+        border-style: solid;
+        border-width: 0;
+        content: "";
+        height: 24px;
+        position: absolute;
+        width: 24px;
+    }
+
+    .snip1583:before {
+        border-color: #c47135;
+        border-top-width: 2px;
+        left: 0px;
+        top: -5px;
+    }
+
+    .snip1583:after {
+        border-bottom-width: 2px;
+        border-color: #c47135;
+        bottom: -5px;
+        right: 0px;
+    }
+
+    .snip1583:hover,
+    .snip1583.hover {
+        background-image: linear-gradient(110deg, #382a0b 0%,#7a5400 );
+    }
+
+        .snip1583:hover:before,
+        .snip1583.hover:before,
+        .snip1583:hover:after,
+        .snip1583.hover:after {
+            height: 100%;
+            width: 100%;
+        }
+
+
+span.dropify-render {
+    display: unset;
+}
+.div_upload_img_css {
+    border-left: 1px solid #d0baba;
+}
+.user-dashboard-section .dashboard-left-sidebar.show{
+    z-index: 99;
+}
+.css_add_address {
+    background: #4fd38f;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+}
+.css_icon_plus_address {
+    color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 100%;
+}

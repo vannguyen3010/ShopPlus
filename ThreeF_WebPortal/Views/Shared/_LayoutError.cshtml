@@ -1,0 +1,38 @@
+﻿
+@{
+    var supplierInfo = ViewBag.SupplierInfo as M_Supplier;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Security-Policy">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="@ViewData["Description"]">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800i" rel="stylesheet">
+
+    <!-- favicon icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="@(!string.IsNullOrEmpty(supplierInfo.imageFavicon) ? supplierInfo.imageFavicon : "/favicon.ico")" />
+    <link rel="icon" type="image/x-icon" href="@(!string.IsNullOrEmpty(supplierInfo.imageFavicon) ? supplierInfo.imageFavicon : "/favicon.ico")" />
+
+    <link href='https://fonts.googleapis.com/css?family=Anton|Passion+One|PT+Sans+Caption' rel='stylesheet' type='text/css'>
+    <link href="~/css/error_page.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="error">
+        <div class="container-floud">
+            <div class="col-xs-12 ground-color text-center" style="text-align:center">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="~/js/error_page.js"></script>
+</body>
+</html>

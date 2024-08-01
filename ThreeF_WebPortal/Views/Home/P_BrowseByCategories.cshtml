@@ -1,0 +1,41 @@
+﻿@{
+    var listCat = ViewBag.Category as List<M_Category>;
+}
+
+
+<section class="category-section-3">
+    <div class="container-fluid-lg">
+        @*<div class="title">
+            <h2>DANH MỤC NỔI BẬT</h2>
+        </div>*@
+        <div class="row">
+            <div class="col-12">
+                <div class="category-slider-1 arrow-slider wow fadeInUp">
+                    @if (listCat != null && listCat.Any())
+                    {
+                        foreach (var item in listCat)
+                        {
+                            <div>
+                                <div class="category-box-list">
+                                    <a data-toggle="tooltip" class="category-name" title="@item.name">
+                                        <h4 class="product_clamp_description">@item.name</h4>
+                                    </a>
+                                    <div class="category-box-view">
+                                        <a href="/san-pham?c1=@item.id">
+                                            <img src="@(!string.IsNullOrEmpty(item.imageObj?.smallUrl) ? item.imageObj?.smallUrl : "/img_dev/error/avatar.png")"
+                                                 class="img-fluid blur-up lazyload" alt="" onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';" style="opacity: 0.9;border-radius: 18%;aspect-ratio: 1;width: 100%;object-fit: cover;">
+                                        </a>
+                                        <a href="/san-pham?c1=@item.id" class="btn shop-button">
+                                            <span>Xem thêm</span>
+                                            <i class="fas fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

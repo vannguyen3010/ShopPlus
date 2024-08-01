@@ -1,0 +1,20 @@
+﻿.clamp_description_css {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+.new_blog_section{
+    height: 290px;
+}
+.new_blog_section .blog-box-image{
+    height: 70%;
+}
+.new_blog_section .blog-box-image img{
+    object-fit: cover;
+}
+.new_blog_section a{
+    height: 30%;
+}

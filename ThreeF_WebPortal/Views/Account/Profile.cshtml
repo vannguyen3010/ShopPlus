@@ -1,0 +1,1228 @@
+﻿@model EM_Person
+@{
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+   
+}
+@section Styles{
+    <link href="~/lib/parsleyjs/parsley.css" rel="stylesheet" />
+    <link href="~/css/loading_small.css" rel="stylesheet" />
+    <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/pretty-checkbox/pretty-checkbox.min.css" rel="stylesheet" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-select-fix/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/lib/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/datetimepicker/css/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/css/checkbox_custom_1.css" rel="stylesheet" />
+    <link href="~/css/profile.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/order_history.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+    @*<link href="~/assets/css/style_v2.css" rel="stylesheet"  asp-append-version="true"/>
+    <link href="~/assets/responsive_dev/responsive_v2.css" rel="stylesheet"  asp-append-version="true"/>*@
+}
+@section Scripts{
+    <script src="~/assets/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/assets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/lib/ladda/spin.min.js"></script>
+    <script src="/lib/ladda/ladda.min.js"></script>
+    <script src="/lib/parsleyjs/parsley.min.js"></script>
+    <script src="/lib/parsleyjs/i18n/vn.js"></script>
+    <script src="/lib/sweetalert2/sweetalert2.min.js"></script>
+    @*<script src="~/lib/bootstrap-select-fix/bootstrap-select.min.js"></script>*@
+    @*<script src="~/lib/bootstrap-select-fix/i18n/defaults-vi_VN.min.js"></script>*@
+    <script src="~/lib/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="~/js/gmaps.min.js"></script>
+    <script src="/lib/dropzone/min/dropzone.min.js"></script>
+    <script src="/lib/dropify/js/dropify.min.js"></script>
+    <script src="/lib/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="/lib/datetimepicker/js/jquery.datetimepicker.full.min.js"></script>
+    <script src="~/js/jsMcAoPmSmGoOnOGLE.js" asp-append-version="true"></script>
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/i18n/vi.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@ViewData["KeyGoogleMap"]"></script>
+    <script src="~/controllers/order.js" asp-append-version="true"></script>
+    <script src="~/controllers/address.js" asp-append-version="true"></script>
+    <script src="/controllers/account_profile.js" asp-append-version="true"></script>
+
+}
+<section class="user-dashboard-section section-b-space" id="section_div_cart">
+    <div class="container-fluid-lg">
+        <div class="row">
+            <div class="col-xxl-3 col-lg-4">
+                <partial name="P_LeftSideBar" model="1" />
+            </div>
+
+            <div class="col-xxl-9 col-lg-8 div_list_order">
+                <button class="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none">
+                    Hiển thị
+                </button>
+                <div class="dashboard-right-sidebar" id="div_list_order">
+
+                    <form class="tab-content needs-validation form_data" action="/Account/EditProfile" method="post" asp-antiforgery="true" novalidate id="pills-tabContent">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="imageId" />
+                        <input type="hidden" asp-for="imageSerialId" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="tab-pane fade show active" id="pills-dashboard" role="tabpanel"
+                             aria-labelledby="pills-dashboard-tab">
+                            <div class="dashboard-profile">
+                                <div class="title">
+                                    <h2>Hồ sơ của tôi</h2>
+                                    <span class="title-leaf">
+                                        <svg class="icon-width bg-gray">
+                                            <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
+                                        </svg>
+                                    </span>
+                                </div>
+
+                                <div class="profile-about dashboard-bg-box">
+                                    <div class="row">
+                                        <div class="col-xl-7 col-lg-8 col-md-12">
+                                            <div class="form-row row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label asp-for="lastName">Họ và tên đệm: <span class="text-danger">(*)</span></label>
+                                                    <input asp-for="lastName" class="form-control" placeholder="Nhập họ" maxlength="30" required />
+                                                    <span asp-validation-for="lastName" class="invalid-feedback"></span>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label asp-for="firstName">Tên: <span class="text-danger">(*)</span></label>
+                                                    <input asp-for="firstName" class="form-control" placeholder="Nhập tên" maxlength="30" required />
+                                                    <span asp-validation-for="firstName" class="invalid-feedback"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-row row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label asp-for="email">Email: </label>
+                                                    <input asp-for="email" type="email" class="form-control" placeholder="Nhập email" maxlength="50" />
+                                                    <span asp-validation-for="email" class="invalid-feedback"></span>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label asp-for="birthday">Ngày sinh: </label>
+                                                    <input type="text" asp-for="birthday" class="form-control" value="@Model.birthday?.ToString("dd-MM-yyyy")" />
+                                                </div>
+                                            </div>
+                                            <div class="form-row row checkout-page">
+                                                <div class="col-md-6 mb-3 checkout-form">
+                                                    <label asp-for="gender">Giới tính: </label>
+                                                    <select asp-for="gender" class="form-control">
+                                                        <option value="0">Nam</option>
+                                                        <option value="1">Nữ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-5 col-lg-4 col-md-12 div_upload_img_css">
+                                            <div>
+                                                @*  <div class="font-weight-bold text-uppercase text-center bg-light p-1 row bg-white mx-0 mb-1 border rounded">
+                                                <span class="pt-1 pb-1"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Ảnh đại diện</span>
+                                                </div>*@
+                                                <!--Image upload-->
+                                                <div class="col-12 col-sm-12 col-md-12" style="display:none;" id="div_upload_image">
+                                                    <div class="col-12 filter-item">
+                                                        <div class="gal-box mb-0">
+                                                            <input type="file" asp-for="imageFile" data-plugins="dropify" accept="image/jpeg, image/png" data-allowed-file-extensions="png jpg jpeg" data-height="150" data-max-file-size="5M" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 text-center">
+                                                        <a href="javascript:void(0)" class="text-info" onclick="ShowHidePanel('#div_view_image','#div_upload_image')">
+                                                            <i class="fa fa-arrow-left"></i> Quay lại
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                              
+
+                                                <!--Image view-->
+                                                <div class="col-12 col-sm-12 col-md-12" id="div_view_image">
+                                                    
+                                                    <div class="col-12 filter-item text-center">
+                                                        <div class="gal-box mb-0">
+                                                            <a href="@Model.imageUrl" class="image-popup" data-glightbox-close>
+                                                                @if (string.IsNullOrEmpty(Model.imageUrl))
+                                                                {
+                                                                    <img src="/img_dev/error/avatar.png" class="img-fluid rounded-circle" style="width: 70%" alt="Ảnh đại diện" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img src="@Model.imageUrl" class="img-fluid rounded-circle" style="width: 70%" alt="Ảnh đại diện" id="img_avatar_image" onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';" />
+                                                                }
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 text-center">
+                                                        <a href="javascript:void(0)" style="color: lightseagreen;margin-right:10px;" onclick="ShowHidePanel('#div_upload_image','#div_view_image')">
+                                                            <i class="fa fa-pencil"></i> Thay đổi
+                                                        </a>
+                                                        <a href="javascript:void(0)" class="text-danger" onclick="RemoveAvatar()">
+                                                            <i class="fa fa-trash"></i> Xóa
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-11 mt-2 d-flex justify-content-between">
+                                            <button type="button" class="btn btn-animation btn_change_pass" onclick="ShowChangePassModal(this)">
+                                                <i class="fa fa-key mx-2" aria-hidden="true"></i> ĐỔI MẬT KHẨU
+                                            </button>
+                                            <button type="submit" class="btn w-auto float-right ladda-button btn_change_pass_update text-white" dir="ltr"
+                                                    data-style="expand-left" id="btn_submit_form" style="background: #339538">
+                                                <i class="fa fa-floppy-o"></i> CẬP NHẬT
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade show" id="pills-wishlist" role="tabpanel"
+                             aria-labelledby="pills-wishlist-tab">
+                            <div class="dashboard-wishlist">
+                                <div class="title">
+                                    <h2>My Wishlist History</h2>
+                                    <span class="title-leaf title-leaf-gray">
+                                        <svg class="icon-width bg-gray">
+                                            <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="row g-sm-4 g-3">
+                                    <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                        <div class="product-box-3 theme-bg-white h-100">
+                                            <div class="product-header">
+                                                <div class="product-image">
+                                                    <a href="product-left-thumbnail.html">
+                                                        <img src="../assets/images/cake/product/2.png"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    </a>
+
+                                                    <div class="product-header-top">
+                                                        <button class="btn wishlist-button close_button">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-footer">
+                                                <div class="product-detail">
+                                                    <span class="span-name">Vegetable</span>
+                                                    <a href="product-left-thumbnail.html">
+                                                        <h5 class="name">Fresh Bread and Pastry Flour 200 g</h5>
+                                                    </a>
+                                                    <p class="text-content mt-1 mb-2 product-content">
+                                                        Cheesy feet
+                                                        cheesy grin brie. Mascarpone cheese and wine hard cheese the
+                                                        big cheese everyone loves smelly cheese macaroni cheese
+                                                        croque monsieur.
+                                                    </p>
+                                                    <h6 class="unit mt-1">250 ml</h6>
+                                                    <h5 class="price">
+                                                        <span class="theme-color">$08.02</span>
+                                                        <del>$15.15</del>
+                                                    </h5>
+                                                    <div class="add-to-cart-box mt-2">
+                                                        <button class="btn btn-add-cart addcart-button"
+                                                                tabindex="0">
+                                                            Add
+                                                            <span class="add-icon">
+                                                                <i class="fa-solid fa-plus"></i>
+                                                            </span>
+                                                        </button>
+                                                        <div class="cart_qty qty-box">
+                                                            <div class="input-group">
+                                                                <button type="button" class="qty-left-minus"
+                                                                        data-type="minus" data-field="">
+                                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                                </button>
+                                                                <input class="form-control input-number qty-input"
+                                                                       type="text" name="quantity" value="0">
+                                                                <button type="button" class="qty-right-plus"
+                                                                        data-type="plus" data-field="">
+                                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                        <div class="product-box-3 theme-bg-white h-100">
+                                            <div class="product-header">
+                                                <div class="product-image">
+                                                    <a href="product-left-thumbnail.html">
+                                                        <img src="../assets/images/cake/product/3.png"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    </a>
+
+                                                    <div class="product-header-top">
+                                                        <button class="btn wishlist-button close_button">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-footer">
+                                                <div class="product-detail">
+                                                    <span class="span-name">Vegetable</span>
+                                                    <a href="product-left-thumbnail.html">
+                                                        <h5 class="name">
+                                                            Peanut Butter Bite Premium Butter Cookies
+                                                            600 g
+                                                        </h5>
+                                                    </a>
+                                                    <p class="text-content mt-1 mb-2 product-content">
+                                                        Feta taleggio
+                                                        croque monsieur swiss manchego cheesecake dolcelatte
+                                                        jarlsberg. Hard cheese danish fontina boursin melted cheese
+                                                        fondue.
+                                                    </p>
+                                                    <h6 class="unit mt-1">350 G</h6>
+                                                    <h5 class="price">
+                                                        <span class="theme-color">$04.33</span>
+                                                        <del>$10.36</del>
+                                                    </h5>
+                                                    <div class="add-to-cart-box mt-2">
+                                                        <button class="btn btn-add-cart addcart-button"
+                                                                tabindex="0">
+                                                            Add
+                                                            <span class="add-icon">
+                                                                <i class="fa-solid fa-plus"></i>
+                                                            </span>
+                                                        </button>
+                                                        <div class="cart_qty qty-box">
+                                                            <div class="input-group">
+                                                                <button type="button" class="qty-left-minus"
+                                                                        data-type="minus" data-field="">
+                                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                                </button>
+                                                                <input class="form-control input-number qty-input"
+                                                                       type="text" name="quantity" value="0">
+                                                                <button type="button" class="qty-right-plus"
+                                                                        data-type="plus" data-field="">
+                                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                        <div class="product-box-3 theme-bg-white h-100">
+                                            <div class="product-header">
+                                                <div class="product-image">
+                                                    <a href="product-left-thumbnail.html">
+                                                        <img src="../assets/images/cake/product/4.png"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    </a>
+
+                                                    <div class="product-header-top">
+                                                        <button class="btn wishlist-button close_button">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-footer">
+                                                <div class="product-detail">
+                                                    <span class="span-name">Snacks</span>
+                                                    <a href="product-left-thumbnail.html">
+                                                        <h5 class="name">
+                                                            SnackAmor Combo Pack of Jowar Stick and
+                                                            Jowar Chips
+                                                        </h5>
+                                                    </a>
+                                                    <p class="text-content mt-1 mb-2 product-content">
+                                                        Lancashire
+                                                        hard cheese parmesan. Danish fontina mozzarella cream cheese
+                                                        smelly cheese cheese and wine cheesecake dolcelatte stilton.
+                                                        Cream cheese parmesan who moved my cheese when the cheese
+                                                        comes out everybody's happy cream cheese red leicester
+                                                        ricotta edam.
+                                                    </p>
+                                                    <h6 class="unit mt-1">570 G</h6>
+                                                    <h5 class="price">
+                                                        <span class="theme-color">$12.52</span>
+                                                        <del>$13.62</del>
+                                                    </h5>
+                                                    <div class="add-to-cart-box mt-2">
+                                                        <button class="btn btn-add-cart addcart-button"
+                                                                tabindex="0">
+                                                            Add
+                                                            <span class="add-icon">
+                                                                <i class="fa-solid fa-plus"></i>
+                                                            </span>
+                                                        </button>
+                                                        <div class="cart_qty qty-box">
+                                                            <div class="input-group">
+                                                                <button type="button" class="qty-left-minus"
+                                                                        data-type="minus" data-field="">
+                                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                                </button>
+                                                                <input class="form-control input-number qty-input"
+                                                                       type="text" name="quantity" value="0">
+                                                                <button type="button" class="qty-right-plus"
+                                                                        data-type="plus" data-field="">
+                                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                        <div class="product-box-3 theme-bg-white h-100">
+                                            <div class="product-header">
+                                                <div class="product-image">
+                                                    <a href="product-left-thumbnail.html">
+                                                        <img src="../assets/images/cake/product/5.png"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    </a>
+
+                                                    <div class="product-header-top">
+                                                        <button class="btn wishlist-button close_button">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-footer">
+                                                <div class="product-detail">
+                                                    <span class="span-name">Snacks</span>
+                                                    <a href="product-left-thumbnail.html">
+                                                        <h5 class="name">
+                                                            Yumitos Chilli Sprinkled Potato Chips 100 g
+                                                        </h5>
+                                                    </a>
+                                                    <p class="text-content mt-1 mb-2 product-content">
+                                                        Cheddar
+                                                        cheddar pecorino hard cheese hard cheese cheese and biscuits
+                                                        bocconcini babybel. Cow goat paneer cream cheese fromage
+                                                        cottage cheese cauliflower cheese jarlsberg.
+                                                    </p>
+                                                    <h6 class="unit mt-1">100 G</h6>
+                                                    <h5 class="price">
+                                                        <span class="theme-color">$10.25</span>
+                                                        <del>$12.36</del>
+                                                    </h5>
+                                                    <div class="add-to-cart-box mt-2">
+                                                        <button class="btn btn-add-cart addcart-button"
+                                                                tabindex="0">
+                                                            Add
+                                                            <span class="add-icon">
+                                                                <i class="fa-solid fa-plus"></i>
+                                                            </span>
+                                                        </button>
+                                                        <div class="cart_qty qty-box">
+                                                            <div class="input-group">
+                                                                <button type="button" class="qty-left-minus"
+                                                                        data-type="minus" data-field="">
+                                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                                </button>
+                                                                <input class="form-control input-number qty-input"
+                                                                       type="text" name="quantity" value="0">
+                                                                <button type="button" class="qty-right-plus"
+                                                                        data-type="plus" data-field="">
+                                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                        <div class="product-box-3 theme-bg-white h-100">
+                                            <div class="product-header">
+                                                <div class="product-image">
+                                                    <a href="product-left-thumbnail.html">
+                                                        <img src="../assets/images/cake/product/6.png"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    </a>
+
+                                                    <div class="product-header-top">
+                                                        <button class="btn wishlist-button close_button">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-footer">
+                                                <div class="product-detail">
+                                                    <span class="span-name">Vegetable</span>
+                                                    <a href="product-left-thumbnail.html">
+                                                        <h5 class="name">Fantasy Crunchy Choco Chip Cookies</h5>
+                                                    </a>
+                                                    <p class="text-content mt-1 mb-2 product-content">
+                                                        Bavarian
+                                                        bergkase smelly cheese swiss cut the cheese lancashire who
+                                                        moved my cheese manchego melted cheese. Red leicester paneer
+                                                        cow when the cheese comes out everybody's happy croque
+                                                        monsieur goat melted cheese port-salut.
+                                                    </p>
+                                                    <h6 class="unit mt-1">550 G</h6>
+                                                    <h5 class="price">
+                                                        <span class="theme-color">$14.25</span>
+                                                        <del>$16.57</del>
+                                                    </h5>
+                                                    <div class="add-to-cart-box mt-2">
+                                                        <button class="btn btn-add-cart addcart-button"
+                                                                tabindex="0">
+                                                            Add
+                                                            <span class="add-icon">
+                                                                <i class="fa-solid fa-plus"></i>
+                                                            </span>
+                                                        </button>
+                                                        <div class="cart_qty qty-box">
+                                                            <div class="input-group">
+                                                                <button type="button" class="qty-left-minus"
+                                                                        data-type="minus" data-field="">
+                                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                                </button>
+                                                                <input class="form-control input-number qty-input"
+                                                                       type="text" name="quantity" value="0">
+                                                                <button type="button" class="qty-right-plus"
+                                                                        data-type="plus" data-field="">
+                                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                        <div class="product-box-3 theme-bg-white h-100">
+                                            <div class="product-header">
+                                                <div class="product-image">
+                                                    <a href="product-left-thumbnail.html">
+                                                        <img src="../assets/images/cake/product/7.png"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    </a>
+
+                                                    <div class="product-header-top">
+                                                        <button class="btn wishlist-button close_button">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-footer">
+                                                <div class="product-detail">
+                                                    <span class="span-name">Vegetable</span>
+                                                    <a href="product-left-thumbnail.html">
+                                                        <h5 class="name">Fresh Bread and Pastry Flour 200 g</h5>
+                                                    </a>
+                                                    <p class="text-content mt-1 mb-2 product-content">
+                                                        Melted cheese
+                                                        babybel chalk and cheese. Port-salut port-salut cream cheese
+                                                        when the cheese comes out everybody's happy cream cheese
+                                                        hard cheese cream cheese red leicester.
+                                                    </p>
+                                                    <h6 class="unit mt-1">1 Kg</h6>
+                                                    <h5 class="price">
+                                                        <span class="theme-color">$12.68</span>
+                                                        <del>$14.69</del>
+                                                    </h5>
+                                                    <div class="add-to-cart-box mt-2">
+                                                        <button class="btn btn-add-cart addcart-button"
+                                                                tabindex="0">
+                                                            Add
+                                                            <span class="add-icon">
+                                                                <i class="fa-solid fa-plus"></i>
+                                                            </span>
+                                                        </button>
+                                                        <div class="cart_qty qty-box">
+                                                            <div class="input-group">
+                                                                <button type="button" class="qty-left-minus"
+                                                                        data-type="minus" data-field="">
+                                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                                </button>
+                                                                <input class="form-control input-number qty-input"
+                                                                       type="text" name="quantity" value="0">
+                                                                <button type="button" class="qty-right-plus"
+                                                                        data-type="plus" data-field="">
+                                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                                        <div class="product-box-3 theme-bg-white h-100">
+                                            <div class="product-header">
+                                                <div class="product-image">
+                                                    <a href="product-left-thumbnail.html">
+                                                        <img src="../assets/images/cake/product/2.png"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    </a>
+
+                                                    <div class="product-header-top">
+                                                        <button class="btn wishlist-button close_button">
+                                                            <i data-feather="x"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-footer">
+                                                <div class="product-detail">
+                                                    <span class="span-name">Vegetable</span>
+                                                    <a href="product-left-thumbnail.html">
+                                                        <h5 class="name">Fresh Bread and Pastry Flour 200 g</h5>
+                                                    </a>
+                                                    <p class="text-content mt-1 mb-2 product-content">
+                                                        Squirty cheese
+                                                        cottage cheese cheese strings. Red leicester paneer danish
+                                                        fontina queso lancashire when the cheese comes out
+                                                        everybody's happy cottage cheese paneer.
+                                                    </p>
+                                                    <h6 class="unit mt-1">250 ml</h6>
+                                                    <h5 class="price">
+                                                        <span class="theme-color">$08.02</span>
+                                                        <del>$15.15</del>
+                                                    </h5>
+                                                    <div class="add-to-cart-box mt-2">
+                                                        <button class="btn btn-add-cart addcart-button"
+                                                                tabindex="0">
+                                                            Add
+                                                            <span class="add-icon">
+                                                                <i class="fa-solid fa-plus"></i>
+                                                            </span>
+                                                        </button>
+                                                        <div class="cart_qty qty-box">
+                                                            <div class="input-group">
+                                                                <button type="button" class="qty-left-minus"
+                                                                        data-type="minus" data-field="">
+                                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                                </button>
+                                                                <input class="form-control input-number qty-input"
+                                                                       type="text" name="quantity" value="0">
+                                                                <button type="button" class="qty-right-plus"
+                                                                        data-type="plus" data-field="">
+                                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade show" id="pills-order" role="tabpanel"
+                             aria-labelledby="pills-order-tab">
+                            <div class="dashboard-order">
+                                <div class="col-sm-12 col-lg-12">
+                                    <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
+                                        <li class="nav-item li_status_order" data-id="-2">
+                                            <a class="nav-link active custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="true">
+                                                <i class="icofont icofont-ui-home"></i>Tất cả
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="0">
+                                            <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="true">
+                                                <i class="icofont icofont-ui-home"></i>Chờ xác nhận
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="1">
+                                            <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                                                <i class="icofont icofont-man-in-glasses"></i>Đã tiếp nhận
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="2">
+                                            <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                                                <i class="icofont icofont-contacts"></i>Đang vận chuyển
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="3">
+                                            <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                                                <i class="icofont icofont-contacts"></i>Đã giao
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="4">
+                                            <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                                                <i class="icofont icofont-contacts"></i>Đã hủy
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="5">
+                                            <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                                                <i class="icofont icofont-contacts"></i>Trả hàng
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                    </ul>
+
+
+                                    <div class="tab-content nav-material" id="div_fade_in">
+                                        <div class="tab-pane fade show active" role="tabpanel"
+                                             aria-labelledby="top-home-tab">
+                                            <div class="mt-0">
+                                                <div class="top-sec d-flex" style="padding: 8px">
+                                                    @*<label style="padding-right: 6px;">Hiển thị:</label>*@
+                                                    <select class="form-select show-tick" id="select_show_records_search" data-style="btn-outline p-1" style="width: unset">
+                                                        <option value="1" selected>7 ngày gần đây</option>
+                                                        <option value="2">1 tháng gần đây</option>
+                                                        <option value="3">6 tháng gần đây</option>
+                                                        <option value="4">Tất cả đơn hàng</option>
+                                                    </select>
+                                                    <label id="label_count_order_item" style="padding-left: 6px; color: #ea9310;"></label>
+                                                </div>
+
+
+                                                <div class="div_order_list_custom row" id="div_order_list">
+
+                                                    @*  <a href="#" class="col-12 div_zone_order_item">
+                                                    <div class="col-12 orderTitle">
+                                                    <span class="mb-0">#20210523015959997TYB <small class="text-dark">09/30/2021</small></span>
+                                                    <span class="mb-0 badge badge-grey-color float-right">Đã giao</span>
+                                                    </div>
+                                                    <div class="col-12 row m-0 p-2">
+                                                    <div class="col-auto p-0">
+                                                    <img src="../assets/images/pro3/2.jpg" style="width:60px; height:60px;" alt="">
+                                                    </div>
+                                                    <div class="col">
+                                                    <div class="div_desktop_custom text-muted">
+                                                    Nguyễn Nguyễn Nguyễn Nguyễn Nguyễn Nguyễ...
+                                                    <span class="col-auto badge badge-grey-color">Size S</span>
+                                                    <span class="col-auto badge badge-default">Màu Xanh</span>
+                                                    </div>
+                                                    <div class="mobile-cart-content text-center row">
+                                                    <span class="col-12 text-muted">Nguyễn Nguyễn Nguyễn Nguyễn Nguyễn Nguyễ...</span>
+                                                    <span class="col-auto badge badge-grey-color">Size S</span>
+                                                    <span class="col-auto badge badge-default">Màu Xanh</span>
+                                                    <div class="col-12 row">
+                                                    <div class="col">
+                                                    <small>SL: 9999</small>
+                                                    </div>
+                                                    <div class="col">
+                                                    <small class="m-0">100.000.000.000đ</small>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-lg-2 col-xl-2 div_desktop_custom">
+                                                    <small class="text-muted">SL: 9999</small>
+                                                    </div>
+                                                    <div class="col-auto div_desktop_custom">
+                                                    <span class="m-0">100.000.100.000đ</span>
+                                                    </div>
+                                                    </div>
+                                                    </a>*@
+
+                                                </div>
+
+                                                <div class="product-pagination product-pagination_no_border mt-4 mb-4">
+                                                    <div class="theme-paggination-block">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                                                <nav aria-label="Page navigation">
+                                                                    <ul class="pagination float-right" id="ul_pagination_order_list" style="float: right">
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div id="div_order_close" class="dashboard-order" style="display: none">
+                                @*    <div class="col-sm-12 col-lg-12">
+                                <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
+                                <li class="nav-item li_status_order" data-id="-2">
+                                <a class="nav-link active custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="true">
+                                <i class="icofont icofont-ui-home"></i>Tất cả
+                                </a>
+                                <div class="material-border"></div>
+                                </li>
+                                <li class="nav-item li_status_order" data-id="0">
+                                <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="true">
+                                <i class="icofont icofont-ui-home"></i>Chờ xác nhận
+                                </a>
+                                <div class="material-border"></div>
+                                </li>
+                                <li class="nav-item li_status_order" data-id="1">
+                                <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                                <i class="icofont icofont-man-in-glasses"></i>Đã tiếp nhận
+                                </a>
+                                <div class="material-border"></div>
+                                </li>
+                                <li class="nav-item li_status_order" data-id="2">
+                                <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                                <i class="icofont icofont-contacts"></i>Đang vận chuyển
+                                </a>
+                                <div class="material-border"></div>
+                                </li>
+                                <li class="nav-item li_status_order" data-id="3">
+                                <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                                <i class="icofont icofont-contacts"></i>Đã giao
+                                </a>
+                                <div class="material-border"></div>
+                                </li>
+                                <li class="nav-item li_status_order" data-id="4">
+                                <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                                <i class="icofont icofont-contacts"></i>Đã hủy
+                                </a>
+                                <div class="material-border"></div>
+                                </li>
+                                <li class="nav-item li_status_order" data-id="5">
+                                <a class="nav-link custom_text_css" data-bs-toggle="tab" href="#" role="tab" aria-selected="false">
+                                <i class="icofont icofont-contacts"></i>Trả hàng
+                                </a>
+                                <div class="material-border"></div>
+                                </li>
+                                </ul>
+
+                                <div class="tab-content nav-material">
+                                <div class="tab-pane fade show active" role="tabpanel"
+                                aria-labelledby="top-home-tab">
+                                <div class="mt-0">
+                                <div class="top-sec d-flex" style="padding: 8px">
+                                <label style="padding-right:6px;">Hiển thị: </label>
+                                <select class="show-tick" id="select_show_records_search"
+                                data-style="btn-outline p-1">
+                                <option value="1" selected>7 ngày gần đây</option>
+                                <option value="2">1 tháng gần đây</option>
+                                <option value="3">6 tháng gần đây</option>
+                                <option value="4">Tất cả đơn hàng</option>
+                                </select>
+                                <label id="label_count_order_item" style="padding-left:6px;color:#ea9310;"> </label>
+                                </div>
+
+                                <div class="div_order_list_custom row" id="div_order_list">
+                                </div>
+
+                                <div class="product-pagination product-pagination_no_border mt-4 mb-4">
+                                <div class="theme-paggination-block">
+                                <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                <nav aria-label="Page navigation">
+                                <ul class="pagination float-right" id="ul_pagination_order_list">
+                                </ul>
+                                </nav>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+
+                                </div>
+                                </div>
+                                </div>
+                                </div>*@
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade show" id="pills-address" role="tabpanel"
+                             aria-labelledby="pills-address-tab">
+                            <div class="dashboard-address">
+                                <div class="title title-flex">
+                                    <div>
+                                        <h2>Địa chỉ của tôi</h2>
+                                        <span class="title-leaf">
+                                            <svg class="icon-width bg-gray">
+                                                <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="css_add_address">
+                                        <a class="css_icon_plus_address" onclick="ShowAddModal(this);">
+                                            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                                            Thêm mới
+                                        </a>
+                                    </div>
+
+                                    @*   <button class="btn theme-bg-color text-white btn-sm fw-bold mt-lg-0 mt-3"
+                                    data-bs-toggle="modal" data-bs-target="#add-address"><i data-feather="plus"
+                                    class="me-2"></i> Add New Address</button>*@
+                                </div>
+
+                                <div class="row g-sm-4 g-3" id="tbody_main_table">
+                                </div>
+                            </div>
+
+                        </div>
+
+                      
+
+                    </form>
+                    <div class="mt-4" id="div_view_panel" style="display:none;">
+                    </div>
+                </div>
+                
+              @*  <div class="faq-content tab-content" id="div_zone_order_view_detail" style="display:none;">
+                    <div class="tab-pane fade show active">
+                        <section class="tab-product pt-0">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12">
+                                    <div class="tab-content nav-material">
+                                        <div class="tab-pane fade show active" role="tabpanel"
+                                             aria-labelledby="top-home-tab">
+                                            <div class="mt-0" id="div_order_detail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container col-9" id="div_zone_order_view_detail">
+
+    <div class="row">
+       <div clas="col-9">
+              <div class="faq-content tab-content" style="display:none;">
+                    <div class="tab-pane fade show active">
+                        <section class="tab-product pt-0">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12">
+                                    <div class="tab-content nav-material">
+                                        <div class="tab-pane fade show active" role="tabpanel"
+                                             aria-labelledby="top-home-tab">
+                                            <div class="mt-0" id="div_order_detail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+       </div>
+    </div>
+</section>
+<!-- Edit Profile Start -->
+<div class="modal fade theme-modal" id="edit_Profile" tabindex="-1" aria-labelledby="exampleModalLabel2"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-4">
+                    <div class="col-xxl-12">
+                        <form>
+                            <div class="form-floating theme-form-floating">
+                                <input type="text" class="form-control" id="pname" value="Jack Jennas">
+                                <label for="pname">Full Name</label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-xxl-6">
+                        <form>
+                            <div class="form-floating theme-form-floating">
+                                <input type="email" class="form-control" id="email1" value="vicki.pope@gmail.com">
+                                <label for="email1">Email address</label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-xxl-6">
+                        <form>
+                            <div class="form-floating theme-form-floating">
+                                <input class="form-control" type="tel" value="4567891234" name="mobile" id="mobile"
+                                       maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value =
+                                            this.value.slice(0, this.maxLength);">
+                                <label for="mobile">Email address</label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-12">
+                        <form>
+                            <div class="form-floating theme-form-floating">
+                                <input type="text" class="form-control" id="address1"
+                                       value="8424 James Lane South San Francisco">
+                                <label for="address1">Add Address</label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-12">
+                        <form>
+                            <div class="form-floating theme-form-floating">
+                                <input type="text" class="form-control" id="address2" value="CA 94080">
+                                <label for="address2">Add Address 2</label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-xxl-4">
+                        <form>
+                            <div class="form-floating theme-form-floating">
+                                <select class="form-select" id="floatingSelect1"
+                                        aria-label="Floating label select example">
+                                    <option selected>Choose Your Country</option>
+                                    <option value="kindom">United Kingdom</option>
+                                    <option value="states">United States</option>
+                                    <option value="fra">France</option>
+                                    <option value="china">China</option>
+                                    <option value="spain">Spain</option>
+                                    <option value="italy">Italy</option>
+                                    <option value="turkey">Turkey</option>
+                                    <option value="germany">Germany</option>
+                                    <option value="russian">Russian Federation</option>
+                                    <option value="malay">Malaysia</option>
+                                    <option value="mexico">Mexico</option>
+                                    <option value="austria">Austria</option>
+                                    <option value="hong">Hong Kong SAR, China</option>
+                                    <option value="ukraine">Ukraine</option>
+                                    <option value="thailand">Thailand</option>
+                                    <option value="saudi">Saudi Arabia</option>
+                                    <option value="canada">Canada</option>
+                                    <option value="singa">Singapore</option>
+                                </select>
+                                <label for="floatingSelect">Country</label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-xxl-4">
+                        <form>
+                            <div class="form-floating theme-form-floating">
+                                <select class="form-select" id="floatingSelect">
+                                    <option selected>Choose Your City</option>
+                                    <option value="kindom">India</option>
+                                    <option value="states">Canada</option>
+                                    <option value="fra">Dubai</option>
+                                    <option value="china">Los Angeles</option>
+                                    <option value="spain">Thailand</option>
+                                </select>
+                                <label for="floatingSelect">City</label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-xxl-4">
+                        <form>
+                            <div class="form-floating theme-form-floating">
+                                <input type="text" class="form-control" id="address3" value="94080">
+                                <label for="address3">Pin Code</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-animation btn-md fw-bold"
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" data-bs-dismiss="modal"
+                        class="btn theme-bg-color btn-md fw-bold text-light">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit Profile End -->
+<!-- Remove Profile Modal Start -->
+<div class="modal fade theme-modal remove-profile" id="removeProfile" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header d-block text-center">
+                <h5 class="modal-title w-100" id="exampleModalLabel22">Are You Sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="remove-box">
+                    <p>
+                        The permission for the use/group, preview is inherited from the object, object will create a
+                        new permission for this object
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn theme-bg-color btn-md fw-bold text-light"
+                        data-bs-target="#removeAddress" data-bs-toggle="modal">
+                    Yes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal change pw start -->
+<div class="modal fade" id="modal_change_pw" tabindex="-1" role="dialog" aria-labelledby="modal_change_pw" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="padding:50px 0;">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #21d512;">
+                <h4 class="modal-title mx-auto">
+                    <b class="text-uppercase text-white">Đổi mật khẩu</b>
+                </h4>
+                @* <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:1.5rem;font-weight:700;line-height:1;"
+                aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>*@
+            </div>
+            <div class="modal-body register-page pt-0" id="div_body_modal_change_pw">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal change pw end -->
+<!-- Modal cancel start -->
+<div class="modal fade" id="modal_cancel_item" tabindex="-1" role="dialog" aria-labelledby="modal_cancel_item" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="padding:50px 0;">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #117d91">
+                <h4 class="modal-title mx-auto">
+                    <b class="text-white">Hủy đơn hàng</b>
+                </h4>
+                <button type="button" class="btn-close " data-bs-dismiss="modal" style="font-size:1.5rem;font-weight:700;line-height:1;margin-top:-8px;padding-bottom:0;"
+                        aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body p-0" style="overflow-x:hidden;">
+                <div class="dashboard-section section-b-space" style="padding-bottom:0px;">
+
+                    <div class="faq-content tab-content">
+                        <div class="tab-pane fade show active">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="dashboard-table mt-0">
+                                        <div class="table-responsive-md">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" colspan="2">Sản phẩm</th>
+                                                        <th scope="col">Lý do</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbody_modal_cancel_oderitem">
+                                                    @*<tr>
+                                                    <td class="col-1">
+                                                    <div class="d-flex align-items-center">
+                                                    <input type="checkbox" name="input_order_item_cancel" data-id="1" id="input_order_item_cancel_${value.id}" />
+                                                    <label for="input_order_item_cancel_${value.id}"> </label>
+                                                    <img src="../assets/images/pro3/2.jpg" style="width:50px; height:50px;" alt=""
+                                                    onerror="this.onerror=null;this.src='/assets/images/error/product_1x1_medium.png';">
+                                                    </div>
+                                                    </td>
+                                                    <td class="col" style="text-align:left;">
+                                                    <label for="input_order_item_cancel_${value.id}">
+                                                    basdsadasdas asd asd a dsad as das asdas aaas aaa
+                                                    <span class="badge badge-grey-color">${sizeTmp}</span>
+                                                    <span class="badge badge-default">${colorTmp}</span>
+                                                    </label>
+                                                    </td>
+                                                    <td class="col-4">
+                                                    <select name="ReasonId" id="ReasonId_1" data-none-results-text="Không tìm thấy kết quả phù hợp"
+                                                    data-none-selected-text="Vui lòng chọn lý do" title="Vui lòng chọn lý do"
+                                                    class="selectpicker form-control show-tick reasonList" data-style="border" data-live-search="false" data-size="10">
+
+                                                    </select>
+                                                    </td>
+                                                    </tr>*@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12" style="padding: 10px 24px 10px 24px;">
+                                    <label class="font-weight-bold" for="textarea_description_cancel">Mô tả: </label>
+                                    <textarea name="textarea_description_cancel" id="textarea_description_cancel" rows="3" class="form-control" placeholder="Nhập nội dung" maxlength="150"></textarea>
+                                </div>
+
+                                <div class="col-12" style="padding: 0 24px 10px 24px;">
+                                    <b>Lưu ý:</b>
+                                    <p>* Không thể hủy khi đơn hàng đã xác nhận, liên hệ SHOP để được hỗ trợ.</p>
+                                    <p>* Khi bạn xác nhận hủy đơn hàng, chúng tôi sẽ không thể khôi phục lại đơn hàng khi đã hủy.</p>
+                                    <p>* Nếu đơn hàng đã được thanh toán, SHOP sẽ liên hệ bạn để hoàn trả tiền.</p>
+                                    <p>* Nếu đơn hàng của bạn có nhiều sản phẩm. Để hủy đơn hàng toàn bộ, hãy chọn tất cả sản phẩm.</p>
+                                    <p>* HappyGreen không giải quyết bất cứ vấn đề nào liên quan đến quá trình hủy đơn và hoàn tiền.</p>
+                                    <i class="text-danger"> Bằng cách "XÁC NHẬN" hủy đơn hàng, tôi đã đồng ý tất cả các chính sách nêu trên.</i>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-animation ladda-button" dir="ltr" data-style="expand-left" id="btn_submit_cancel_item">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal cancel end -->
+<!-- Modal bank list start -->
+<div class="modal fade" id="modal_bank_list" tabindex="-1" role="dialog" aria-labelledby="modal_bank_list" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="padding:50px 0;">
+        <div class="modal-content mx-auto" style="border: 10px solid #339538;max-width: 720px;">
+            <div class="modal-header pb-0">
+                <h4 class="modal-title">
+                    <b class="text-uppercase"></b>
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:1.5rem;font-weight:700;line-height:1;"
+                        aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body register-page pt-0" id="div_body_modal_bank_list">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm snip15823 add-button" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal bank list end -->

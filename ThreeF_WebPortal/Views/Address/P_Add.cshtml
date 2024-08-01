@@ -1,0 +1,126 @@
+﻿@model EM_DeliveryAddress
+@section Scripts{
+    <script src="~/js/gmaps.min.js"></script>
+    <script src="~/js/jsMcAoPmSmGoOnOGLE.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@ViewData["KeyGoogleMap"]"></script>
+    <script src="~/controllers/address.js" asp-append-version="true"></script>
+}
+<form action="/Address/P_Add" method="post" class="theme-form needs-validation" id="form_data_add" asp-antiforgery="true" novalidate>
+    <input type="hidden" asp-for="longitude" />
+    <input type="hidden" asp-for="latitude" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            <div class="col-12 mb-3">
+                <label class="font-weight-bold" asp-for="name">Họ và tên: <span class="text-danger">(*)</span></label>
+                <input asp-for="name" class="form-control" placeholder="Nhập họ và tên" maxlength="50" required />
+              
+                <span asp-validation-for="name" class="invalid-feedback"></span>
+            </div>
+            <div class="col-12 mb-2">
+                <label class="font-weight-bold" asp-for="phoneNumber"> Điện thoại: <span class="text-danger">(*)</span></label>
+                <input asp-for="phoneNumber" class="form-control"
+                       placeholder="Nhập điện thoại" maxlength="12" onkeypress="return IsNumberKey(event)" required />
+                <span asp-validation-for="phoneNumber" class="invalid-feedback"></span>
+             
+            </div>
+
+            <div class="col-12 pt-1 select2-w100" style="margin-bottom:12px;">
+                <label class="font-weight-bold" asp-for="provinceId">Tỉnh/Thành phố: <span class="text-danger">(*)</span></label>
+                <select asp-for="provinceId" asp-items="ViewBag.ProvinceId" onchange="OnChangeProvinceFormEvent(this, 'form_data_add')"
+                        class="form-control select2" data-style="border" data-live-search="true" data-size="10" required>
+                    <option value="">--Chọn--</option>
+                </select>
+                <span asp-validation-for="provinceId" class="invalid-feedback"></span>
+              
+            </div>
+            <div class="col-12 pt-1 select2-w100" style="margin-bottom:12px;">
+                <label class="font-weight-bold" asp-for="districtId">Quận/Huyện: <span class="text-danger">(*)</span></label>
+                <div class="position-relative" id="div_zone_district">
+                    <select asp-for="districtId" onchange="OnChangeDistrictFormEvent(this, 'form_data_add')" disabled
+                            class="form-control select2" data-style="border" data-live-search="true" data-size="10" required>
+                    </select>
+                    <span asp-validation-for="districtId" class="invalid-feedback"></span>
+                
+                </div>
+            </div>
+            <div class="col-12 pt-1 select2-w100" style="margin-bottom:12px;">
+                <label class="font-weight-bold" asp-for="wardId">Phường/Xã: <span class="text-danger">(*)</span></label>
+                <div class="position-relative" id="div_zone_ward">
+                    <select asp-for="wardId" disabled class="form-control select2" id="wardId" name="wardId" disabled="disabled" data-style="border" data-live-search="true" data-size="10" required>
+                    </select>
+                    <span asp-validation-for="wardId" class="invalid-feedback"></span>
+
+                </div>
+            </div>
+            <div class="col-12 mb-2">
+                <label class="font-weight-bold" asp-for="addressText"> Địa chỉ: <span class="text-danger">(*)</span></label>
+                <input asp-for="addressText" class="form-control"
+                       placeholder="Nhập địa chỉ" maxlength="100" required />
+                <span asp-validation-for="addressText" class="invalid-feedback"></span>
+               
+            </div>
+            <div class="col-12 mt-2 row">
+                <div class="d-flex col-4">
+                    <div>
+                        <div class="pretty p-default p-round">
+                            <input type="radio" asp-for="typeId" id="input_address_type_1" value="1" checked />
+                            <div class="state p-primary-o">
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div><label for="input_address_type_1">Nhà riêng</label></div>
+                </div>
+                <div class="d-flex col-4">
+                    <div>
+                        <div class="pretty p-default p-round">
+                            <input type="radio" asp-for="typeId" id="input_address_type_2" value="2" />
+                            <div class="state p-primary-o">
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div><label for="input_address_type_2">Văn phòng</label></div>
+                </div>
+                <div class="d-flex col-4">
+                    <div>
+                        <div class="pretty p-default p-round">
+                            <input type="radio" asp-for="typeId" id="input_address_type_3" value="0" />
+                            <div class="state p-primary-o">
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div><label for="input_address_type_3">Khác</label></div>
+                </div>
+            </div>
+            <div class="col-12 mt-2 mb-3 d-flex">
+                <input asp-for="isDefault" class="mx-1" type="checkbox" />
+                <label asp-for="isDefault" class="mb-0">Sử dụng làm địa chỉ mặc định</label>
+            </div>
+        </div>
+        <div class="col-12 col-lg-8">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="box-inner-map" style="width: 100%; height: 470px;">Google Map</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label style="font-size: 13px; color: #FF6600;">&#10043; Bạn chỉ được xem địa chỉ của mình trên bản đồ.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row float-right mt-2 mb-2 d-flex justify-content-between">
+        <button type="button" class="btn btn-danger text-white" style="background: #c66428" onclick="CloseModal()">Hủy</button>
+        @*<button type="submit" class="text-white ladda-button" dir="ltr" data-style="expand-left" id="btn_submit_form_add">Thêm</button>*@
+        <button type="submit" class="btn theme-bg-color btn-md text-white" id="btn_submit_form_add">
+            Thêm
+        </button>
+    </div>
+</form>

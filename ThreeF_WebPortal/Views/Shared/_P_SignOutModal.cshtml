@@ -1,0 +1,79 @@
+﻿@{
+    var supplierInfo = ViewBag.SupplierInfo as M_Supplier;
+}
+
+<div class="modal fade bd-example-modal-lg theme-modal exit-modal" id="modal_signout" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content mx-auto" style="width: 70%">
+            <div class="modal-body modal1" style="border: 15px solid darkred">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="modal-bg">
+                                <button type="button" id="btn_close_sigout_modal" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <div class="media d-flex align-items-center row">
+                                    <div class="profile-image1 text-center">
+                                        <img src="@supplierInfo.imageObj?.smallUrl" alt="Profile Image" />
+                                    </div>
+                                    <div class="media-body text-start align-self-center">
+                                        @* col-8 col-md-6 *@
+                                        <div class="text-center">
+                                            <h2 style="padding-right:10px;">Bạn có muốn đăng xuất?</h2>
+                                            <div class="mt-3">
+                                                @*<a href="javascript:void(0);" data-dismiss="modal" style="background: #c37921;" class="btn1 btn-cancel">Không</a>*@
+                                                <a style="background: #1cb42b;" href="/account/signout" class="btn1 btn-logout">Đăng xuất</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .logout-form1 {
+        text-align: center;
+        padding: 20px;
+    }
+
+
+    .profile-image1 img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 20px;
+    }
+
+    .logout-buttons1 {
+        margin-top: 20px;
+    }
+
+    .btn1 {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn1:hover {
+            background-color: #555;
+        }
+
+    .btn1-cancel {
+        background-color: #ccc;
+        color: #333;
+        margin-right: 10px;
+    }
+
+</style>

@@ -1,0 +1,345 @@
+﻿@using ThreeF_WebPortal.Lib;
+@{
+    var supplierInfo = ViewBag.SupplierInfo as M_Supplier;
+
+}
+
+<footer class="section-t-space">
+    <div class="container-fluid-lg">
+        <div class="service-section">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="service-contain">
+                        <div class="service-box">
+                            <div class="service-image">
+                                <img src="/assets/svg/product.svg" class="blur-up lazyload" alt="">
+                            </div>
+
+                            <div class="service-detail">
+                                <h5>Đảm bảo chất lượng</h5>
+                            </div>
+                        </div>
+
+                        <div class="service-box">
+                            <div class="service-image">
+                                <img src="/assets/svg/delivery.svg" class="blur-up lazyload" alt="">
+                            </div>
+
+                            <div class="service-detail">
+                                <h5>Phí giao hàng ưu đãi</h5>
+                            </div>
+                        </div>
+
+                        <div class="service-box">
+                            <div class="service-image">
+                                <img src="/assets/svg/discount.svg" class="blur-up lazyload" alt="">
+                            </div>
+
+                            <div class="service-detail">
+                                <h5>Giảm giá hàng ngày</h5>
+                            </div>
+                        </div>
+
+                        <div class="service-box">
+                            <div class="service-image">
+                                <img src="/assets/svg/market.svg" class="blur-up lazyload" alt="">
+                            </div>
+
+                            <div class="service-detail">
+                                <h5>Giá tốt nhất trên thị trường</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-footer section-b-space section-t-space">
+            <div class="row g-md-4 g-3">
+                <div class="col-xl-3 col-lg-4 col-xl-4 col-sm-12">
+                    <div class="footer-logo">
+                        <div class="theme-logo">
+                            <a href="/">
+                                <img src="@(!string.IsNullOrEmpty(supplierInfo.imageObj?.smallUrl) ? supplierInfo.imageObj?.smallUrl : "/img_dev/error/avatar.png")" class="blur-up lazyload" alt=""
+                                     onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';" style="max-height: 150px; width: auto; max-width: 100%;">
+                            </a>
+                        </div>
+
+                        <div class="footer-logo-contain">
+                            <p style="white-space:pre-line" class="pt-2">
+                                @supplierInfo.description
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="footer-social mt-2 mb-2">
+                        <ul class="contact-list">
+                            @if (!string.IsNullOrEmpty(supplierInfo.facebook))
+                            {
+                                <li class="p-2"><a class="facebook_shop" href="@supplierInfo.facebook" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(supplierInfo.youtube))
+                            {
+                                <li class="p-2"><a class="youtube_shop" href="@supplierInfo.youtube" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                            }
+                            @*@if (!string.IsNullOrEmpty(supplierInfo.zalo))
+                            {
+                            <li style="width: 8%; margin-top: -10px;"><a class="zalo_shop" href="@supplierInfo.zalo" target="_blank"><img src="/img_dev/logo/zalo.png" class="h-10" style="object-fit: cover; height: 19px; margin-top: -6px; " /></a></li>
+                            }*@
+                            @if (!string.IsNullOrEmpty(supplierInfo.instagram))
+                            {
+                                <li class="p-2"><a class="instagram_shop" href="@supplierInfo.instagram" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(supplierInfo.tiktokUrl))
+                            {
+                                <li class="p-2"><a class="instagram_shop" href="@supplierInfo.tiktokUrl" target="_blank"><i class="fa-brands fa-tiktok aria-hidden=" true""></i></a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(supplierInfo.twitter))
+                            {
+                                <li class="p-2"><a class="twitter_shop" href="@supplierInfo.twitter" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4">
+                    @if (@supplierInfo.ministryUrl != null ||
+                    @supplierInfo.roleFileUrl != null ||
+                    @supplierInfo.securityFileUrl != null ||
+                    @supplierInfo.refundPolicyUrl != null ||
+                    @supplierInfo.operatingRegulationUrl != null ||
+                    @supplierInfo.shippingPolicyUrl != null)
+                    {
+                        <div class="footer-title">
+                            <h4>Hỗ trợ khách hàng</h4>
+                        </div>
+                    }
+
+                 
+                    <div class="footer-contain">
+                        @if (!string.IsNullOrEmpty(supplierInfo.ministryUrl))
+                        {
+                            <a href="@supplierInfo.ministryUrl" target="_blank" id="a_ministry_url">
+                                <img src="/img/ticket_notified_ministry.png" style="max-height:60px;width:auto;max-width:100%;" />
+                            </a>
+                        }
+                        <ul>
+                            @if (!string.IsNullOrEmpty(supplierInfo.roleFileUrl))
+                            {
+                                <li>
+                                    <a href="@supplierInfo.roleFileUrl" class="text-content" target="_blank">Điều khoản sử dụng </a>
+                                </li>
+                            }
+                            @if (!string.IsNullOrEmpty(supplierInfo.securityFileUrl))
+                            {
+                                <li>
+                                    <a href="@supplierInfo.securityFileUrl" class="text-content" target="_blank">Chính sách bảo mật </a>
+                                </li>
+                            }
+                            @if (!string.IsNullOrEmpty(supplierInfo.shippingPolicyUrl))
+                            {
+                                <li>
+                                    <a href="@supplierInfo.refundPolicyUrl" class="text-content" target="_blank">Chính sách điều khoản </a>
+                                </li>
+                            }
+
+                            @if (!string.IsNullOrEmpty(supplierInfo.operatingRegulationUrl))
+                            {
+                                <li><a href="@supplierInfo.operatingRegulationUrl" class="text-content" target="_blank">Quy chế hoạt động</a></li>
+                            }
+                            @if (!string.IsNullOrEmpty(supplierInfo.shippingPolicyUrl))
+                            {
+                                <li><a href="@supplierInfo.shippingPolicyUrl" class="text-content" target="_blank">Chính sách bảo mật</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-sm-4">
+                    <div class="footer-title">
+                        <h4>Danh mục</h4>
+                    </div>
+
+                    <div class="footer-contain">
+                        <ul>
+                            <li>
+                                <a href="/" class="text-content">Trang chủ</a>
+                            </li>
+                            <li>
+                                <a href="/san-pham" class="text-content">Sản phẩm</a>
+                            </li>
+                            @if (supplierInfo?.supplierServiceObj?.serviceObj?.packageServiceObj?.serviceCode == CommonConstants.NAME_SERVICE_MINISHOP_PLUS)
+                            {
+                                <li>
+                                    <a href="/gioi-thieu" class="text-content">Giới thiệu</a>
+                                </li>
+                            }
+                            @if (supplierInfo?.supplierServiceObj?.serviceObj?.packageServiceObj?.serviceCode == CommonConstants.NAME_SERVICE_MINISHOP_PLUS)
+                            {
+                                <li>
+                                    <a href="/tin-tuc" class="text-content">Tin tức</a>
+                                </li>
+                            }
+                            <li>
+                                <a href="/lien-he" class="text-content">Liên hệ</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+
+                <div class="col-xl-3 col-lg-4 col-sm-4">
+
+                    <div class="footer-title">
+                        <h4>Liên hệ</h4>
+                    </div>
+
+                    <div class="footer-contact">
+                        <ul>
+                            @if (!string.IsNullOrEmpty(supplierInfo.addressObj?.addressText))
+                            {
+                                <li style='@(string.IsNullOrEmpty(supplierInfo.hotlineNumber) ? "display:none;" : "")'>
+                                    <a class="footer-number" href="tel:0945524725">
+                                        <i data-feather="phone"></i>
+                                        <div class="contact-number">
+                                            <h6 class="text-content">Hotline 24/7 :</h6>
+                                            @if (supplierInfo.hotlineNumber != null)
+                                            {
+                                                <h5>@supplierInfo.hotlineNumber</h5>
+                                            }
+                                        </div>
+                                    </a>
+
+                                </li>
+                                <li style='@(string.IsNullOrEmpty(supplierInfo.telephoneNumber) ? "display:none;" : "")'>
+                                    <a class="footer-number" href="tel:0384910019">
+                                        <i data-feather="smartphone"></i>
+                                        <div class="contact-number">
+                                            <h6 class="text-content">Di động :</h6>
+                                            @if (supplierInfo.telephoneNumber != null)
+                                            {
+                                                <h5>@supplierInfo.telephoneNumber</h5>
+                                            }
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li style='@(string.IsNullOrEmpty(supplierInfo.email) ? "display:none;" : "")'>
+                                    <div class="footer-number">
+                                        <i data-feather="mail"></i>
+                                        <div class="contact-number css_mobile_fax">
+                                            <h6 class="text-content">Email :</h6>
+                                            @if (supplierInfo.email != null)
+                                            {
+                                                <h5 style="word-wrap: break-word;" href="mailto:@supplierInfo.email">
+                                                    @supplierInfo.email
+                                                </h5>
+                                            }
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style='@(supplierInfo.fax == null ? "display:none;" : "")'>
+                                    <div class='footer-number'>
+                                        <i class='fa-solid fa-fax'></i>
+                                        <div class='contact-number'>
+                                            <h6 class='text-content'>Fax :</h6>
+                                            @if (supplierInfo.fax != null)
+                                            {
+                                                <h5>@supplierInfo.fax</h5>
+                                            }
+                                        </div>
+                                    </div>
+                                </li>
+
+                               
+
+                                <li>
+                                    <div class="footer-number">
+                                        <i style="width: 30px" data-feather="map-pin"></i>
+                                        <div class="contact-number">
+                                            <h6 class="text-content">Địa chỉ :</h6>
+                                            <h5>
+                                                @if (supplierInfo.addressObj != null)
+                                                {
+                                                    <text>@supplierInfo.addressObj.addressText</text>
+                                                    if (supplierInfo.addressObj.wardObj != null)
+                                                    {
+                                                        <text>, @supplierInfo.addressObj.wardObj.name</text>
+                                                    }
+                                                    if (supplierInfo.addressObj.districtObj != null)
+                                                    {
+                                                        <text>, @supplierInfo.addressObj.districtObj.name</text>
+                                                    }
+                                                    if (supplierInfo.addressObj.provinceObj != null)
+                                                    {
+                                                        <text>, @supplierInfo.addressObj.provinceObj.name</text>
+                                                    }
+                                                }
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                @*<li style='@(string.IsNullOrEmpty(supplierInfo.fax) ? "display:none;" : "")'>
+                            <div class="footer-number">
+                            <i style="width: 30px" data-feather="map-pin"></i>
+                            <div class="contact-number">
+                            <h6 class="text-content">Địa chỉ :</h6>
+                            <h5 href="mailto:@supplierInfo.email">@supplierInfo.addressObj?.addressText, @supplierInfo.addressObj?.wardObj?.name, @supplierInfo.addressObj?.districtObj?.name, @supplierInfo.addressObj?.provinceObj?.name</h5>
+                            </div>
+                            </div>
+                            </li>*@
+
+                                @*<li><i class="fa fa-map-marker"></i>
+
+                            <span class="address_shop">@supplierInfo.addressObj?.addressText, @supplierInfo.addressObj?.wardObj?.name, @supplierInfo.addressObj?.districtObj?.name, @supplierInfo.addressObj?.provinceObj?.name </span></li>*@
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="sub-footer">
+            <div class="col-xl-12 col-md-12 col-sm-12">
+                <div class="text-center">
+                    @if (@supplierInfo.facebook != null)
+                    {
+                        <div class="draggable_bubble bubble_move_cart bubble_phone ui-draggable ui-draggable-handle" style="z-index: 99">
+                            <a class="cart_food btn-shake avatar btn btn-circle btn-play ripple text-uppercase fs-11" target="_blank" rel="nofollow" aria-label="facebook" href="@supplierInfo.facebook"> <i class="fa-brands fa-facebook text-white fs-30 text-black"></i></a>
+                        </div>
+                    }
+                    @if (@supplierInfo.zalo != null)
+                    {
+                        <div class="draggable_bubble bubble_move_cart bubble_zalo ui-draggable ui-draggable-handle">
+                            <a class="cart_food btn-shake avatar btn btn-circle btn-play ripple  text-uppercase fs-11" target="_blank" title="Chat với chúng tôi qua zalo" href="@supplierInfo.zalo" rel="nofollow" aria-label="zalo"> <img src="/img_dev/logo/zalo.png" style=" width: 100%;"></a>
+                        </div>
+
+                    }
+                    <div class="draggable_bubble bubble_move_cart bubble_cart ui-draggable ui-draggable-handle" @*id="btn_search_bubble"*@>
+                        <a onclick="$('#modal_show_search').fadeIn();" class="cart_food btn-shake avatar btn btn-circle btn-play ripple text-uppercase fs-11" title="Tìm kiếm" aria-label="cart" style="background: #209e00"> <i class="fa-solid fa-magnifying-glass text-white fs-30 text-black" @*onclick="openSearch()"*@></i></a>
+                    </div>
+                    <p>
+                        © <a href="https://h2aits.com/" target="_blank" style="color: #19871c">H2A IT Solution</a>. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="theme-option">
+    <div class="back-to-top">
+        <a id="back-to-top" href="#">
+            <i class="fas fa-chevron-up"></i>
+        </a>
+    </div>
+</div>
+@*<div class="bg-overlay"></div>
+
+<div class="bg-overlay"></div>*@

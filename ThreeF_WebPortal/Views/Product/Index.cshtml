@@ -1,0 +1,554 @@
+﻿@{
+    var sideBarCategory = ViewBag.Category as List<M_Category>;
+    var dataBanner1 = ViewBag.BannerTop as List<VM_Banner>;
+    var priceList = ViewBag.priceList as List<VM_PriceListSearch.VM_Price>;
+    var breadCrumb = ViewBag.BreadCrumb as VM_BreadCrumb;
+}
+
+@section Styles{
+    <link href="~/css/product.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/home.css" rel="stylesheet" asp-append-version="true" />
+
+}
+@section Scripts{
+    <script src="/controllers/product.js" asp-append-version="true"></script>
+
+}
+
+<!-- Breadcrumb Section Start -->
+<partial name="_P_Breadcrumb" model="breadCrumb" />
+<!-- Breadcrumb Section End -->
+<!-- Shop Section Start -->
+<section class="section-b-space shop-section blog-section">
+    <div class="container-fluid-lg left-sidebar-box">
+        <div class="row">
+            <div class="col-custome-3">
+                <div class="left-box wow fadeInUp left-accordion-box">
+                    <div class="shop-left-sidebar">
+                        <div class="back-button">
+                            <h3><i class="fa-solid fa-arrow-left"></i>Trở về </h3>
+                        </div>
+                        <div class="accordion custome-accordion" id="accordionExample">
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                            aria-expanded="false" aria-controls="collapseTwo">
+                                        <span>Nhóm công dụng</span>
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse show"
+                                     aria-labelledby="headingTwo">
+                                    <div class="accordion-body">
+                                        <ul class="category-list custom-padding" id="div_list_property_filter_0">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                            aria-expanded="false" aria-controls="collapseThree">
+                                        <span>Cách dùng</span>
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse show"
+                                     aria-labelledby="headingThree">
+                                    <div class="accordion-body">
+                                        <ul class="category-list custom-padding" id="div_list_property_filter_1">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSix">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseSix"
+                                            aria-expanded="false" aria-controls="collapseSix">
+                                        <span>Dạng</span>
+                                    </button>
+                                </h2>
+                                <div id="collapseSix" class="accordion-collapse collapse show"
+                                     aria-labelledby="headingSix">
+                                    <div class="accordion-body">
+                                        <ul class="category-list custom-padding" id="div_list_property_filter_2">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseFour"
+                                            aria-expanded="false" aria-controls="collapseFour">
+                                        <span>Đối tượng sử dụng</span>
+                                    </button>
+                                </h2>
+                                <div id="collapseFour" class="accordion-collapse collapse show"
+                                     aria-labelledby="headingFour">
+                                    <div class="accordion-body">
+                                        <ul class="category-list custom-padding" id="div_list_property_filter_3">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*  <div class="accordion_item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseThree">
+                            Danh mục bài viết
+                            </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse collapse show"
+                            aria-labelledby="panelsStayOpen-headingThree">
+                            <div class="accordion_body pt-0">
+                            <div class="product-tags-box">
+                            <ul>
+                            <li>
+                            <a href="">Cây xoài</a>
+                            </li>
+                            <li>
+                            <a href="">Cây xoài</a>
+                            </li>
+                            <li>
+                            <a href="">Cây xoài</a>
+                            </li>
+                            <li>
+                            <a href="">Cây xoài</a>
+                            </li>
+                            <li>
+                            <a href="">Cây xoài</a>
+                            </li>
+
+                            </ul>
+                            </div>
+                            </div>
+                            </div>
+                            </div>*@
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                    <button style="font-size: 15px !important" class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                            aria-controls="panelsStayOpen-collapseThree">
+                                        Danh mục sản phẩm
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse collapse show"
+                                     aria-labelledby="panelsStayOpen-headingThree">
+                                    <div class="accordion-body pt-0">
+                                        <div class="product-tags-box">
+                                            <ul>
+                                                @if (sideBarCategory != null && sideBarCategory.Any())
+                                                {
+                                                    @foreach (var item in sideBarCategory)
+                                                    {
+                                                        <li>
+                                                            <a href="/san-pham?c1=@item.id">@item.name</a>
+                                                        </li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive">
+                                    <button style="font-size: 15px !important" class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseFive"
+                                            aria-expanded="false" aria-controls="collapseFive">
+                                        <span>Giá</span>
+                                    </button>
+                                </h2>
+                                @if (priceList != null && priceList.Any())
+                                {
+                                    foreach (var item in priceList)
+                                    {
+                                        <div class="form-check mt-2 collection-filter-checkbox" aria-labelledby="headingFive">
+                                            <input type="checkbox" class="form-check-input input_checkbox_price_search" style="font-size: 16px" id="input_price_@item.id" value="@item.id">
+                                            <label class="form-check-label" for="input_price_@item.id" style="font-size:16px">@item.name</label>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-custome-9">
+                <div class="show-button css_header_drop">
+                    <div class="filter-button-group mt-0">
+                        <div class="filter-button d-inline-block d-lg-none">
+                            <a><i class="fa-solid fa-filter"></i> BỘ LỌC</a>
+                        </div>
+                    </div>
+
+                    <div class="top-filter-menu filter_div_css">
+
+                        <div class="search-count d-none d-md-block px-4" style="max-width: fit-content">
+                            <h5 class="text-filter h5_count_record_product">...</h5>
+                        </div>
+                        <div class="product-page-per-view custom_count d-none">
+                            <select onchange="OnchangeRecord()" id="select_record_search">
+                                <option value="24">
+                                    24 sản phẩm / trang
+                                </option>
+                                <option value="36">
+                                    36 sản phẩm / trang
+                                </option>
+                                <option value="48">
+                                    48 sản phẩm / trang
+                                </option>
+                                <option value="64">
+                                    64 sản phẩm / trang
+                                </option>
+                            </select>
+                        </div>
+                        <div class="product-page-filter">
+                            <select onchange="OnchangeType()" id="select_type_search">
+                                <option value="1">Phổ biến</option>
+                                <option value="2">Bán chạy</option>
+                                <option value="3">Hàng mới</option>
+                                <option value="4">Giá thấp</option>
+                                <option value="5">Giá cao</option>
+                            </select>
+                        </div>
+
+                        <div class="grid-option d-none d-md-block">
+                            <ul>
+                                <li class="three-grid">
+                                    <a href="javascript:void(0)">
+                                        <img src="../assets/svg/grid-3.svg" class="blur-up lazyload" alt="">
+                                    </a>
+                                </li>
+                                <li class="grid-btn d-xxl-inline-block d-none active">
+                                    <a href="javascript:void(0)">
+                                        <img src="../assets/svg/grid-4.svg"
+                                             class="blur-up lazyload d-lg-inline-block d-none" alt="">
+                                        <img src="../assets/svg/grid.svg"
+                                             class="blur-up lazyload img-fluid d-lg-none d-inline-block" alt="">
+                                    </a>
+                                </li>
+                                @*  <li class="list-btn">
+                                <a href="javascript:void(0)">
+                                <img src="../assets/svg/list.svg" class="blur-up lazyload" alt="">
+                                </a>
+                                </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="div_main_data" class="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
+                </div>
+
+                <nav class="custome-pagination">
+                    <ul id="ul_main_pagination" class="pagination justify-content-center">
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+<!-- Footer Section Start -->
+<!-- Footer Section End -->
+<input type="hidden" id="input_category1" value="@ViewBag.category1" />
+<input type="hidden" id="input_category2" value="@ViewBag.category2" />
+<input type="hidden" id="input_type" value="@ViewBag.type" />
+<input type="hidden" id="input_keyword" value="@ViewBag.keyword" />
+<input type="hidden" id="input_size" value="@ViewBag.size" />
+<input type="hidden" id="input_color" value="@ViewBag.color" />
+<input type="hidden" id="input_brand" value="@ViewBag.brand" />
+<input type="hidden" id="input_price" value="@ViewBag.price" />
+<input type="hidden" id="input_record" value="@ViewBag.record" />
+<input type="hidden" id="input_page" value="@ViewBag.page" />
+<input type="hidden" id="input_property_filter_0" value="@ViewBag.propertyFilter0" />
+<input type="hidden" id="input_property_filter_1" value="@ViewBag.propertyFilter1" />
+<input type="hidden" id="input_property_filter_2" value="@ViewBag.propertyFilter2" />
+<input type="hidden" id="input_property_filter_3" value="@ViewBag.propertyFilter3" />
+<!-- Location Modal Start -->
+<div class="modal location-modal fade theme-modal" id="locationModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Choose your Delivery Location</h5>
+                <p class="mt-1 text-content">Enter your address and we will specify the offer for your area.</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="location-list">
+                    <div class="search-input">
+                        <input type="search" class="form-control" placeholder="Search Your Area">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+
+                    <div class="disabled-box">
+                        <h6>Select a Location</h6>
+                    </div>
+
+                    <ul class="location-select custom-height">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h6>Alabama</h6>
+                                <span>Min: $130</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h6>Arizona</h6>
+                                <span>Min: $150</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h6>California</h6>
+                                <span>Min: $110</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h6>Colorado</h6>
+                                <span>Min: $140</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h6>Florida</h6>
+                                <span>Min: $160</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h6>Georgia</h6>
+                                <span>Min: $120</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h6>Kansas</h6>
+                                <span>Min: $170</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h6>Minnesota</h6>
+                                <span>Min: $120</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h6>New York</h6>
+                                <span>Min: $110</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h6>Washington</h6>
+                                <span>Min: $130</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Location Modal End -->
+<!-- Deal Box Modal Start -->
+<div class="modal fade theme-modal deal-modal section_main_page" id="deal-box" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title w-100" id="deal_today">Deal Today</h5>
+                    <p class="mt-1 text-content">Recommended deals for you.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="deal-offer-box">
+                    <ul class="deal-offer-list">
+                        <li class="list-1">
+                            <div class="deal-offer-contain">
+                                <a href="shop-left-sidebar.html" class="deal-image">
+                                    <img src="../assets/images/vegetable/product/10.png" class="blur-up lazyload"
+                                         alt="">
+                                </a>
+
+                                <a href="shop-left-sidebar.html" class="deal-contain">
+                                    <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
+                                    <h6>$52.57 <del>57.62</del> <span>500 G</span></h6>
+                                </a>
+                            </div>
+                        </li>
+
+                        <li class="list-2">
+                            <div class="deal-offer-contain">
+                                <a href="shop-left-sidebar.html" class="deal-image">
+                                    <img src="../assets/images/vegetable/product/11.png" class="blur-up lazyload"
+                                         alt="">
+                                </a>
+
+                                <a href="shop-left-sidebar.html" class="deal-contain">
+                                    <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
+                                    <h6>$52.57 <del>57.62</del> <span>500 G</span></h6>
+                                </a>
+                            </div>
+                        </li>
+
+                        <li class="list-3">
+                            <div class="deal-offer-contain">
+                                <a href="shop-left-sidebar.html" class="deal-image">
+                                    <img src="../assets/images/vegetable/product/12.png" class="blur-up lazyload"
+                                         alt="">
+                                </a>
+
+                                <a href="shop-left-sidebar.html" class="deal-contain">
+                                    <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
+                                    <h6>$52.57 <del>57.62</del> <span>500 G</span></h6>
+                                </a>
+                            </div>
+                        </li>
+
+                        <li class="list-1">
+                            <div class="deal-offer-contain">
+                                <a href="shop-left-sidebar.html" class="deal-image">
+                                    <img src="../assets/images/vegetable/product/13.png" class="blur-up lazyload"
+                                         alt="">
+                                </a>
+
+                                <a href="shop-left-sidebar.html" class="deal-contain">
+                                    <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
+                                    <h6>$52.57 <del>57.62</del> <span>500 G</span></h6>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Deal Box Modal End -->
+<!-- Add to cart Modal Start -->
+<div class="add-cart-box">
+    <div class="add-iamge">
+        <img src="../assets/images/cake/pro/1.jpg" class="img-fluid blur-up lazyload" alt="">
+    </div>
+
+    <div class="add-contain">
+        <h6>Added to Cart</h6>
+    </div>
+</div>
+<!-- Add to cart Modal End -->
+<!-- Category Section Start -->
+<section id="categorySection" class="category-section-3">
+    <div class="container-fluid-lg">
+        @* <div class="title">
+        <h2>Sản phẩm mới nhất </h2>
+        </div>*@
+        <div class="row">
+            <div class="col-12">
+                <div id="div_list_new_product_item" class="category-slider-1 arrow-slider wow fadeInUp">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Category Section End -->
+<!-- Banner Section Start -->
+<section class="banner-section pt-2">
+    <div class="container-fluid-lg">
+        <div class="row">
+            <div class="col-12">
+
+                @if (dataBanner1 != null && dataBanner1.Any())
+                {
+                    @foreach (var item in dataBanner1)
+                    {
+                        <div class="banner-contain-3 section-b-space section-t-space hover-effect overflow-visible">
+                            <img src="@(!string.IsNullOrEmpty(item.imageUrl) ? item.imageUrl : "/img_dev/error/banner.png")" onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';" class="bg-img" alt="">
+                            <div class="banner-detail p-center-left position-relative d-block py-0 banner-furniture mend-auto">
+                                <div class="row">
+                                    <div class="col-xl-6 offset-xxl-2 offset-xl-1 col-md-8 col-sm-9">
+
+                                        <h2 class="mt-sm-3 mt-1 mb-2 text-content">
+                                            <span style="color: @item.titleColor;text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">@item.title</span>
+                                        </h2>
+                                        <p class="text-content" style="height: @item.descShortColor;text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">
+                                            @item.descShort
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }@*
+                else
+                {
+                <div class="banner-contain-3 section-b-space section-t-space hover-effect overflow-visible">
+                <img src="/img_dev/error/banner.png" class="bg-img" alt="">
+                <div class="banner-detail p-center-left position-relative d-block py-0 banner-furniture mend-auto">
+                <div class="row">
+                <div class="col-xl-6 offset-xxl-2 offset-xl-1 col-md-8 col-sm-9">
+                </div>
+                </div>
+                </div>
+                </div>
+                }*@
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Section End -->
+
+<section id="product_ishot">
+    <div class="container-fluid-lg mb-5">
+        <div class="title">
+            <h2>Giảm giá sốc</h2>
+            <span class="title-leaf">
+                <svg class="icon-width">
+                    <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
+                </svg>
+            </span>
+        </div>
+        <div class="product-border border-row">
+            <div class=" no-arrow">
+
+                <div class="row m-0 div_width_product">
+                    <div id="product_hot_slider_div">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

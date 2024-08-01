@@ -1,0 +1,425 @@
+﻿@{
+    var breadCrumb = new VM_BreadCrumb
+            {
+                currentName = "Mua hàng",
+                lv1Name = "Giỏ hàng",
+                lv1Url = "/checkout/cart",
+            };
+    var listProductGift = ViewBag.ListProductGift as List<M_ProductGift>;
+    System.Globalization.CultureInfo cul = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+@section MetaHead{
+    <meta name="robots" content="noindex, nofollow">
+}
+@section Styles{
+    <link href="~/lib/parsleyjs/parsley.css" rel="stylesheet" />
+    <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/lib/microtip-master/microtip.min.css" rel="stylesheet" />
+  @*  <link href="~/lib/bootstrap-select-fix/bootstrap-select.min.css" rel="stylesheet" />*@
+    <link href="~/css/loading_small.css" rel="stylesheet" />
+    <link href="~/css/checkbox_custom_1.css" rel="stylesheet" />
+    <link href="~/css/checkbox_custom_2.css" rel="stylesheet" />
+    <link href="~/lib/pretty-checkbox/pretty-checkbox.min.css" rel="stylesheet" />
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/css/checkout_payment.css" rel="stylesheet" asp-append-version="true" />
+}
+@section Scripts{
+    <script src="~/lib/ladda/spin.min.js"></script>
+    <script src="~/lib/ladda/ladda.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    @* <script src="~/lib/bootstrap-select-fix/bootstrap-select.min.js"></script>*@
+   @*<script src="~/lib/bootstrap-select-fix/i18n/defaults-vi_VN.min.js"></script>*@
+    <script src="~/lib/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="~/js/gmaps.min.js"></script>
+    <script src="~/js/jsmcaopmsmgoonogle.js"></script>
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/i18n/vi.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@ViewData["KeyGoogleMap"]"></script>
+    <script src="~/controllers/checkout_pament.js" asp-append-version="true"></script>
+    <script>
+        const CARRIER_ID = '@ViewBag.CarrierId';
+        const CARRIER_CODE = '@ViewBag.CarrierCode';
+        const CARRIER_TOKEN = '@Html.Raw(ViewBag.CarrierToken)';
+        const SUPPLIER_ADDRESS = JSON.parse('@Html.Raw(ViewBag.SupplierAddressObj)');
+    </script>
+}
+<partial name="_P_Breadcrumb" model="breadCrumb" />
+<section class="checkout-section-2 section_place_order section-b-space">
+    <div class="container-fluid-lg">
+
+        <input type="hidden" id="input_list_cart_item_selected" value="@ViewBag.CartItemSelected" />
+        <input type="hidden" id="input_default_address" value="@ViewBag.DefaultAddress" />
+        @*<input type="hidden" id="input_default_carrierId" value="@ViewBag.SupplierCarrierId" />*@
+        
+
+        <input type="hidden" id="addressDeliveryName" value="" />
+        <input type="hidden" id="addressDeliveryPhoneNumber" value="" />
+        <input type="hidden" id="addressDeliveryLocation" value="" />
+        <input type="hidden" id="addressDeliveryAddressText" value="" />
+        <input type="hidden" id="addressDeliveryProvinceId" value="0" />
+        <input type="hidden" id="addressDeliveryDistrictId" value="0" />
+        <input type="hidden" id="addressDeliveryWardId" value="0" />
+        <input type="hidden" id="addressDeliveryProvinceName" value="" />
+        <input type="hidden" id="addressDeliveryDistrictName" value="" />
+        <input type="hidden" id="addressDeliveryWardName" value="" />
+
+
+        <input type="hidden" id="input_address_delivery_name" value="" />
+        <input type="hidden" id="input_address_delivery_location" value="" />
+        <input type="hidden" id="input_address_delivery_phonenumber" value="" />
+        <input type="hidden" id="input_addressie_latitude" value="" />
+        <input type="hidden" id="input_addressie_longitude" value="" />
+        <input type="hidden" id="input_addressie_address_text" value="" />
+        <input type="hidden" id="input_addressie_country_id" value="" />
+        <input type="hidden" id="input_addressie_province_id" value="" />
+        <input type="hidden" id="input_addressie_district_id" value="" />
+        <input type="hidden" id="input_addressie_ward_id" value="" />
+        <input type="hidden" id="input_addressie_province_name" value="" />
+        <input type="hidden" id="input_addressie_district_name" value="" />
+        <input type="hidden" id="input_addressie_ward_name" value="" />
+        <input type="hidden" id="input_feeship_calculate" value="" />
+        <input type="hidden" id="input_total_price_checkout" />
+        <div class="row g-sm-4 g-3">
+            <div class="col-lg-8">
+                <div class="left-sidebar-checkout">
+                    <div class="checkout-detail-box">
+                        <ul>
+                            <li>
+                                <div class="checkout-box mx-auto">
+                                    <div class="checkout-title">
+                                        <h4 style="color: #ce8503;"><i class="fa-solid fa-map-location"></i> Chọn địa chỉ giao hàng</h4>
+                                        <a href="javascript:void(0)" onclick="ShowAddAddressModal(this);" class="float-right color-default" aria-label="Thêm mới địa chỉ nhận hàng"
+                                           data-microtip-position="left" data-microtip-align="center"
+                                           data-microtip-size="small" role="tooltip"> <i class="fa fa-pencil text-success mx-1"></i>Thêm mới</a>
+                                    </div>
+                                    <div class="checkout-detail">
+                                        <div class="row g-4" id="div_list_address">
+                                            
+                                            <div id="div_no_address" style="display: none;">
+                                                Vui lòng tạo địa chỉ mới!!
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="checkout-box mx-auto">
+                                    <div class="checkout-title">
+                                        <h4 style="color: #ce8503;"><i class="fa-solid fa-truck"></i>Phương thức vận chuyển</h4>
+                                    </div>
+
+                                    <div class="checkout-detail">
+                                       
+                                        <div class="row g-4" id="div_shipping_fee_list">
+                                            
+
+
+                                       @*     <div class="col-12 future-box">
+                                                <div class="future-option">
+                                                    <div class="row g-md-0 gy-4">
+                                                        <div class="col-md-6">
+                                                            <div class="delivery-items">
+                                                                <div>
+                                                                    <h5 class="items text-content">
+                                                                        <span>
+                                                                            3
+                                                                            Items
+                                                                        </span>
+                                                                        $693.48
+                                                                    </h5>
+                                                                    <h5 class="charge text-content">
+                                                                        Delivery Charge
+                                                                        $34.67
+                                                                        <button type="button" class="btn p-0"
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-placement="top"
+                                                                                title="Extra Charge">
+                                                                            <i class="fa-solid fa-circle-exclamation"></i>
+                                                                        </button>
+                                                                    </h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <form class="form-floating theme-form-floating date-box">
+                                                                <input type="date" class="form-control">
+                                                                <label>Select Date</label>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="checkout-box mx-auto">
+                                    <div class="checkout-title">
+
+                                        <h4 style="color: #ce8503;"><i class="fa-solid fa-money-bill"></i> Phương thức thanh toán</h4>
+                                    </div>
+
+                                    <div class="checkout-detail row">
+                                        <div class="col-6 accordion accordion-flush custom-accordion"
+                                             id="accordionFlushExample">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <div class="pretty p-svg p-tada p-round">
+                                                        <input type="radio" name="input_payment_group" id="input_payment_group_1" value="1" checked />
+                                                        <div class="state p-danger">
+                                                            <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                                                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                                            </svg>
+                                                            <label></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div><label for="input_payment_group_1">Thanh toán khi nhận hàng</label></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 accordion accordion-flush custom-accordion"
+                                             id="accordionFlushExample">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <div class="pretty p-svg p-tada p-round">
+                                                        <input type="radio" name="input_payment_group" id="input_payment_group_2" value="2" />
+                                                        <div class="state p-danger">
+                                                            <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                                                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                                            </svg>
+                                                            <label></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div><label for="input_payment_group_2">Chuyển khoản qua ngân hàng</label></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="checkout-box mx-auto li_product_gift_wrapper">
+                                    <div class="checkout-title">
+
+                                        <h4 style="color: #ce8503;"><i class="fa-solid fa-gift flashit_animation"></i> Quà tặng</h4>
+                                    </div>
+                                    <div @*id="div_product_gift_wrapper"*@>
+                                        <div class="row px-0" id="div_product_gift">
+                                        </div>
+                                    </div>
+                                   
+                                   
+                                </div>
+                            </li>
+                           @* <li class="pt-2 mx-auto li_product_gift_wrapper" style="max-width: 90%">
+
+                                <p class="mb-1">
+                                    <i class="fa-solid fa-gift flashit_animation" style="color: #f24e07;"></i>
+                                    <span class="fs-5 fw-bolder" style="color: #ce8503">Quà tặng kèm</span>
+                                </p>
+                                <div id="div_product_gift_wrapper" class="card mb-3" style="overflow-y: auto;max-height: 300px;">
+                                    <div class="card-body py-0">
+
+                                        <div class="row px-0" id="div_product_gift">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>*@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="right-side-summery-box">
+                   @* <div class="summery-box-2">
+
+                        <div class="summery-contain">
+                            <p class="mb-1"><i class="ti-bolt text-danger fw-bolder"></i><span class="fs-6 text-success fw-bolder">Sản phẩm đã chọn</span></p>
+                            <div class="card mb-3 div_product_gift" style="max-height: 300px;overflow-y: auto">
+
+                                <div class="card-body">
+                                 
+
+
+                                    <table class="table mb-0 align-middle">
+                                        <tbody id="div_zone_cart">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="summery-box-2">
+                        <div class="summery-contain">
+                            <p class="mb-1"><i class="ti-bolt text-danger fw-bolder"></i><span class="fs-6 text-success fw-bolder">Sản phẩm đã chọn</span></p>
+                            <div class="card mb-3 div_product_gift" style="max-height: 300px;overflow-y: auto">
+
+                                <div class="card-body">
+
+
+
+                                    <table class="table mb-0 align-middle">
+                                        <tbody id="div_zone_cart">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="summery-contain" id="div_product_gift_you_can_get">
+                            @* <li>
+                            <div class="product-thumbnail">
+                            <div class="product-thumbnail__wrapper" data-tg-static="">
+                            <img src="//bizweb.dktcdn.net/thumb/thumb/100/322/163/products/copy82a285b911f2434997280095c6.jpg?v=1532676164417" alt="" class="product-thumbnail__image">
+
+                            </div>
+                            <span class="product-thumbnail__quantity">1</span>
+
+                            </div>
+                            <div class="mx-3"
+                            <h4>Bell pepper</h4>
+                            <p>Cần đạt mốc 2.000.000đ</p>
+                            <p>Chỉ cần thêm 810.000đ !!</p>
+                            </div>
+
+                            <h4 class="price">$32.34</h4>
+                            </li>*@
+
+
+                        </ul>
+                        <ul class="summery-contain" @*id="div_product_gift"*@>
+
+                        </ul>
+                        <div class="form-group mb-2">
+                            <textarea style="border-radius: 4px;" class="form-control input-custom px-2" type="text" id="input_remark" rows="3" max-lenght="150" placeholder="Nhập ghi chú giao hàng (nếu có)" maxlength="250"></textarea>
+                        </div>
+                        <ul class="summery-total">
+                            <li class="border-bottom color-default"><span style="font-size:20px;font-weight:500;color: #ce8503"><i class="fa fa-money mx-2"></i>Thanh toán</span></li>
+                            <li>
+                                <h4 style="padding-top: 0.75em;color: #9b7575;">Tạm tính (<b style="font-weight:normal;" id="b_count_cart_item">0</b> sản phẩm)</h4>
+                                <h4 class="price" id="span_total_price_all_item">$8.90</h4>
+                            </li>
+
+                            <li>
+                                <h4 style="padding-top: 0.75em;color: #9b7575;">Phí vận chuyển</h4>
+                               @* <h4 class="price" id="span_transport_fee">(chưa tính)</h4>*@
+                                <h4 class="price" id="span_transport_fee">(chưa tính)</h4>
+                            </li>
+
+                            <li class="list-total">
+                                <h4 style="font-size: 1.2em" class="d-grid text-danger">
+                                    Tổng cộng
+                                    <span> <i sty class="small text-danger">(Đã bao gồm VAT nếu có)</i></span>
+                                </h4>
+                                <h4 class="price text-danger" @*style="color: #2a9dcc;"*@ id="span_total_price_payment">0đ</h4>
+
+                            </li>
+                          @*  <li style="float: right" class="text-right"><i class="small text-muted">(Đã bao gồm VAT nếu có)</i></li>*@
+
+                        </ul>
+                    </div>
+
+                    @*<div class="checkout-offer">
+                    <div class="offer-title">
+                    <div class="offer-icon">
+                    <img src="../assets/images/inner-page/offer.svg" class="img-fluid" alt="">
+                    </div>
+                    <div class="offer-name">
+                    <h6>Available Offers</h6>
+                    </div>
+                    </div>
+                    <ul class="offer-detail">
+                    <li>
+                    <p>Combo: BB Royal Almond/Badam Californian, Extra Bold 100 gm...</p>
+                    </li>
+                    <li>
+                    <p>combo: Royal Cashew Californian, Extra Bold 100 gm + BB Royal Honey 500 gm</p>
+                    </li>
+                    </ul>
+                    </div>*@
+
+                    <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold ladda-button" id="btn_place_order">Đặt hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- Modal address add start -->
+<div class="modal fade" id="modal_add_address" tabindex="-1" aria-labelledby="modal_add_address" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document" style="padding:50px 0;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <b class="text-uppercase">Thêm địa chỉ nhận hàng</b>
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:1.5rem;font-weight:700;line-height:1;"
+                        aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body register-page pt-0" id="div_body_modal_add_address" style="padding-bottom: 50px !important;">
+            </div>
+        </div>
+    </div>
+</div>
+@*<partial name="P_OrderSucces"/>*@
+<!-- Modal address add end -->
+
+<partial name="P_OrderSuccess"/>
+<div class="modal fade" id="modal_bank_list" tabindex="-1" role="dialog" aria-labelledby="modal_bank_list" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document" style="padding:50px 0;">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                <h4 class="modal-title">
+                    <b class="text-uppercase"></b>
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:1.5rem;font-weight:700;line-height:1;"
+                        aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body register-page pt-0 pb-0" id="div_body_modal_bank_list">
+                @*<h5 class="font-weight-bold text-center text-success text-uppercase"><i class="fa fa-credit-card h4"></i> Thông tin thanh toán</h5>
+                <p class="text-center mb-0">
+                <b>Số tiền: </b>100.000đ
+                </p>
+                <p class="text-center">
+                <b>Nội dung chuyển khoản: </b><span>0123456798111111</span>
+                <button type="button" class="btn btn-sm p-0" onclick="CopyText('012345679811111')" title="Sao chép">
+                <i class="fa fa-clone color-default"></i>
+                </button>
+                </p>
+                <div class="row justify-content-center">
+                <div class="col-12 col-md-6 col-lg-6 mb-2">
+                <ul class="list-group text-left">
+                <li class="list-group-item">
+                <i class="fa fa-id-card-o mr-1"></i> <span>
+                Số tài khoản:
+                </span>117002868043
+                <button type="button" class="btn btn-sm p-0" onclick="CopyText('012345679811111')" title="Sap chép">
+                <i class="fa fa-clone color-default"></i>
+                </button>
+                </li>
+                <li class="list-group-item"><i class="fa fa-user mr-1"></i> <span>Tên người nhận: </span>CTCP GIAI PHAP CONG NGHE H2A VIET NAM</li>
+                <li class="list-group-item"><i class="fa fa-bank mr-1"></i> <span>Ngân hàng: </span>Ngân hàng TMCP Công Thương Việt Nam - VietinBank</li>
+                <li class="list-group-item"><i class="fa fa-badiv_bank_info_panelnk mr-1"></i> <span>Ngân hàng: </span>Ngân hàng TMCP Công Thương Việt Nam - VietinBank</li>
+                </ul>
+                </div>
+                </div>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-solid" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

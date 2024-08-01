@@ -1,0 +1,29 @@
+
+.parsley-errors-list {
+    margin: 0;
+    padding: 0;
+}
+
+    .parsley-errors-list > li {
+        list-style: none;
+        color: #f1556c;
+        margin-top: 5px;
+        padding-left: 20px;
+        position: relative;
+    }
+
+        .parsley-errors-list > li:before {
+            content: "\e717";
+            font-family: themify;
+            position: absolute;
+            left: 2px;
+            top: -1px;
+        }
+
+.parsley-error {
+    border-color: #f1556c;
+}
+
+.parsley-success {
+    border-color: #1abc9c;
+}

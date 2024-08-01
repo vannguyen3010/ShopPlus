@@ -1,0 +1,28 @@
+﻿@using ThreeF_WebPortal.Lib;
+
+@{
+    var supplierInfo = ViewBag.SupplierInfo as M_Supplier;
+}
+
+
+@if (supplierInfo?.supplierServiceObj?.serviceObj?.serviceCode == CommonConstants.CODE_SERVICE_MINISHOP_PLUS || supplierInfo?.supplierServiceObj?.serviceObj?.serviceCode == CommonConstants.CODE_SERVICE_MINISHOP_PLUS_TRIAL)
+{
+    <section id="div_show_new_lated">
+        <div class="container-fluid-lg">
+            <div class="title">
+                <h2>TIN TỨC NỔI BẬT</h2>
+                <span class="title-leaf">
+                    <svg class="icon-width">
+                        <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
+                    </svg>
+                </span>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div id="div_latest_news" class="no-arrow product-wrapper">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

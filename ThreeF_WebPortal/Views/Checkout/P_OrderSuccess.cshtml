@@ -1,0 +1,359 @@
+﻿@section Styles{
+    <link href="~/css/checkout_payment.css" rel="stylesheet" asp-append-version="true" />
+}
+
+<div class="div_section_body section_order_success" style="margin: 20px auto;display:none">
+    <table align="center" border="0" cellpadding="0" cellspacing="0"
+           style="background-color: #fff; box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.2705882353);-webkit-box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.2705882353);">
+        <tbody>
+            <tr>
+                <td>
+
+                    <div class="breadscrumb-section pt-0">
+                        <div class="container-fluid-lg">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="breadscrumb-contain breadscrumb-order">
+                                        <div class="order-box">
+                                            <div class="order-image">
+                                                <div class="checkmark">
+                                                    <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                                                        </path>
+                                                    </svg>
+                                                    <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                                                        </path>
+                                                    </svg>
+                                                    <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                                                        </path>
+                                                    </svg>
+                                                    <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                                                        </path>
+                                                    </svg>
+                                                    <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                                                        </path>
+                                                    </svg>
+                                                    <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                                                        </path>
+                                                    </svg>
+                                                    <svg class="checkmark__check" height="36" viewBox="0 0 48 36" width="48"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M47.248 3.9L43.906.667a2.428 2.428 0 0 0-3.344 0l-23.63 23.09-9.554-9.338a2.432 2.432 0 0 0-3.345 0L.692 17.654a2.236 2.236 0 0 0 .002 3.233l14.567 14.175c.926.894 2.42.894 3.342.01L47.248 7.128c.922-.89.922-2.34 0-3.23">
+                                                        </path>
+                                                    </svg>
+                                                    <svg class="checkmark__background" height="115" viewBox="0 0 120 115" width="120"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M107.332 72.938c-1.798 5.557 4.564 15.334 1.21 19.96-3.387 4.674-14.646 1.605-19.298 5.003-4.61 3.368-5.163 15.074-10.695 16.878-5.344 1.743-12.628-7.35-18.545-7.35-5.922 0-13.206 9.088-18.543 7.345-5.538-1.804-6.09-13.515-10.696-16.877-4.657-3.398-15.91-.334-19.297-5.002-3.356-4.627 3.006-14.404 1.208-19.962C10.93 67.576 0 63.442 0 57.5c0-5.943 10.93-10.076 12.668-15.438 1.798-5.557-4.564-15.334-1.21-19.96 3.387-4.674 14.646-1.605 19.298-5.003C35.366 13.73 35.92 2.025 41.45.22c5.344-1.743 12.628 7.35 18.545 7.35 5.922 0 13.206-9.088 18.543-7.345 5.538 1.804 6.09 13.515 10.696 16.877 4.657 3.398 15.91.334 19.297 5.002 3.356 4.627-3.006 14.404-1.208 19.962C109.07 47.424 120 51.562 120 57.5c0 5.943-10.93 10.076-12.668 15.438z">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+
+                                            <div class="order-contain">
+                                                <h2 class="theme-color">CẢM ƠN BẠN ĐÃ MUA HÀNG</h2>
+                                                <p>Đơn hàng của bạn đã được chuyển đến SHOP xử lý.</p>
+                                                <span>
+                                                    Để biết thêm chi tiết về trạng thái đơn hàng, vui lòng vào
+                                                    <a href="/account/profile" class="font-weight-bold" style="color:#198754 !important;text-decoration: underline;"> Thông tin cá nhân » Đơn hàng</a>
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div id="div_list_order_item">*@
+                    <table class="container shipping-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%"
+                           style="padding: 0 27px;">
+
+                        <tbody @*class="container"*@>
+                            <tr @*class="row" *@id="div_list_order_item" style="column-count: 2;column-rule-style: dashed;column-rule-color: rgba(82, 82, 108, 0.7);column-gap: 22px;column-rule-width: 1px;display: flex;align-items: center;border-bottom: 1px solid #000">
+                                @*<td style="width: 100%;">
+                                <table class="product-table" align="center" border="0" cellpadding="0"
+                                cellspacing="0" width="100%">
+                                <tbody >
+                                <tr>
+                                <td style="padding: 28px 0;border-bottom: 1px solid rgba(217, 217, 217, 0.5);">
+                                <img src="/assets/images/cake/product/10.png" alt="">
+                                </td>
+                                <td style="padding: 28px 0;border-bottom: 1px solid rgba(217, 217, 217, 0.5);">
+                                <ul class="product-detail">
+                                <li>Green Capsicum#1</li>
+                                <li>Số lượng: <span>01</span></li>
+                                <li>Giá: <span>$35.15</span></li>
+                                </ul>
+                                </td>
+                                </tr>
+
+
+                                </tbody>
+                                </table>
+                                </td>
+
+                                <td style="width: 70%;">
+                                <table class="dilivery-table" align="center" border="0" cellpadding="0"
+                                style="background-color: #F7F7F7;padding: 14px;border-collapse: separate;" cellspacing="0" width="100%">
+                                <tbody>
+                                <tr>
+                                <td style="font-weight: 700;font-size: 17px;padding-bottom: 15px;border-bottom: 1px solid rgba(217, 217, 217, 0.5);"
+                                colspan="2">
+                                Thanh toán
+                                </td>
+                                </tr>
+                                <tr>
+                                <td style="text-align: left;font-size: 15px;font-weight: 400;padding: 15px 0;border-bottom: 1px solid rgba(217, 217, 217, 0.5);">
+                                Tạm tính
+                                </td>
+                                <td style="text-align: right;font-size: 15px;font-weight: 400;padding: 15px 0;border-bottom: 1px solid rgba(217, 217, 217, 0.5);">
+                                $90,00
+                                </td>
+                                </tr>
+                                <tr>
+                                <td style="text-align: left;font-size: 15px;font-weight: 400;padding: 15px 0;border-bottom: 1px solid rgba(217, 217, 217, 0.5);">
+                                Phí vận chuyển
+                                </td>
+                                <td style="text-align: right;font-size: 15px;font-weight: 400;padding: 15px 0;border-bottom: 1px solid rgba(217, 217, 217, 0.5);">
+                                -$20,00
+                                </td>
+                                </tr>
+                                <tr>
+                                <td style="text-align: left;font-size: 15px;font-weight: 600;padding-top: 15px;">
+                                Thành tiền
+                                </td>
+                                <td style="text-align: right;font-size: 15px;font-weight: 600;padding-top: 15px;">
+                                $70,00
+                                </td>
+                                </tr>
+                                </tbody>
+                                </table>
+                                </td>*@
+
+                            </tr>
+
+                            @*  <div id="div_list_order_product_gift">
+                            </div>*@
+                        </tbody>
+
+
+                    </table>
+
+                    @*  </div>*@
+
+                  
+                </td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr id="div_list_order_product_gift">
+                <th style="
+                      font-size: 17px;
+                      font-weight: 700;
+                      padding-bottom: 8px;
+                      border-bottom: 1px solid rgba(217, 217, 217, 0.5);
+                    ">
+                    <p style="border-top: 1px solid red;" class="mb-1"><i class="fa-solid fa-gift flashit_animation" style="color: #f24e07;"></i><span class="fs-6 text-success fw-bolder mx-2 pt-2">Quà tặng</span></p>
+                    
+                </th>
+            </tr>
+            <tr @*id="div_list_order_product_gift"*@ style="
+                    column-count: 2;
+                    column-rule-style: dashed;
+                    column-rule-color: rgba(82, 82, 108, 0.7);
+                    column-gap: 22px;
+                    column-rule-width: 1px;
+                    display: flex;
+                    align-items: center;
+                  ">
+              
+            </tr>
+        </tbody>
+        <tbody>
+            <tr style="display: block">
+                <th class="row mx-auto">
+                    <div class="position-relative col-12 col-md-7 mt-4" id="div_bank_info_panel">
+                    </div>
+                    <div class="col-12 col-md-5 text-center" id="div_bank_qr_code">
+                     
+                    </div>
+                </th>
+                <th class="text-center pt-4" style="display: block">
+                    <a href="/san-pham" class="btn btn-sucess div_btn_aniation">
+                        Tiếp tục mua sắm
+                    </a>
+                </th>
+            </tr>
+        </tbody>
+      
+    </table>
+   
+</div>
+
+
+<style>
+    .div_btn_aniation {
+        background: #209e00;
+        color: #fff;
+        border: none;
+        position: relative;
+        height: 60px;
+        font-size: 1.6em;
+        padding: 0 2em;
+        cursor: pointer;
+        transition: 800ms ease all;
+        outline: none;
+    }
+
+        .div_btn_aniation:hover {
+            background: #fff;
+            color: #1AAB8A;
+        }
+
+        .div_btn_aniation:before, .div_btn_aniation:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 2px;
+            width: 0;
+            background: #1AAB8A;
+            transition: 400ms ease all;
+        }
+
+        .div_btn_aniation:after {
+            right: inherit;
+            top: inherit;
+            left: 0;
+            bottom: 0;
+        }
+
+        .div_btn_aniation:hover:before, .div_btn_aniation:hover:after {
+            width: 100%;
+            transition: 800ms ease all;
+        }
+
+    .div_section_body {
+        text-align: center;
+        margin: 0 auto;
+        font-family: 'Public Sans', sans-serif;
+        background-color: #e2e2e2;
+        display: block;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+        text-decoration: unset;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    h5 {
+        margin: 10px;
+        color: #777;
+    }
+
+    .text-center {
+        text-align: center
+    }
+
+    .main-bg-light {
+        background-color: #fafafa;
+    }
+
+    .header-menu ul li a {
+        font-size: 14px;
+        color: #252525;
+        font-weight: 500;
+    }
+
+    .product-table tbody tr td img {
+        /* width: 86%; */
+        margin-right: 26px;
+    }
+
+    .product-table tbody tr td .product-detail {
+        text-align: left;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+    }
+
+        .product-table tbody tr td .product-detail li {
+            display: block;
+            width: 100%;
+            font-size: 15px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+            .product-table tbody tr td .product-detail li span {
+                color: #939393;
+            }
+
+    .order-table {
+        background-image: url(images/order-poster.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 5px;
+        overflow: hidden;
+        padding: 18px 27px;
+        margin-top: 40px;
+    }
+
+    .footer-table {
+        position: relative;
+        margin-top: 34px;
+    }
+
+        .footer-table::before {
+            position: absolute;
+            content: "";
+            background-image: url(images/footer-left.svg);
+            background-position: top right;
+            top: 0;
+            left: -71%;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            z-index: -1;
+            background-size: contain;
+            opacity: 0.3;
+        }
+
+        .footer-table::after {
+            position: absolute;
+            content: "";
+            background-image: url(images/footer-right.svg);
+            background-position: top right;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            z-index: -1;
+            background-size: contain;
+            opacity: 0.3;
+        }
+
+</style>
+
+

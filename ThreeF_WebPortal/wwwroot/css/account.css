@@ -1,0 +1,52 @@
+﻿span.fa.fa-eye-slash {
+    right: 30px;
+    top: 20px;
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+}
+span.fa.fa-eye {
+    right: 30px;
+    top: 20px;
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+}
+span.fa.fa-eye-slash.field-icon {
+    right: 30px;
+    top: 20px;
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+}
+span.fa.fa-eye.field-icon {
+    right: 30px;
+    top: 20px;
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.css_text_sigin {
+    font-size: 26px !important;
+    font-weight: 400;
+    text-transform: none;
+    text-align: center;
+    color: #4d4d4d;
+}
+.css_text_register {
+    color: #4d4d4d;
+    transition: none;
+    font-weight: 400;
+    font-size: 26px !important;
+    text-align: center;
+}
+.div_css_veritify{
+    height: 50px;
+}
+.text_forgot_css {
+    text-align: center;
+    font-size: 26px !important;
+    font-weight: 400;
+    color: #4d4d4d;
+}

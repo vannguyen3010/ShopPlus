@@ -1,0 +1,585 @@
+﻿@model EM_Order
+
+@{
+    var breadCrumb = new ThreeF_WebPortal.ViewModels.VM_BreadCrumb
+            {
+                currentName = "Mua hàng",
+                lv1Name = "Giỏ hàng",
+                lv1Url = "/checkoutwithoutlogin/cart",
+            };
+    var listProductGift = ViewBag.ListProductGift as List<M_ProductGift>;
+    System.Globalization.CultureInfo cul = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+@section MetaHead{
+    <meta name="robots" content="noindex, nofollow">
+}
+@section Styles{
+    <link href="~/lib/parsleyjs/parsley.css" rel="stylesheet" />
+    <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/lib/microtip-master/microtip.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-select-fix/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/css/loading_small.css" rel="stylesheet" />
+    <link href="~/css/checkbox_custom_1.css" rel="stylesheet" />
+    <link href="~/css/checkbox_custom_2.css" rel="stylesheet" />
+    <link href="~/lib/pretty-checkbox/pretty-checkbox.min.css" rel="stylesheet" />
+    <link href="~/css/payment_without_account.css" asp-append-version="true" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="~/assets/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/assets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/ladda/spin.min.js"></script>
+    <script src="~/lib/ladda/ladda.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    @*<script src="~/lib/bootstrap-select-fix/bootstrap-select.min.js"></script>*@
+    @*<script src="~/lib/bootstrap-select-fix/i18n/defaults-vi_VN.min.js"></script>*@
+    <script src="~/lib/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="~/js/gmaps.min.js"></script>
+    <script src="~/js/jsMcAoPmSmGoOnOGLE.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@ViewData["KeyGoogleMap"]"></script>
+    <script src="~/controllers/checkout_payment_without_login.js" asp-append-version="true"></script>
+}
+@*@section LoaderBody{
+        @await Html.PartialAsync("P_Loader")
+    }*@
+<!-- breadcrumb start -->
+@await Html.PartialAsync("_P_BreadCrumb", breadCrumb)
+<!-- breadcrumb end -->
+<!-- content section start -->
+<section class="section-b-space section_place_order bg-light">
+    <div class="container">
+        <div class="checkout-page">
+            <div class="checkout-form">
+                <input type="hidden" id="input_feeship_calculate" value="" />
+                <div class="row">
+                    <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12 col-xs-12 px-0 px-md-1">
+
+                        <div class="card mb-3">
+                            <div class="card-body py-0">
+
+                                <div class="row px-0" id="div_zone_cart" style="max-height: 300px;overflow-y: auto;">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <form class="card" id="form_data_add_address">
+                            <div class="card-body">
+                                <div class="border-bottom color-default">
+                                    <span style="font-size:16px;font-weight:700;"><i class="fa fa-id-card-o fa-lg section__title--icon hide-on-desktop mx-2"></i>Thông tin nhận hàng</span>
+
+                                </div>
+                                <div class="row mt-2 div_form_info_receiver_payment">
+                                    <div class="col-12 col-xl-6">
+                                        <div class="col-12 mt-3">
+                                            <div class="form-floating theme-form-floating log-in-form">
+                                                <input id="input_address_delivery_name" type="text" class="form-control" placeholder="Họ và tên">
+                                                <label style="color: #357ebd">Họ và tên<small class="text-danger fw-bolder">*</small></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <div class="form-floating theme-form-floating log-in-form">
+                                                <input onkeypress="return IsNumberKey(event)" id="input_address_delivery_phonenumber" type="text" name="receiverPhoneNumber" class="form-control" placeholder="Số điện thoại" >
+                                                <label style="color: #357ebd">Số điện thoại <small class="text-danger fw-bolder">*</small></label>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-1" id="div_select_province">
+                                            <div class="field-label fw-normal" style="color: #357ebd;">Tỉnh/Thành<small class="text-danger fw-bolder">*</small></div>
+                                            <select class="form-control" id="select_province" onchange="GetListDistricts(this)" >
+                                                <option value="">--chọn--</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 mt-1" id="div_select_district">
+                                            <div class="field-label fw-normal" style="color: #357ebd;">Quận/Huyện <small class="text-danger fw-bolder">*</small></div>
+                                            <select class="form-control" id="select_district" onchange="GetListWards(this)">
+                                                <option>--chọn--</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-12 mt-1" id="div_select_ward">
+                                            <div class="field-label fw-normal" style="color: #357ebd;">Phường/Xã </div>
+                                            <select class="form-control" id="select_ward">
+                                                <option>--chọn--</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="col-12 mt-1">
+                                            <div class="field-label fw-normal" style="color: #357ebd;">Địa chỉ</div>
+                                            <input type="text" asp-for="addressIeText" class="form-control" id="input_addressie_address_text" value="" placeholder="Vui lòng nhập địa chỉ cụ thể" >
+                                            
+                                        </div>
+                                        <div class="form-group col-md-12 col-sm-12 col-xs-12 mb-3 mb-md-0">
+                                            <div class="field-label fw-normal" style="color: #357ebd;">Ghi chú giao hàng (nếu có)</div>
+                                            <textarea class="form-control input-custom px-2" type="text" id="input_remark" rows="7" placeholder="Nhập ghi chú giao hàng (nếu có)" maxlength="250"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-6">
+                                        <div class="checkout-box mx-2 mt-2">
+                                            <div class="checkout-title">
+                                                <h4 class="fw-bold"><i class="fa-solid fa-truck mx-2" style="color: #357ebd;"></i> Vận chuyển</h4>
+                                            </div>
+
+                                            <div class="checkout-detail mt-2">
+                                                <div class="row" id="div_shipping_fee_list">
+                                                    @* <div class="col-xxl-12 div_fee_ship_css_payment">
+                                                    <div class="delivery-option div_css_delivery_payment d-flex">
+                                                    <div class="delivery-category">
+                                                    <div class="shipment-detail">
+                                                    <div class="form-check custom-form-check hide-check-box">
+                                                    <input class="form-check-input" type="radio"
+                                                    name="standard" id="standard" checked>
+                                                    <label class="form-check-label"
+                                                    for="standard">
+                                                    Standard
+                                                    Delivery Option
+                                                    </label>
+                                                    </div>
+
+                                                    </div>
+                                                    </div>
+                                                    <span>40.000</span>
+                                                    </div>
+                                                    </div>*@
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="checkout-box mt-4 mx-2">
+                                            <div class="checkout-title">
+                                                <h4 class="fw-bold"><i class="fa-solid fa-circle-dollar-to-slot mx-2" style="color: #357ebd;font-size: 27px;"></i> Phương thức thanh toán</h4>
+                                            </div>
+
+                                            <div class="checkout-detail">
+                                                <div class="row g-4" id="">
+                                                    <div class="col-xxl-12 div_fee_ship_css_payment">
+                                                        <div class="delivery-option div_css_delivery_payment d-flex">
+                                                            <div class="delivery-category">
+                                                                <div class="shipment-detail">
+                                                                    <div class="form-check custom-form-check hide-check-box">
+                                                                        <input class="form-check-input" type="radio"
+                                                                               name="input_payment_group" id="input_payment_group_1" value="1" checked>
+                                                                        <label class="form-check-label"
+                                                                               for="input_payment_group_1">
+                                                                            Thanh toán khi nhận hàng
+                                                                        </label>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <span>
+                                                                <i class="fa-solid fa-money-bill mx-2" style="color: #22c393;font-size: 25px;"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12 div_fee_ship_css_payment">
+                                                        <div class="delivery-option div_css_delivery_payment d-flex">
+                                                            <div class="delivery-category">
+                                                                <div class="shipment-detail">
+                                                                    <div class="form-check custom-form-check hide-check-box">
+                                                                        <input class="form-check-input" type="radio" name="input_payment_group" id="input_payment_group_2" value="2">
+                                                                        <label class="form-check-label"
+                                                                               for="input_payment_group_2">
+                                                                            Chuyển khoản qua ngân hàng
+                                                                        </label>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <span>
+                                                                <i class="fa-solid fa-money-bill mx-2" style="color: #22c393;font-size: 25px;"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        @* <div class="card mt-3">
+                        <div class="card-body">
+                        <div class="border-bottom color-default"><span style="font-size:16px;font-weight:500;"><i class="ti-truck mr-1"></i>Phương thức vận chuyển</span></div>
+                        <div class="row" id="div_shipping_fee_list">
+                        </div>
+                        </div>
+                        </div>*@
+
+                       @* <div class="card mt-3 mb-3">
+                            <div class="card-body">
+
+                                <div class="border-bottom color-default"><span style="font-size:16px;font-weight:500;"><i class="ti-credit-card mr-1"></i>Phương thức thanh toán</span></div>
+                                <div class="payment-box">
+                                <div class="upper-box">
+                                <div class="payment-options pl-2 pr-2 m-0">
+                                <ul>
+                                <li class="mb-0">
+                                <div class="d-flex">
+                                <div>
+                                <div class="pretty p-svg p-tada p-round">
+                                <input type="radio" name="input_payment_group" id="input_payment_group_1" checked value="1" />
+                                <div class="state p-danger">
+                                <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                </svg>
+                                <label></label>
+                                </div>
+                                </div>
+                                </div>
+                                <div><label for="input_payment_group_1">Thanh toán tiền mặt khi nhận hàng</label></div>
+                                </div>
+                                </li>
+                                <li class="mb-0">
+                                <div class="d-flex">
+                                <div>
+                                <div class="pretty p-svg p-tada p-round">
+                                <input type="radio" name="input_payment_group" id="input_payment_group_2" value="2" />
+                                <div class="state p-danger">
+                                <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                </svg>
+                                <label></label>
+                                </div>
+                                </div>
+                                </div>
+                                <div><label for="input_payment_group_2">Chuyển khoản qua ngân hàng</label></div>
+                                </div>
+                                </li>
+
+                                </ul>
+                                </div>
+                                </div>
+                                </div>
+
+                            </div>
+                        </div>*@
+
+                    </div>
+
+                    <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12 col-xs-12 px-0 px-md-1">
+
+                        <!--Product Gift-->
+                        <div id="div_product_gift">
+                        </div>
+
+                        @*        <div class="card-body">
+                        <p class="mb-1"><i class="ti-bolt text-danger fw-bolder"></i><span class="fs-6 text-success fw-bolder">Quà tặng</span></p>
+                        <small class="p-2 text-danger">Herbs gửi tặng quý khách một phần quà</small>
+
+                        <table class="table mb-0 align-middle">
+                        <tbody id="div_list_product_gift">
+
+                        <tr>
+                        <th scope="row"><a class="custom_img_product_gift"><img src="@(!string.IsNullOrEmpty(item.productObj?.imageObj?.smallUrl) ? item.productObj?.imageObj?.smallUrl : "/img_dev/error/avatar.png")" class="blur-up lazyloaded"></a></th>
+                        <td>
+                        <small class="sp-line-2 mb-0 font-weight-5" title="Tên">@item.productObj?.name</small>
+                        <span class="col-auto badge badge-default">@item.productObj?.categoryObj?.name</span>
+                        <br /><span class="col-auto">Số lượng: @item.quantityDonation</span>
+                        </td>
+                        <td><span class="text-primary">@item.productObj?.productPriceObj[0]?.priceOut?.ToString("#,###", cul.NumberFormat)<sup>đ</sup> </span></td>
+                        <td>
+                        <div class="pretty p-icon p-round p-jelly">
+                        <input id="@item.id" type="checkbox" class="checkbox_product_gift" />
+                        <div class="state p-success">
+                        <i class="fas fa-check icon"></i>
+                        <label></label>
+                        </div>
+                        </div>
+                        </td>
+                        </tr>
+
+
+                        @* <tr>
+                        <th scope="row"><img src="https://cdn.tgdd.vn/Files/2021/12/10/1403671/y-nghia-gio-qua-tet-la-gi-tim-hieu-y-nghia-cua-tung-loai-gio-qua-tet-202112102017402505.jpg" class="w-auto mw-100 blur-up lazyloaded"></th>
+                        <td>
+                        <p class="sp-line-2 mb-0" title="Tên">Quà Tết 2023Quà Tết 2023Quà Tết 2023Quà Tết 2023Quà Tết 2023</p>
+                        <span class="col-auto badge badge-default">SET HẠT SUNG TÚC</span>
+                        </td>
+                        <td><span class="text-primary">20.000.000đ </span><span>x5</span></td>
+                        <td>
+                        <div class="pretty p-icon p-round p-jelly">
+                        <input type="checkbox" />
+                        <div class="state p-success">
+                        <i class="fas fa-check icon"></i>
+                        <label></label>
+                        </div>
+                        </div>
+                        </td>
+                        </tr>*@
+
+                        @*</tbody>
+                        </table>
+                        </div>*@
+                        <!--Div gift you can get-->
+                        <div id="div_product_gift_you_can_get">
+                        </div>
+
+                        <!-- Div remark -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mt-0">
+                                    <div class="order-box">
+                                        <div class="border-bottom color-default"><span style="font-size:16px;font-weight:500;"><i class="fas fa-comment-dollar mx-2" style="color: #357ebd;font-size: 25px"></i>Thanh toán</span></div>
+                                        <ul class="qty" style="line-height: 3.2em;display: grid;">
+                                            <li class="text-muted">
+                                                Tạm tính (<b style="font-weight:normal;" id="b_count_cart_item">0</b> sản phẩm)
+                                                <span style="float: right" class="" id="span_total_price_all_item">0đ</span>
+                                            </li>
+                                            <li class="text-muted">
+                                                Phí vận chuyển
+                                                <span style="float: right;" class="text-right" id="span_transport_fee">(chưa tính)</span>
+                                            </li>
+                                        </ul>
+                                        <ul class="total div_border">
+                                            <li class="m-0 fs-5">Tổng cộng </li>
+                                            <li style="float: right;color: #466caf;"><span class="count text-right fs-5" id="span_total_price_payment">0đ</span></li>
+                                            <li class="text-right"><i class="small text-muted">(Đã bao gồm VAT nếu có)</i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="payment-box">
+                                        <div class="text-end d-flex justify-content-between mt-5">
+                                            <a href="/san-pham" class="btn-solid btn w-50 ladda-button" style="color: #357ebd">
+                                                <i class="fa-solid fa-arrow-left mx-2" style="color: #466caf;"></i>
+                                                Tiếp tục mua hàng
+                                            </a>
+                                            <button type="button" class="btn-solid btn w-30 ladda-button text-white" id="btn_place_order"
+                                                    dir="ltr" data-style="expand-left" style="background: #357ebd">
+                                                Đặt hàng
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- content section end -->
+<!-- thank you section start -->
+@*<section class="section-b-space light-layout section_order_success" style="display:none;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 mb-2">
+                <div class="success-text">
+                    <div class="checkmark">
+                        <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                            </path>
+                        </svg>
+                        <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                            </path>
+                        </svg>
+                        <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                            </path>
+                        </svg>
+                        <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                            </path>
+                        </svg>
+                        <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                            </path>
+                        </svg>
+                        <svg class="star" height="19" viewBox="0 0 19 19" width="19"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.296.747c.532-.972 1.393-.973 1.925 0l2.665 4.872 4.876 2.66c.974.532.975 1.393 0 1.926l-4.875 2.666-2.664 4.876c-.53.972-1.39.973-1.924 0l-2.664-4.876L.76 10.206c-.972-.532-.973-1.393 0-1.925l4.872-2.66L8.296.746z">
+                            </path>
+                        </svg>
+                        <svg class="checkmark__check" height="36" viewBox="0 0 48 36" width="48"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M47.248 3.9L43.906.667a2.428 2.428 0 0 0-3.344 0l-23.63 23.09-9.554-9.338a2.432 2.432 0 0 0-3.345 0L.692 17.654a2.236 2.236 0 0 0 .002 3.233l14.567 14.175c.926.894 2.42.894 3.342.01L47.248 7.128c.922-.89.922-2.34 0-3.23">
+                            </path>
+                        </svg>
+                        <svg class="checkmark__background" height="115" viewBox="0 0 120 115" width="120"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M107.332 72.938c-1.798 5.557 4.564 15.334 1.21 19.96-3.387 4.674-14.646 1.605-19.298 5.003-4.61 3.368-5.163 15.074-10.695 16.878-5.344 1.743-12.628-7.35-18.545-7.35-5.922 0-13.206 9.088-18.543 7.345-5.538-1.804-6.09-13.515-10.696-16.877-4.657-3.398-15.91-.334-19.297-5.002-3.356-4.627 3.006-14.404 1.208-19.962C10.93 67.576 0 63.442 0 57.5c0-5.943 10.93-10.076 12.668-15.438 1.798-5.557-4.564-15.334-1.21-19.96 3.387-4.674 14.646-1.605 19.298-5.003C35.366 13.73 35.92 2.025 41.45.22c5.344-1.743 12.628 7.35 18.545 7.35 5.922 0 13.206-9.088 18.543-7.345 5.538 1.804 6.09 13.515 10.696 16.877 4.657 3.398 15.91.334 19.297 5.002 3.356 4.627-3.006 14.404-1.208 19.962C109.07 47.424 120 51.562 120 57.5c0 5.943-10.93 10.076-12.668 15.438z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h2>cảm ơn bạn đã mua hàng</h2>
+                    <p>Đơn hàng của bạn đã được chuyển đến SHOP xử lý.</p>
+                    <p>
+                        Để biết thêm chi tiết về trạng thái đơn hàng, vui lòng vào
+                        <a href="/order/view" class="font-weight-bold" style="color:yellow !important"> Tài khoản » Đơn hàng</a>
+                    </p>
+                    <em class="font-italic">
+                        Lưu ý: chỉ nhận hàng khi đơn hàng ở trạng thái <b>Đang vận chuyển</b>.
+                        Kiểm tra mã đơn hàng và người gửi trước khi thanh toán.
+                    </em>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+</section>*@
+<partial name="P_OrderSuccess_without_account"/>
+<!-- thank you end -->
+<!-- order detail section start -->
+@*<section class="section-b-space section_order_success" style="display:block;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-6 px-0">
+                <div class="product-order order_success_custom">
+
+                    <div id="div_list_order_item">
+                       
+                    </div>
+                    <div id="div_list_order_product_gift">
+                    </div>
+
+                    <div class="final-total p-3" hidden>
+                        <h3>Tổng cộng <span class="text-lowercase text-danger" style="font-size:20px;" id="span_order_review_total_pay">0đ</span></h3>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="position-relative col-12 col-md-7 p-0" id="div_bank_info_panel">
+                        </div>
+                        <div class="col-12 col-md-5 text-center" id="div_bank_qr_code">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-4">
+                <a href="/san-pham" class="btn-solid btn">
+                    Tiếp tục mua sắm
+                </a>
+            </div>
+        </div>
+    </div>
+</section>*@
+<!-- order-detail section end -->
+<!-- Modal address list start -->
+<div class="modal fade" id="modal_address_list" tabindex="-1" role="dialog" aria-labelledby="modal_address_list" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document" style="padding:50px 0;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <b class="text-uppercase">Địa chỉ nhận hàng</b>|
+                    <a href="javascript:void(0)" onclick="ShowAddAddressModal(this);" class="btn btn-sm btn-outline-info"><small> Thêm mới</small></a>
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:1.5rem;font-weight:700;line-height:1;"
+                        aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body p-0" style="overflow-x:hidden;">
+                <div class="dashboard-section section-b-space" style="padding-bottom:0px;">
+
+                    <div class="faq-content tab-content" id="top-tabContent">
+                        <div class="tab-pane fade show active" id="products">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="dashboard-table mt-0">
+                                        <div class="table-responsive-md">
+                                            <table class="table mb-0" id="table_address_list">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Tên</th>
+                                                        <th scope="col">Địa chỉ</th>
+                                                        <th scope="col" style="text-align:left;">Điện thoại</th>
+                                                        <th scope="col" style="text-align:left;">Vị trí</th>
+                                                        <th scope="col"> </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbody_address_list">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-solid" onclick="SaveAddressInfo()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal address list end -->
+<!-- Modal address add start -->
+<div class="modal fade" id="modal_add_address" tabindex="-1" role="dialog" aria-labelledby="modal_add_address" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document" style="padding:50px 0;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <b class="text-uppercase">Thêm địa chỉ nhận hàng</b>
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:1.5rem;font-weight:700;line-height:1;"
+                        aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body register-page pt-0" id="div_body_modal_add_address" style="padding-bottom: 50px !important;">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal address add end -->
+<!-- Modal bank list start -->
+<div class="modal fade" id="modal_bank_list" tabindex="-1" role="dialog" aria-labelledby="modal_bank_list" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document" style="padding:50px 0;">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                <h4 class="modal-title">
+                    <b class="text-uppercase"></b>
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:1.5rem;font-weight:700;line-height:1;"
+                        aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body register-page pt-0 pb-0" id="div_body_modal_bank_list">
+                @*<h5 class="font-weight-bold text-center text-success text-uppercase"><i class="fa fa-credit-card h4"></i> Thông tin thanh toán</h5>
+                <p class="text-center mb-0">
+                <b>Số tiền: </b>100.000đ
+                </p>
+                <p class="text-center">
+                <b>Nội dung chuyển khoản: </b><span>0123456798111111</span>
+                <button type="button" class="btn btn-sm p-0" onclick="CopyText('012345679811111')" title="Sao chép">
+                <i class="fa fa-clone color-default"></i>
+                </button>
+                </p>
+                <div class="row justify-content-center">
+                <div class="col-12 col-md-6 col-lg-6 mb-2">
+                <ul class="list-group text-left">
+                <li class="list-group-item">
+                <i class="fa fa-id-card-o mr-1"></i> <span>
+                Số tài khoản:
+                </span>117002868043
+                <button type="button" class="btn btn-sm p-0" onclick="CopyText('012345679811111')" title="Sap chép">
+                <i class="fa fa-clone color-default"></i>
+                </button>
+                </li>
+                <li class="list-group-item"><i class="fa fa-user mr-1"></i> <span>Tên người nhận: </span>CTCP GIAI PHAP CONG NGHE H2A VIET NAM</li>
+                <li class="list-group-item"><i class="fa fa-bank mr-1"></i> <span>Ngân hàng: </span>Ngân hàng TMCP Công Thương Việt Nam - VietinBank</li>
+                <li class="list-group-item"><i class="fa fa-badiv_bank_info_panelnk mr-1"></i> <span>Ngân hàng: </span>Ngân hàng TMCP Công Thương Việt Nam - VietinBank</li>
+                </ul>
+                </div>
+                </div>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-solid" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

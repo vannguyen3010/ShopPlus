@@ -1,0 +1,67 @@
+﻿@model M_News
+@{
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+    var breadCrumb = new ThreeF_WebPortal.ViewModels.VM_BreadCrumb
+    {
+        currentName = Model.title,
+        lv1Name = "Giới thiệu",
+        lv1Url = "/gioi-thieu",
+    };
+}
+@section MetaHead{
+    <meta name="robots" content="noodp,noydir,index,follow" />
+}
+
+
+<!-- breadcrumb start -->
+@await Html.PartialAsync("_P_BreadCrumb", breadCrumb)
+<!-- breadcrumb end -->
+<!-- content section start -->
+<section class="blog-section section-b-space">
+    <div class="container-fluid-lg">
+        <div class="row g-sm-4 g-3">
+
+            <div class="col-xxl-12 ratio_50" style="overflow: hidden">
+                <div class="blog-detail-image rounded-3 mb-4">
+                    <img src="@Model.imageObj?.smallUrl" class="bg-img blur-up lazyload" alt="">
+                    <div class="blog-image-contain">
+                        <ul class="contain-list">
+                            <li>@Model.categoryObj?.name</li>
+                        </ul>
+                        <h2>@Model.title</h2>
+                        <ul class="contain-comment-list">
+                            
+
+                            <li>
+                                <div class="user-list">
+                                    <i data-feather="calendar"></i>
+                                    <span>@Model.createdAt?.ToString("dd-MM-yyyy")</span>
+
+                                </div>
+                            </li>
+
+                          
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="blog-detail-contain blog_detail_css">
+                    <p>
+                        @Model.description
+                    </p>
+                   @* <div class="blog-details-quote">
+                        <h3>Chi tiết</h3>
+                    </div>*@
+
+                    <p>
+                        @Html.Raw(@Model.detail)
+                    </p>
+                   
+                </div>
+
+             
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,263 @@
+﻿@model EM_Contact
+@{
+    var breadCrumb = new ThreeF_WebPortal.ViewModels.VM_BreadCrumb
+            {
+                currentName = "Liên hệ",
+            };
+    var supplierInfo = ViewBag.SupplierInfo as M_Supplier;
+}
+@section MetaHead{
+    <meta name="robots" content="Liên hệ" />
+}
+@section Styles{
+    <link href="/assets/lib/bootstrap-select-fix/bootstrap-fix-select-modal.css" rel="stylesheet" />
+    <link href="/lib/ladda/ladda-themeless.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/contact.css" rel="stylesheet" asp-append-version="true" />
+}
+@section Scripts{
+    <script src="~/assets/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/assets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/assets/lib/ladda/spin.min.js"></script>
+    <script src="~/assets/lib/ladda/ladda.min.js"></script>
+    <script src="~/assets/lib/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=@ViewData["KeyGoogleMap"]&callback=InitMap" defer></script>
+    <script src="~/js/gmaps.min.js"></script>
+    <script>
+        const LATITUDE = @supplierInfo.addressObj?.latitude;
+        const LONGITUDE = @supplierInfo.addressObj?.longitude;
+    </script>
+
+    <script src="/controllers/contact.js" asp-append-version="true"></script>
+}
+
+<!-- Breadcrumb Section Start -->
+<partial name="_P_Breadcrumb" model="breadCrumb" />
+<!-- Breadcrumb Section End -->
+<!-- Contact Box Section Start -->
+<section class="contact-box-section">
+    <div class="container-fluid-lg">
+        <div class="row g-lg-5 g-3">
+            <div class="col-lg-6">
+                <div class="left-sidebar-box">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="contact-image">
+                                <img src="../assets/images/inner-page/contact-us.png"
+                                     class="img-fluid blur-up lazyloaded" alt="">
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="contact-title">
+                                <h3>
+                                    Thông tin liên hệ
+                                </h3>
+                            </div>
+
+                            <div class="contact-detail">
+                                <div class="row g-4">
+                                    @if (!string.IsNullOrEmpty(supplierInfo.telephoneNumber))
+                                    {
+                                        <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                            <div class="contact-detail-box">
+                                                <div class="contact-icon">
+                                                    <i class="fa-solid fa-mobile"></i>
+                                                </div>
+                                                <div class="contact-detail-title">
+                                                    <h4>Số điện thoại</h4>
+                                                </div>
+
+                                                <a href="tel:@supplierInfo.telephoneNumber" class="contact-detail-contain">
+                                                    <p>@supplierInfo.telephoneNumber</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(supplierInfo.hotlineNumber))
+                                    {
+                                        <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                            <div class="contact-detail-box">
+                                                <div class="contact-icon">
+                                                    <i class="fa-solid fa-phone"></i>
+                                                </div>
+                                                <div class="contact-detail-title">
+                                                    <h4>Hotline</h4>
+                                                </div>
+
+                                                <a href="tel:@supplierInfo.hotlineNumber" class="contact-detail-contain">
+                                                    <p>@supplierInfo.hotlineNumber</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(supplierInfo.email))
+                                    {
+                                        <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                            <div class="contact-detail-box">
+                                                <div class="contact-icon">
+                                                    <i class="fa-solid fa-envelope"></i>
+                                                </div>
+                                                <div class="contact-detail-title">
+                                                    <h4>Email</h4>
+                                                </div>
+
+                                                <a href="mailto:@supplierInfo.email" class="contact-detail-contain">
+                                                    <p style="word-break: break-word;">@supplierInfo.email</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(supplierInfo.fax))
+                                    {
+                                        <div class="col-xxl-6 col-lg-12 col-sm-6">
+                                            <div class="contact-detail-box">
+                                                <div class="contact-icon">
+                                                    <i class="fa-solid fa-fax"></i>
+                                                </div>
+                                                <div class="contact-detail-title">
+                                                    <h4>Fax</h4>
+                                                </div>
+
+                                                <div class="contact-detail-contain">
+                                                    <p>@supplierInfo.fax</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                   
+
+                                    <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12">
+                                        <div class="contact-detail-box">
+                                            <div class="contact-icon">
+                                                <i class="fa-solid fa-location-dot"></i>
+                                            </div>
+                                            <div class="contact-detail-title">
+                                                <h4>Địa chỉ</h4>
+                                            </div>
+
+                                            <div class="contact-detail-contain">
+                                                <p>@supplierInfo.addressObj?.addressText, @supplierInfo.addressObj?.wardObj?.name, @supplierInfo.addressObj?.districtObj?.name, @supplierInfo.addressObj?.provinceObj?.name</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="title d-xxl-none d-block">
+                    <h2>Liên hệ chúng tôi</h2>
+                </div>
+                <form id="form_data" asp-antiforgery="true" class="right-sidebar-box needs-validation" method="post">
+                    <div class="row">
+                        <div class="col-xxl-12 col-lg-12 col-sm-6">
+                            <div class="mb-md-4 mb-3 custom-form">
+                                <label asp-for="title" class="form-label">Tiêu đề <span class="text-danger">*</span></label>
+                                <input type="text" asp-for="title" class="form-control" maxlength="100" placeholder="Nhập tiêu đề" required>
+                                <span asp-validation-for="title" class="invalid-feedback"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-6 col-lg-12 col-sm-6">
+                            <div class="mb-md-4 mb-3 custom-form">
+                                <label asp-for="name" class="form-label">Họ và Tên<span class="text-danger">*</span></label>
+                                <input type="text" asp-for="name" class="form-control" maxlength="50"
+                                       placeholder="Nhập họ và tên của bạn" required>
+                                <span asp-validation-for="name" class="invalid-feedback"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-6 col-lg-12 col-sm-6">
+                            <div class="mb-md-4 mb-3 custom-form">
+                                <label asp-for="phoneNumber" class="form-label">Số điện thoại<span class="text-danger">*</span></label>
+                                <input type="text" asp-for="phoneNumber" class="form-control" maxlength="11" onkeypress="return IsNumberKey(event)" pattern="^[0-9]{1,20}$" placeholder="Nhập số điện thoại" required>
+                                <span asp-validation-for="phoneNumber" class="invalid-feedback"></span>
+                               
+                            </div>
+                        </div>
+                        <div class="col-xxl-12 col-lg-12 col-sm-6">
+                            <div class="mb-md-4 mb-3 custom-form">
+                                <label asp-for="email" class="form-label">Email</label>
+                                <input type="email" asp-for="email" class="form-control" maxlength="100" pattern=@(@"^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")
+                                       placeholder="Nhập địa chỉ email">
+                               
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="mb-md-4 mb-3 custom-form">
+                                <label asp-for="detail" class="form-label">Nội dung</label>
+                                <textarea asp-for="detail" class="form-control" placeholder="Nhập nội dung" rows="6" required></textarea>
+                                <span asp-validation-for="detail" class="invalid-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-animation btn-md fw-bold ms-auto" data-style="expand-right" id="btn_submit_form" type="submit">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Gửi
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- modal send success start-->
+<div class="modal fade bd-example-modal-lg theme-modal exit-modal" id="modal_send_success" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content modal_div_css">
+            <div class="modal-body modal1" style="border: 14px solid #4e7b15;">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="modal-bg">
+                             
+                                <div class="media d-flex align-items-center">
+                                   
+                                    <div class="media-body text-start align-self-center mx-auto">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        </button>
+                                        <div class="text-center">
+                                            <h2>Gửi thành công!</h2>
+                                            <h4>
+                                                Cảm ơn bạn đã gửi phản hồi đến chúng tôi.
+                                            </h4>
+                                            <div>
+                                                <a href="javascript:void(0)" data-bs-dismiss="modal" class="btn w-25 mx-auto btn-danger bg_color">Đóng</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal send success end-->
+<!-- Contact Box Section End -->
+<!-- Map Section Start -->
+@*<section class="map-section">
+    <div class="container-fluid p-0">
+        <div id="map" class="map-box">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.0478098262615!2d106.8049972696284!3d10.95976123194344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174dbfdae738bad%3A0xd988af2188c9081d!2zNDAgTmd1eeG7hW4gRHUsIFF1YW5nIFZpbmgsIFRow6BuaCBwaOG7kSBCacOqbiBIw7JhLCDEkOG7k25nIE5haSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1686796072100!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</section>*@
+<section class="map-section">
+    <div class="container-fluid p-0">
+        <div class="map-box map">
+            <div id="map" style="height:450px;">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Map Section End -->

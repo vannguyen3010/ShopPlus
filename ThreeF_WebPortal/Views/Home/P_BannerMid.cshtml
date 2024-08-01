@@ -1,0 +1,123 @@
+﻿@{
+    var bannerMidLeft = ViewBag.BannerMidLeft as List<ThreeF_WebPortal.Models.VM_Banner>;
+    //var bannerMidRight = ViewBag.BannerTop as List<ThreeF_WebPortal.Models.VM_Banner>;
+}
+@section Styles{
+    <link href="~/css/responsive.css" asp-append-version="true" rel="stylesheet" />
+}
+<!-- Banner Section Start -->
+<section class="banner-section">
+    <div class="container-fluid-lg">
+        <div class="row gy-xl-0 gy-3">
+            <div class="col-xl-6 slider_banner_mid banner_header_mid_css">
+                @if (bannerMidLeft != null && bannerMidLeft.Any())
+                {
+                    foreach (var item in bannerMidLeft)
+                    {
+                        if (item.id % 2 == 0)
+                        {
+                            <div class="banner-contain-3 hover-effect" style="height: 250px">
+                                <img style="height: 100%" src="@(!string.IsNullOrEmpty(item.imageUrl) ? item.imageUrl : "/img_dev/error/banner.png")" class="bg-img img-fluid"
+                                     onerror="this.onerror=null;this.src='/img_dev/error/banner.png';" alt="@item.title">
+                                <div class="banner-detail banner-details-dark text-white p-center-left w-50 position-relative mend-auto">
+                                    <div>
+                                        @if (!string.IsNullOrEmpty(item.title))
+                                        {
+                                            <h3 class="mb-sm-3 mb-1" style="color: @item.titleColor; text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">@item.title</h3>
+                                        }
+                                        @if (!string.IsNullOrEmpty(item.descShort))
+                                        {
+                                            <h4 style="color: @item.descShortColor;text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px">@item.descShort</h4>
+                                        }
+                                        @if (!string.IsNullOrEmpty(item.url))
+                                        {
+                                            <a class="btn theme-bg-color btn-md text-white fw-bold mt-md-4 mt-2 mend-auto"
+                                               href="@item.url" target="_blank">
+                                                Xem thêm <i class="fa-solid fa-arrow-right icon"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn theme-bg-color btn-md text-white fw-bold mt-md-4 mt-2 mend-auto d-none"
+                                               href="" target="_blank">
+                                                Xem thêm <i class="fa-solid fa-arrow-right icon"></i>
+                                            </a>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    }
+                }
+                else
+                {
+                    <div class="banner-contain-3 h-100 hover-effect">
+                        <img src="~/img_dev/error/avatar.png" class="bg-img img-fluid" alt="">
+                        <div class="banner-detail banner-details-dark text-white p-center-left w-50 position-relative mend-auto">
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-xl-6 slider_banner_mid banner_header_mid_css">
+                @if (bannerMidLeft != null && bannerMidLeft.Any())
+                {
+                    foreach (var item in bannerMidLeft)
+                    {
+                        if (item.id % 2 != 0)
+                        {
+                            <div class="banner-contain-3 hover-effect banner_respon" style="height: 250px">
+                                <img style="height: 100%" src="@(!string.IsNullOrEmpty(item.imageUrl) ? item.imageUrl : "/img_dev/error/banner.png")" class="bg-img img-fluid"
+                                     onerror="this.onerror=null;this.src='/img_dev/error/banner.png';" alt="@item.title">
+                                <div class="banner-detail banner-details-dark text-white p-center-left w-50 position-relative mend-auto">
+                                    <div>
+                                        @if (!string.IsNullOrEmpty(item.title))
+                                        {
+                                            <h3 class="mb-sm-3 mb-1" style="color: @item.titleColor; text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">@item.title</h3>
+                                        }
+                                        @if (!string.IsNullOrEmpty(item.descShort))
+                                        {
+                                            <h4 style="color: @item.descShortColor;text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px">@item.descShort</h4>
+                                        }
+
+                                        @if (!string.IsNullOrEmpty(item.url))
+                                        {
+                                            <a class="btn theme-bg-color btn-md text-white fw-bold mt-md-4 mt-2 mend-auto"
+                                               href="@item.url" target="_blank">
+                                                Xem thêm <i class="fa-solid fa-arrow-right icon"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn theme-bg-color btn-md text-white fw-bold mt-md-4 mt-2 mend-auto d-none"
+                                               href="" target="_blank">
+                                                Xem thêm <i class="fa-solid fa-arrow-right icon"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div class="banner-contain-3 h-100 hover-effect">
+                        <img src="~/img_dev/error/avatar.png" class="bg-img img-fluid" alt="">
+                        <div class="banner-detail banner-details-dark text-white p-center-left w-50 position-relative mend-auto">
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Banner Section End -->

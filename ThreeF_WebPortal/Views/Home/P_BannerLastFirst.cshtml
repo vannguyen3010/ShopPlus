@@ -1,0 +1,48 @@
+﻿@{
+    var data = ViewBag.BannerBottom as List<ThreeF_WebPortal.Models.VM_Banner>;
+}
+
+
+<section>
+    <div class="container-fluid-lg">
+        <div class="row">
+            <div class="col-12 slider_banner_mid_heder banner_header_mid_css">
+
+                @if (data != null && data.Any())
+                {
+                    foreach (var item in data)
+                    {
+                        <div class="offer-box hover-effect div_res_mobile">
+                            <img src="@(!string.IsNullOrEmpty(item.imageUrl) ? item.imageUrl : "/img_dev/error/banner.png")" class="bg-img blur-up lazyload"
+                                 onerror="this.onerror=null;this.src='/img_dev/error/banner.png';" alt="@item.title" style="height: 100%;text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px">
+
+                            <div class="offer-contain p-4">
+                                <div class="offer-detail">
+                                    <h2 class="text-dark" style="color: @item.descShortColor;text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">
+                                        @item.descShort
+                                    </h2>
+                                    <p class="text-content" style="color: @item.titleColor;text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">@item.title</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="offer-box hover-effect d-none" style="height: 250px">
+                        <img src="~/img_dev/error/avatar.png" class="bg-img blur-up lazyload" alt="">
+
+                        <div class="offer-contain p-4">
+                            <div class="offer-detail">
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>

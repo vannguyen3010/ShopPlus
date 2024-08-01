@@ -1,0 +1,111 @@
+﻿.div_desktop_custom {
+    color: black;
+}
+
+.mobile-cart-content {
+    color: #000;
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .div_desktop_custom {
+        display: none;
+    }
+
+    .mobile-cart-content {
+        display: block;
+    }
+
+    .div_order_list_custom .div_zone_order_item .orderTitle {
+        font-size: 13px;
+    }
+}
+
+.div_order_list_custom {
+    padding: 0 10px;
+}
+
+    .div_order_list_custom .div_zone_order_item {
+        background-color: #f9f9f9;
+        border-radius: 4px;
+        margin: 6px 0;
+        padding: 0;
+    }
+
+    .div_order_list_custom .a_row_hover:hover {
+        background-color: #fff;
+    }
+
+    .div_order_list_custom .a_row_hover:active {
+        background-color: var(--theme-deafult);
+    }
+
+    .div_order_list_custom .div_zone_order_item .orderTitle {
+        padding: 6px 12px 6px 12px;
+        border-bottom: 2px solid #fff;
+        color: #81ba00;
+        font-weight: 400;
+    }
+
+    .div_order_list_custom .deliveryOpttion {
+        height: 50px;
+        border: 1px solid #81ba00;
+        border-radius: 4px;
+        margin: 4px;
+    }
+
+.dashboard-section .bootstrap-select {
+    width: 160px !important;
+}
+
+.div_zone_order_item .deleted {
+    background-color: #ff000014;
+}
+
+
+
+
+.custom_text_css {
+    color: #212121;
+    text-align: center;
+    padding: 0 15px 20px 15px;
+    text-transform: uppercase;
+    border: 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.custom_text_css {
+    color: #333;
+    font-weight: bold;
+}
+
+.material-border {
+    border-bottom: 2px solid #333;
+}
+
+.custom_css_div {
+    padding: 1px 7px 3px 4px;
+    background: #159057;
+    color: white;
+    border-radius: 3px;
+}
+.text_div_price {
+    position: relative;
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+.div_all_price_css {
+    position: relative;
+    display: block;
+    font-weight: 400;
+    color: #333;
+    line-height: 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+.div_css_detail_order {
+    box-shadow: rgb(239 255 85) 0px 0px 0px 3px, var(--primaryColor) 0px 0px 0px 12px, rgb(239 255 85) 0px 0px 0px 15px;
+}

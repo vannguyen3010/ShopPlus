@@ -1,0 +1,511 @@
+﻿@model M_Product
+@{
+    var dataBanner = ViewBag.BannerTop as List<VM_Banner>;
+    var productDetail = ViewBag.ProductDetail as M_Product;
+    var proppertyFilter0 = productDetail.productPropertyFilterObj.Where(x => x.propertyFilterObj.typeId == 0).Select(x => x.propertyFilterObj?.name).ToList();
+    var proppertyFilter1 = productDetail.productPropertyFilterObj.Where(x => x.propertyFilterObj.typeId == 1).Select(x => x.propertyFilterObj?.name).ToList();
+    var proppertyFilter2 = productDetail.productPropertyFilterObj.Where(x => x.propertyFilterObj.typeId == 2).Select(x => x.propertyFilterObj?.name).ToList();
+    var proppertyFilter3 = productDetail.productPropertyFilterObj.Where(x => x.propertyFilterObj.typeId == 3).Select(x => x.propertyFilterObj?.name).ToList();
+    int countImageList = 0;
+    var supplierInfo = ViewBag.SupplierInfo as ThreeF_WebPortal.Models.M_Supplier;
+    var breadCrumb = new VM_BreadCrumb
+            {
+                currentName = productDetail.name,
+                lv1Name = "Sản phẩm",
+                lv1Url = "/san-pham",
+                lv2Name = productDetail.categoryObj?.name,
+                lv2Url = $"/san-pham?c1={productDetail.categoryObj?.parentId}",
+                lv3Name = productDetail.categoryObj?.parentObj?.name,
+                lv3Url = $"/san-pham?c1={productDetail.categoryObj?.parentId}&c2={productDetail.categoryObj?.parentObj?.id}",
+            };
+}
+
+
+
+<partial name="_P_Breadcrumb" model="breadCrumb" />
+@section Scripts{
+    <script src="/lib/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@ViewData["KeyGoogleMap"]"></script>
+    <script src="~/lib/ladda/spin.min.js"></script>
+    <script src="~/lib/ladda/ladda.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        const productPriceJsonObjs = '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@productDetail.productPriceObjs))';
+        const productPriceArr = JSON.parse(productPriceJsonObjs);
+    </script>
+    <script src="~/controllers/product_detail.js" asp-append-version="true"></script>
+    @*<script src="~/controllers/home.js" asp-append-version="true"></script>*@
+}
+@section Styles{
+    <link href="~/lib/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/css/product_detail.css" rel="stylesheet" asp-append-version="true" />
+}
+
+
+<input type="hidden" id="input_product_id" value="@productDetail.id" />
+<input type="hidden" id="input_category_id" value="@productDetail.categoryObj?.id" />
+
+    <!-- Product Left Sidebar Start -->
+    <section class="product-section pt-0">
+    <input id="input_name_slug" type="hidden" value="@productDetail.nameSlug"/>
+    <input type="hidden" id="input_product_price" />
+    <input type="hidden" id="input_product_discount"/>
+    <input id="input_imageUrl" type="hidden" value="@productDetail.imageObj?.smallUrl" />
+
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-xxl-9 col-xl-8 col-lg-7 wow fadeInUp">
+                    <div class="row g-4">
+                        <div class="col-xl-6 wow fadeInUp">
+                            <div class="product-left-box">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <div class="product-main-1 no-arrow d-flex align-self-center img_div">
+                                        <div>
+                                            <a href="@productDetail.imageObj?.smallUrl" class="slider-image div_image_product_slick image-link" data-glightbox-close>
+                                                <img id="input_imageUrl" src="@(string.IsNullOrEmpty(productDetail.imageObj?.smallUrl) ? "/img_dev/error/product.png" : productDetail.imageObj?.smallUrl)" style="object-fit: cover"
+                                                     class="img-fluid image_zoom_cls-2 blur-up lazyload w-100"
+                                                     onerror="this.onerror=null;this.src='/img_dev/error/product.png';" alt="@productDetail.name" />
+                                            </a>
+                                        </div>
+                                            @if (productDetail.imageListObj != null && productDetail.imageListObj.Any())
+                                            {
+                                                @foreach (var item in productDetail.imageListObj)
+                                                 {
+                                                    <div>
+                                                    <a href="@item.smallUrl" class="slider-image div_image_product_slick image-link" data-glightbox-close>
+                                                        <img id="input_imageUrl" src="@(string.IsNullOrEmpty(item.smallUrl) ? "/img_dev/error/product.png" : item.smallUrl)" style="object-fit: cover"
+                                                                 class="img-fluid image_zoom_cls-2 blur-up lazyload w-100"
+                                                             onerror="this.onerror=null;this.src='/img_dev/error/product.png';" alt="" />
+                                                        </a>
+                                                    </div>
+                                                
+                                                countImageList++;
+                                                }
+                                            }
+                                       
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="bottom-slider-image left-slider no-arrow slick-top">
+                                        <div>
+                                            <div class="sidebar-image slider_respon_custom_width">
+                                                <img src="@(string.IsNullOrEmpty(productDetail.imageObj?.smallUrl) ? "/img_dev/error/product.png" : productDetail.imageObj?.smallUrl)"
+                                                     class="img-fluid blur-up lazyload w-100" alt="" style="object-fit: cover; aspect-ratio: 1/1"
+                                                     onerror="this.onerror=null;this.src='/img_dev/error/product.png';">
+                                            </div>
+                                        </div>
+                                            @if (productDetail.imageListObj != null && productDetail.imageListObj.Any())
+                                            {
+                                                @foreach (var item in productDetail.imageListObj)
+                                                {
+                                                    <div>
+                                                        <div class="sidebar-image slider_respon_custom_width">
+                                                        <img src="@(string.IsNullOrEmpty(item.smallUrl) ? "/img_dev/error/product.png" : item.smallUrl)"
+                                                                 class="img-fluid blur-up lazyload w-100" alt="" style="object-fit: cover; aspect-ratio: 1/1"
+                                                             onerror="this.onerror=null;this.src='/img_dev/error/product.png';">
+                                                        </div>
+                                                    </div>
+                                                
+                                                }   
+                                            }
+                                       @* <div>
+                                            <div class="sidebar-image slider_respon_custom_width">
+                                                <img src="@(string.IsNullOrEmpty(productDetail.imageObj?.smallUrl) ? "/img_dev/error/product.png" : productDetail.imageObj?.smallUrl)"
+                                                     class="img-fluid blur-up lazyload w-100" alt="" style="object-fit: cover; aspect-ratio: 1/1"
+                                                     onerror="this.onerror=null;this.src='/img_dev/error/product.png';">
+                                            </div>
+                                        </div>*@
+
+                                        </div>
+                                    </div>
+
+                                  
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div id="div_info_product_detail" class="right-box-contain">
+
+                            <span id="product_name" class="name_css">@productDetail.name</span>
+                                <div id="div_price_product_detail" class="price-rating">
+                                    <h3 id="product_price" class="text-danger price">
+                                        @*$49.50 *@
+                                    </h3>
+                                </div>
+
+                                @*<div class="procuct-contain">
+                                <p>
+                                @productDetail.summaryInfo
+                                </p>
+                                </div>*@
+
+                                <div class="product-packege" id="div_view_price_addtocart_panel">
+                                <div class="product-title mt-1">
+                                        <h4>Chọn loại</h4>
+                                    </div>
+                                    <ul id="div_type_product_list" class="select-packege">
+
+                                      
+
+                                    </ul>
+                                </div>
+
+
+
+                                <div class="note-box product-packege wrap_css_btn mt-0" id="div_view_quantity">
+                                <div class="qty-box btn mt-0 px-0" id="div_quantity_box">
+                                        <div class="input-group div_quantity_wrapper">
+                                            <span class="input-group-prepend">
+                                                <button type="button"
+                                                        class="btn quantity-right-plus is-form minus btn_minus_custom" data-type="plus" data-field="" value="+">
+                                                    <i class="fa fa-minus text-white" aria-hidden="true"></i>
+                                                </button>
+                                            </span>
+                                            <input type="text" name="quantity" aria-label="quantity" id="input_quantity" class="form-control input-number" max="999" min="1" onchange="OnChangeRangeQuantityWithMinMax(this)" onkeypress="return IsNumberKey(event)" value="1">
+                                            <span class="input-group-prepend">
+                                                <button type="button"
+                                                        class="btn quantity-left-minus is-form plus btn_plus_custom" data-type="minus" data-field="" value="-">
+                                                <i class="fa fa-plus text-white" aria-hidden="true"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                
+                                    <a class="btn cart-button text-white w-100 button_animation_css spotlight res_mobile_btn_cart" id="btn_add_to_cart">
+                                        <i class="fas fa-cart-plus"></i>
+                                        Thêm vào giỏ hàng
+                                    </a>
+                            
+                              
+                                </div>
+
+                                <div class="buy-box">
+
+
+                                    <a href="javascript:void(0)" id="btn_copy_link">
+                                        <i data-feather="link"></i>
+                                        Sao chép đường dẫn
+                                    </a>
+                                </div>
+
+                                @* @if ((proppertyFilter2 != null && proppertyFilter2.Any()) ||
+                                (proppertyFilter1 != null && proppertyFilter1.Any()) ||
+                                (proppertyFilter3 != null && proppertyFilter3.Any()) ||
+                                (proppertyFilter0 != null && proppertyFilter0.Any()))
+                                {
+
+                                    <table class="table table-bordered table-striped" id="table_property_filter" style="text-align: left;">
+                                        <tbody>
+                                        @if (proppertyFilter2 != null && proppertyFilter2.Any())
+                                        {
+                                            <tr>
+                                                <th scope="row"><h6>Dạng</h6></th>
+                                                <td>
+                                                    @for (var i = 0; i < proppertyFilter2.Count(); i++)
+                                                    {
+                                                        var item = proppertyFilter2.ElementAt(i);
+
+                                                        <span>@item</span>
+                                                        @if (i != proppertyFilter2.Count() - 1)
+                                                        {
+                                                            <span>,</span>
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        @if (proppertyFilter1 != null && proppertyFilter1.Any())
+                                        {
+                                            <tr>
+                                                <th scope="row"><h6>Cách dùng</h6></th>
+                                                <td>
+                                                    @for (var i = 0; i < proppertyFilter1.Count(); i++)
+                                                    {
+                                                        var item = proppertyFilter1.ElementAt(i);
+
+                                                        <span>@item</span>
+                                                        @if (i != proppertyFilter1.Count() - 1)
+                                                        {
+                                                            <span>,</span>
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                            @if (proppertyFilter3 != null && proppertyFilter3.Any())
+                                            {
+                                                <tr>
+                                                    <th scope="row"><h6>Đối tượng sử dụng</h6></th>
+                                                    <td>
+                                                        @for (var i = 0; i < proppertyFilter3.Count(); i++)
+                                                        {
+                                                            var item = proppertyFilter3.ElementAt(i);
+                                                        <span>@item</span>
+                                                            @if (i != proppertyFilter3.Count() - 1)
+                                                            {
+                                                                <span>,</span>
+                                                            }
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                            @if (proppertyFilter0 != null && proppertyFilter0.Any())
+                                            {
+                                                <tr>
+                                                    <th scope="row"><h6>Nhóm công dụng</h6></th>
+                                                    <td>
+                                                        @for (var i = 0; i < proppertyFilter0.Count(); i++)
+                                                        {
+                                                            var item = proppertyFilter0.ElementAt(i);
+                                                        <span>@item</span>
+                                                            @if (i != proppertyFilter0.Count() - 1)
+                                                            {
+                                                                <span>,</span>
+                                                            }
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <style>
+                                        #div_detail_none {
+                                            display: none;
+                                        }
+                                    </style>
+                                } *@
+
+                                <div class="pickup-box pickup-detail">
+                                    <div class="product-title">
+                                        <h4 style="font-weight: 600">Thông tin sản phẩm</h4>
+                                    </div>
+                                    @productDetail.summaryInfo
+                                    @*<h5 class="text-content" style="font-family: Arial">
+                                       
+                                    </h5>*@
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    <div class="col-12" style="z-index: 1;overflow-y: auto;">
+                            <div class="product-section-box">
+                                <ul class="nav nav-tabs custom-nav" id="myTab" role="tablist">
+                                    @if(@productDetail.detail !=null)
+                                     {
+                                          <li class="nav-item" role="presentation">
+                                             <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+                                                     data-bs-target="#description" type="button" role="tab"
+                                                     aria-controls="description" aria-selected="true">
+                                                     Thông tin chi tiết 
+                                            </button>
+                                            </li>
+                                     }
+                                </ul>
+
+                                <div class="tab-content custom-tab" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="description" role="tabpanel"
+                                         aria-labelledby="description-tab">
+                                    <div class="product-description" style="display: inline-grid;">
+                                            <div class="nav-desh">
+                                                <p>
+                                                    @Html.Raw(@productDetail.detail)
+
+                                                </p>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-xl-4 col-lg-5 d-none d-lg-block wow fadeInUp">
+                    <div class="right-sidebar-box">
+                        <div class="vendor-box">
+                            <div class="verndor-contain">
+                                <div class="vendor-image">
+                                <img src="@supplierInfo.imageObj?.smallUrl" class="blur-up lazyload" onerror="this.onerror=null;this.src='/img_dev/error/product.png';" alt="@supplierInfo.name">
+                                </div>
+
+                                <div class="vendor-name">
+                                    <h6 class="fw-500">@supplierInfo.name</h6>
+
+
+
+                                </div>
+                            </div>
+
+                            <p class="vendor-detail">
+                                @supplierInfo.description
+                            </p>
+
+                            <div class="vendor-list">
+                                <ul>
+                                    @if (!string.IsNullOrEmpty(supplierInfo.addressObj?.addressText))
+                                    {
+                                        <li>
+                                            <div class="address-contact text-black fw-bold" style="display: block">
+                                                <span class="d-flex"><i data-feather="map-pin"></i><h4 class="mx-2">Điạ chỉ:</h4></span>
+                                            <h6 class="mx-3"> <span class="text-content mt-2 mx-3">@supplierInfo.addressObj?.addressText, @supplierInfo.addressObj?.wardObj?.name, @supplierInfo.addressObj?.districtObj?.name, @supplierInfo.addressObj?.provinceObj?.name</span></h6>
+                                            </div>
+                                        </li>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(supplierInfo.hotlineNumber))
+                                    {
+                                        <li>
+                                            <div class="address-contact">
+                                                <i data-feather="phone-call"></i>
+                                                <h6 class="text-black fw-bold">Hotline: <span class="text-content">@supplierInfo.hotlineNumber</span></h6>
+                                            </div>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Trending Product -->
+                     @*   <div class="pt-25">
+                            <div class="category-menu">
+                                <h3>Sản phẩm mới </h3>
+
+                                <ul id="div_list_product_new" class="product-list product-right-sidebar border-0 p-0">
+                                </ul>
+                            </div>
+                        </div>*@
+
+                        <!-- Banner Section -->
+                        <div class="ratio_156 pt-25">
+                            <div class="home-contain">
+                                @if (dataBanner != null && dataBanner.Any())
+                                {
+                                    foreach (var item in dataBanner)
+                                    {
+                                        <img src="@(!string.IsNullOrEmpty(item.imageUrl) ? item.imageUrl : "/img_dev/error/banner.png")" class="bg-img blur-up lazyload"
+                                             alt=""
+                                             onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';">
+                                        <div class="home-detail p-top-left home-p-medium">
+                                            <div>
+                                                <h3 class="text-uppercase fw-normal">
+                                                    <span class="theme-color fw-bold" style="color: @item.titleColor;text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">@item.title</span>
+                                                </h3>
+                                                <p class="fw-light" style="color: @item.descShortColor;text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">@item.descShort</p>
+                                                @if (!string.IsNullOrEmpty(item.url))
+                                                {
+                                                    <button href="/san-pham"
+                                                            class="btn btn-animation btn-md fw-bold mend-auto">
+                                                        Xem thêm <i class="fa-solid fa-arrow-right icon"></i>
+                                                    </button>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Left Sidebar End -->
+    <!-- Releted Product Section Start -->
+    <section class="product-list-section section-b-space">
+        <div class="container-fluid-lg">
+            <div class="title">
+                <h2>Sản phẩm liên quan</h2>
+                <span class="title-leaf">
+                    <svg class="icon-width">
+                        <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
+                    </svg>
+                </span>
+            </div>
+            <div class="border-row">
+                <div class=" no-arrow">
+                    <div class="row m-0 div_width_product">
+                        <div class="slider_product" id="div_list_related_product">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- Releted Product Section End -->
+    <!-- Add to cart Modal Start -->
+    <div class="add-cart-box">
+        <div class="add-iamge">
+            <img src="../assets/images/cake/pro/1.jpg" class="img-fluid" alt="">
+        </div>
+
+        <div class="add-contain">
+            <h6>Added to Cart</h6>
+        </div>
+    </div>
+    <!-- Add to cart Modal End -->
+    <!-- Tap to top start -->
+    <div class="theme-option">
+        <div class="back-to-top">
+            <a id="back-to-top" href="#">
+                <i class="fas fa-chevron-up"></i>
+            </a>
+        </div>
+    </div>
+    <!-- Tap to top end -->
+    <!-- Bg overlay Start -->
+  @*  <div class="bg-overlay"></div>*@
+    <!-- Bg overlay End -->
+
+<div class="added-notification">
+    <img src="/img_dev/logo/add-to-cart.png" style="color:seagreen" class="img-fluid" alt="Success">
+    <h3>Đã thêm vào giỏ hàng</h3>
+</div>
+<!-- added to cart notification -->
+
+
+<div class="modal fade" id="modal_dismiss_create_account" tabindex="-1" role="dialog" aria-labelledby="modal_dismiss_create_account" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="border: 2mm ridge rgb(218 229 20 / 60%);">
+            <div class="modal-header">
+                <h4 class="modal-title"><span class="fw-bolder fs-5" style="color: #259043;">@supplierInfo.name</span> xin chào !</h4>
+                <button type="button" class="close btn btn-primary rounded" onclick="$('#modal_dismiss_create_account').modal('hide')" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0 pb-0">
+                <b class="text-info mb-5" style="font-size: 18px;">Bạn có muốn tạo tài khoản không ?</b>
+                <br /> <i class="text-dark fs-6">Việc bạn tạo tài khoản sẽ giúp bạn dễ dàng hơn trong việc mua hàng, cũng như xem lại lịch sử những đơn hàng đã mua, và một số ưu đãi khác.</i>
+                <br />
+                <div class="pretty text-muted float-right mt-2 p-icon p-round p-jelly d-flex" style="float: right">
+                    <input id="input_dismiss_modal_create" type="checkbox" />
+                    <div class="state mx-3 p-success">
+                        @*<i class="fas fa-check icon"></i>*@
+                        <label>Không hiển thị lại</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="ShowModalDimissCreateAccount('2')" type="button" class="btn btn-success rounded" data-dismiss="modal" style="background: #13d42c;color: white">Tiếp tục thêm vào giỏ hàng</button>
+                <button onclick="CreateAccountCustomer()" type="button" class="btn btn-primary rounded" style="background: #239bff;color: white">Tạo tài khoản</button>
+            </div>
+        </div>
+    </div>
+</div>

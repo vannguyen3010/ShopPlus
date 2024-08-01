@@ -1,0 +1,99 @@
+﻿@{
+    var identity = (System.Security.Claims.ClaimsIdentity)Context.Request.HttpContext.User.Identity;
+    ThreeF_WebPortal.ViewModels.VM_AccountInfo account = new VM_AccountInfo();
+    if (identity.IsAuthenticated)
+    {
+        account = new ThreeF_WebPortal.ViewModels.VM_AccountInfo()
+                {
+                    userName = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Select(c => c.Value)?.SingleOrDefault(),
+                    fullName = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Name).Select(c => c.Value)?.SingleOrDefault(),
+                    avatar = identity.Claims.Where(c => c.Type == "Avatar").Select(c => c.Value).SingleOrDefault(),
+                    isAuthenticated = identity.IsAuthenticated,
+                };
+    }
+    var supplierInfo = ViewBag.SupplierInfo as M_Supplier;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @await RenderSectionAsync(name: "MetaHead", required: false)
+    <meta name="robots" content="noodp,noydir,index,follow" />
+    <meta http-equiv="Content-Security-Policy" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-language" content="vi" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>@ViewData["Title"]</title>
+    @*   <meta name="description" content="@ViewData["Description"]" />*@
+    <meta name="description" content="@(string.IsNullOrEmpty(supplierInfo.description) ? ViewData["Description"] : supplierInfo.description)" />
+    <meta name="keywords" content="@ViewData["Keywords"]" />
+    <meta name="author" content="H2AITS" />
+    <link rel="shortcut icon" type="image/x-icon" href="@(!string.IsNullOrEmpty(supplierInfo.imageFavicon) ? supplierInfo.imageFavicon : "/favicon.ico")" />
+    @* <link rel="icon" type="image/x-icon" href="@(!string.IsNullOrEmpty(supplierInfo.imageFavicon) ? supplierInfo.imageFavicon : "/favicon.ico")" />*@
+    <meta property="og:image" content="@(!string.IsNullOrEmpty(supplierInfo.imageObj?.mediumUrl) ? supplierInfo.imageObj?.mediumUrl : ViewData["ImagePreview"])" />
+
+    <meta property="og:image" content="@(!string.IsNullOrEmpty(supplierInfo.imageObj?.mediumUrl) ? supplierInfo.imageObj?.mediumUrl : ViewData["ImagePreview"])" />
+    <meta property="og:image:alt" content="@ViewData["Title"]" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="vi" />
+
+    <meta property="og:site_name" content="@(string.IsNullOrEmpty(supplierInfo.name) ? "Shop Plus" : supplierInfo.name)" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@(string.IsNullOrEmpty(supplierInfo.description) ? ViewData["Description"] : supplierInfo.description)" />
+
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="@(!string.IsNullOrEmpty(supplierInfo.imageObj?.mediumUrl) ? supplierInfo.imageObj?.mediumUrl : ViewData["ImagePreview"])" />
+    <meta name="twitter:title" content="@ViewData["Title"]" />
+    <meta name="twitter:description" content="@(string.IsNullOrEmpty(supplierInfo.description) ? ViewData["Description"] : supplierInfo.description)" />
+    <partial name="_P_Styles" />
+    @RenderSection("Styles", required: false)
+    <link href="/css/responsive.css" rel="stylesheet" asp-append-version="true" />
+</head>
+
+<body class="bg-effect">
+    <partial name="_P_HeaderTop" />
+    @RenderBody()
+    <partial name="_P_ListenVoiceModal" />
+    <partial name="_P_Order_Search" />
+    <partial name="_P_Footer" />
+    <partial name="_P_SignOutModal" />
+   @* <div class="cookie-bar-box" id="div_qc" style="max-width:380px !important">
+        <div class="cookie-box">
+            <div class="cookie-image">
+                <img src="../assets/images/cookie-bar.png" class="blur-up lazyload" alt="">
+                <h2>Thông báo!</h2>
+            </div>
+
+            <div class="cookie-contain">
+                <h5 style="font-weight: 500;color:#000;font-size: 14px;" class="text-content">
+                    MỪNG SINH NHẬT <span class="text-success">H2A</span>, SALE LỚN THÁNG 11 NÀY!
+                </h5>
+                 <h5>
+                    <span style="margin-left: -12px;" class="text-danger">
+                        » Thời gian áp dụng: 01/11/2023 - 30/11/2023
+                    </span>
+                    <span class="text-black">
+                        » Ưu đãi: Toàn bộ sản phẩm trong hệ sinh thái H2A được <span class="text-danger">giảm 30%</span> so với giá gốc khi quý khách thanh toán trong tháng 11 này !!
+                    </span>
+                 </h5>
+                
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn privacy-button" onclick="$('#div_qc').remove()">Đóng</button>
+            <a style="white-space: nowrap;
+    width: 100%;
+    font-weight: 700;
+    border-radius: 0;
+background-color: var(--theme-color);
+    color: #fff;" target="_blank" href="https://register.h2aits.com/" class="btn ok-button">Đăng ký</a>
+        </div>
+    </div>*@
+    <partial name="_P_Scripts" model="new VM_AccountInfo()" />
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

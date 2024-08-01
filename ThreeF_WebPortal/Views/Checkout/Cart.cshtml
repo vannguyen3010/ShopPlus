@@ -1,0 +1,76 @@
+﻿@{
+    var breadCrumb = new ThreeF_WebPortal.ViewModels.VM_BreadCrumb
+            {
+                currentName = "Giỏ hàng",
+            };
+}
+@section MetaHead{
+    <meta name="robots" content="noindex, nofollow">
+}
+@section Styles{
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/css/checkbox_custom_1.css" rel="stylesheet" />
+    <link href="~/css/cart.css" rel="stylesheet" asp-append-version="true" />
+
+}
+@section Scripts{
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/controllers/checkout_cart.js" asp-append-version="true"></script>
+    <script>
+        var placeOrderFail = '@TempData["PlaceOrderFail"]';
+        if (placeOrderFail) {
+            ShowToastNoti('error', '', 'Xảy ra lỗi, hãy thử lại!');
+        }
+    </script>
+}
+
+<partial name="_P_Breadcrumb" model="breadCrumb" />
+<!-- Cart Section Start -->
+<input id="total_price_cart" type="hidden" />
+<section class="cart-section section-b-space" id="section_cart">
+    <div class="container-fluid-lg">
+        <div class="row g-sm-5 g-3">
+            <div class="table-responsive-vertical">
+                <table class="table table-hover table-mc-light-blue" id="div_zone_cart">
+                   
+
+                </table>
+
+                <div class="summery-box p-sticky d-flex" style="float: right">
+                    <ul class="summery-total">
+                        <li class="list-total border-top-0">
+                            <h4 class="mx-4">Tổng tiền</h4>
+                            <h4 class="price theme-color" id="h2_total_pay">0đ</h4>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xxl-12 d-flex justify-content-between" style="background: #f8f8f8;">
+                <div class="summery-box p-sticky d-flex">
+                    <div class="col-auto px-1">
+                        <a href="/san-pham" class="btn btn-solid mb-1" style="color: #fff;background: #0da0da;">Tiếp tục mua sắm</a>
+                    </div>
+
+                  
+                </div>
+                <div class="summery-box p-sticky d-flex">
+
+                    <div class="">
+                        <ul>
+                            <li>
+                                <a id="btn_confirm" title="Xoá mục đã chọn"
+                                   class="btn btn-animation proceed-btn fw-bold" style="background: #00dd42;">
+                                    Mua hàng
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+               
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Cart Section End -->

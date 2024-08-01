@@ -1,0 +1,689 @@
+﻿@using ThreeF_WebPortal.Lib;
+@section Scripts{
+    <script src="~/controllers/checkout_cart.js" asp-append-version="true"></script>
+    <script src="~/controllers/handle_cart_local_storage.js" asp-append-version="true"></script>
+}
+
+
+@{
+    var bannerTop = ViewBag.BannerTopFirst as List<M_BannerLocation>;
+    var dataFirst = ViewBag.BannerFirst as List<VM_Banner>;
+    var identity = (System.Security.Claims.ClaimsIdentity)Context.Request.HttpContext.User.Identity;
+    var listCategory = ViewBag.Category as List<M_Category>;
+    var supplierInfo = ViewBag.SupplierInfo as M_Supplier;
+    var newsCategory = ViewBag.NewsCategory as List<M_NewsCategory>;
+    var listCat = ViewBag.Category as List<M_Category>;
+    string name = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Name).Select(c => c.Value).FirstOrDefault();
+    string avatar = identity.Claims.Where(c => c.Type == "Avatar").Select(c => c.Value).FirstOrDefault();
+}
+<div class="fullpage-loader">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<header class="pb-md-4 pb-0">
+    @if (bannerTop != null && bannerTop.Any())
+    {
+        <div class="div_header_bg_opacity d-none d-md-block">
+            <div class="slider_banner_top" @*style="height: 75px"*@>
+                @foreach (var item in bannerTop)
+                {
+                    @if (item.dataObj != null && item.dataObj.Any())
+                    {
+                        foreach (var value in item.dataObj)
+                        {
+                            <div style="height: 75px">
+                                <img style="object-fit: cover;" class="w-100 h-100 lazyload div_img_css_bannerFirst" src="@(!string.IsNullOrEmpty(value.imageObj?.smallUrl) ? value.imageObj?.smallUrl : "/img_dev/error/banner.png")" alt="@value.title" />
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+        </div>
+    }
+
+    @* <div class="div_header_bg_opacity div_bg @if (bannerTop == null || !bannerTop.Any()) { <text> d-none d-md-block</text> }">
+    @if (bannerTop != null && bannerTop.Any())
+    {
+    <div class="slider_banner_mid" style="height: 75px">
+    @foreach (var item in bannerTop)
+    {
+    @if (item.dataObj != null && item.dataObj.Any())
+    {
+    foreach (var value in item.dataObj)
+    {
+    <img style="object-fit: cover;" class="w-100 h-100 lazyload div_img_css_bannerFirst" src="@(!string.IsNullOrEmpty(value.imageObj?.smallUrl) ? value.imageObj?.smallUrl : "/img_dev/error/banner.png")" alt="@value.title" />
+    }
+    }
+    }
+    </div>
+    }
+    <div class="container-fluid-lg">
+    </div>
+    </div>*@
+    <div class="top-nav top-header sticky-header pt-0 pb-0 bg-header_green" style="background: var(--primaryColor);">
+
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="navbar-top">
+                        <button class="navbar-toggler d-xl-none d-inline navbar-menu-button" type="button"
+                                data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
+                            <span @*class="navbar-toggler-icon"*@>
+                                <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
+                            </span>
+                        </button>
+                        <a href="/" class="web-logo nav-logo" style="z-index: 10">
+                            <img src="@(!string.IsNullOrEmpty(supplierInfo.imageObj?.smallUrl) ? supplierInfo.imageObj?.smallUrl : "/img_dev/error/avatar.png")" class="img-fluid blur-up lazyload m-1" alt="@supplierInfo.name"
+                                 onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';" style="max-height: 85px; width: auto; max-width: 100%;">
+                        </a>
+                        <div class="header-nav-middle" style="z-index: 99">
+                            <div class="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
+                                <div class="offcanvas offcanvas-collapse order-xl-2" id="primaryMenu">
+                                    <div class="offcanvas-header navbar-shadow">
+                                        <h5>Danh mục</h5>
+                                        <button class="btn-close lead" type="button" data-bs-dismiss="offcanvas"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body mt-md-3 offcanvas_css">
+                                        <ul class="navbar-nav">
+                                            <li class="nav-item ">
+                                                <a class="nav-link disable_icon_dropdown fs-6" href="/"
+                                                   data-bs-toggle="" style="font-weight: 700;color: white">Trang Chủ</a>
+                                            </li>
+                                            <li class="nav-item dropdown div_product_respon_dekstop">
+                                                <a class="nav-link dropdown-toggle fs-6" href="/san-pham" style="font-weight: 700;color: white">Sản Phẩm</a>
+
+                                                <ul class="dropdown-menu div_section_scroll">
+                                                    @if (listCategory != null && listCategory.Any())
+                                                    {
+                                                        foreach (var item in listCategory)
+                                                        {
+                                                            <li class="sub-dropdown-hover">
+                                                                <a href="/san-pham?c1=@item.id" class="dropdown-item disable_icon_dropdown d-flex align-items-center">
+                                                                    <img src="@item.imageObj?.smallUrl" alt="" style="width: 50px; height: 50px; margin-right: 10px; object-fit: contain" onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';">
+                                                                    <h6 class="flex-grow-1" style="margin-right: 10px;">@item.name</h6>
+
+                                                                    @if (item.childMenu != null && item.childMenu.Any())
+                                                                    {
+                                                                        <i class="fa-solid fa-angle-right"></i>
+                                                                    }
+                                                                </a>
+
+                                                                @if (item.childMenu != null && item.childMenu.Any())
+                                                                {
+                                                                    <ul class="sub-menu">
+                                                                        @foreach (var value in item.childMenu)
+                                                                        {
+                                                                            <li>
+                                                                                <a style="object-fit: cover;" href="/san-pham?c1=@item.id&c2=@value.id">@value.name</a>
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                }
+                                                            </li>
+                                                        }
+                                                    }
+                                                </ul>
+
+                                            </li>
+                                            <li class="nav-item dropdown nav_product_v2 div_product_respon_mobile">
+                                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="/san-pham" style="font-weight: 700;color: white">
+                                                    Sản Phẩm
+                                                </a>
+
+                                                <ul class="dropdown-menu">
+                                                    @if (listCategory != null && listCategory.Any())
+                                                    {
+                                                        foreach (var item in listCategory)
+                                                        {
+                                                            <li class="sub-dropdown-hover">
+
+                                                                <a href="/san-pham?c1=@item.id" class="dropdown-item font_title disable_icon_dropdown d-flex align-items-center">
+                                                                    <img src="@item.imageObj?.smallUrl" alt="" style="width: 35px; height: 35px; margin-right: 10px;object-fit:cover;border-radius: 10px;" onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';">
+                                                                    <h6 class="pt-2 px-1 flex-grow-1 text-success fw-bold" style="margin-right: 10px;">@item.name</h6>
+                                                                    <i class="fa-solid fa-angle-right d-none d-md-block"></i>
+                                                                </a>
+                                                                @if (item.childMenu != null && item.childMenu.Any())
+                                                                {
+                                                                    <ul class="sub-menu">
+                                                                        @foreach (var value in item.childMenu)
+                                                                        {
+                                                                            <li>
+                                                                                <a style="font-size: 13px !important;" class="" href="/san-pham?c1=@item.id&c2=@value.id">@value.name</a>
+                                                                            </li>
+                                                                        }
+
+                                                                    </ul>
+                                                                }
+
+                                                            </li>
+                                                        }
+                                                    }
+
+                                                </ul>
+                                            </li>
+
+                                            @if (supplierInfo?.supplierServiceObj?.serviceObj?.serviceCode == CommonConstants.CODE_SERVICE_MINISHOP_PLUS || supplierInfo?.supplierServiceObj?.serviceObj?.serviceCode == CommonConstants.CODE_SERVICE_MINISHOP_PLUS_TRIAL)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link disable_icon_dropdown fs-6" href="/gioi-thieu"
+                                                       data-bs-toggle="" style="font-weight: 700;color: white">Giới Thiệu</a>
+                                                </li>
+                                            }
+
+                                            @if (supplierInfo?.supplierServiceObj?.serviceObj?.serviceCode == CommonConstants.CODE_SERVICE_MINISHOP_PLUS || supplierInfo?.supplierServiceObj?.serviceObj?.serviceCode == CommonConstants.CODE_SERVICE_MINISHOP_PLUS_TRIAL)
+                                            {
+                                                <li class="nav-item dropdown d-none d-md-block">
+                                                    <a class="nav-link dropdown-toggle div_product_respon_dekstop" style="font-weight: 700;color: white" href="/tin-tuc">Tin Tức</a>
+                                                    @if (newsCategory != null && newsCategory.Any())
+                                                    {
+                                                        <ul class="dropdown-menu">
+                                                            @foreach (var item in newsCategory)
+                                                            {
+                                                            <li>
+                                                                <a href="/tin-tuc?c=@item.id" class="dropdown-item">
+                                                                    @item.name
+                                                                </a>
+                                                            </li>
+                                                            }
+
+                                                        </ul>
+                                                    }
+
+                                                </li>
+                                                <li class="nav-item dropdown d-block d-md-none">
+                                                    <a class="nav-link dropdown-toggle div_product_respon_mobile" style="font-weight: 700;color: white" href="/tin-tuc"
+                                                       data-bs-toggle="dropdown">Tin Tức</a>
+
+                                                    <ul class="dropdown-menu">
+                                                        @if (newsCategory != null && newsCategory.Any())
+                                                        {
+                                                            foreach (var item in newsCategory)
+                                                            {
+                                                                <li>
+                                                                    <a href="/tin-tuc?c=@item.id" class="dropdown-item">
+                                                                        @item.name
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                        }
+
+                                                    </ul>
+                                                </li>
+                                            }
+
+
+                                            <li class="nav-item">
+                                                <a class="nav-link disable_icon_dropdown fs-6" href="/lien-he" style="font-weight: 700;color: white">Liên Hệ</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*   <div class="middle-box">
+
+                        <div class="search-box">
+                        <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Tìm kiếm sản phẩm"
+                        aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn" type="button" id="button-addon2">
+                        <i data-feather="search"></i>
+                        </button>
+                        </div>
+                        </div>
+                        </div>*@
+
+                        <div class="rightside-box">
+                            <div class="search-full">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i data-feather="search" class="font-light"></i>
+                                    </span>
+                                    <input type="text" class="form-control search-type" placeholder="Search here..">
+                                    <span class="input-group-text close-search">
+                                        <i data-feather="x" class="font-light"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <ul class="right-side-menu">
+                                <li class="right-side d-none">
+                                    <div class="delivery-login-box">
+                                        <div class="delivery-icon">
+                                            <div class="search-box">
+                                                <i data-feather="search"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                @*  <div class="col-lg-3">
+                                <ul class="about-list right-nav-about">
+                                <li class="right-nav-list">
+                                <div class="theme-form-select">
+                                <a class="btn vibrate" href="tel:@supplierInfo.hotlineNumber">
+                                <i class="fas fa-phone-alt text-white"></i>
+                                <span style="color: #f9ff00" ;>Hotline:@supplierInfo.hotlineNumber</span>
+                                </a>
+
+                                </div>
+                                </li>
+                                </ul>
+                                </div>*@
+                                @*  <li class="right-side">
+                                <ul class="about-list right-nav-about">
+                                <li class="right-nav-list">
+                                <div class="theme-form-select">
+                                <a class="btn vibrate" href="tel:@supplierInfo.hotlineNumber">
+                                <i class="fas fa-phone-alt text-white"></i>
+                                <span style="color: #f9ff00" ;>Hotline:@supplierInfo.hotlineNumber</span>
+                                </a>
+
+                                </div>
+                                </li>
+                                </ul>
+                                </li>*@
+                                @*  <li class="right-side">
+                                <a href="tel:@supplierInfo.telephoneNumber" class="delivery-login-box">
+                                <div class="delivery-icon">
+                                <i class="text-white" data-feather="smartphone"></i>
+                                </div>
+                                <div class="delivery-detail">
+                                <h6>Hỗ trợ khách hàng</h6>
+                                <h5>@supplierInfo.telephoneNumber</h5>
+                                </div>
+                                </a>
+                                </li>*@
+                                <li class="header-nav-right">
+                                    <a class="btn deal-button" href="tel:@(string.IsNullOrEmpty(supplierInfo.hotlineNumber) ? supplierInfo.telephoneNumber : supplierInfo.hotlineNumber)">
+                                        <i class="flashit me-1" data-feather="phone"></i>
+                                        <span class="text-white">@(string.IsNullOrEmpty(supplierInfo.hotlineNumber) ? supplierInfo.telephoneNumber : supplierInfo.hotlineNumber)</span>
+                                    </a>
+                                </li>
+                                <li class="right-side">
+                                    <div class="onhover-dropdown header-badge">
+
+                                        @if (!identity.IsAuthenticated)
+                                        {
+                                            <a id="btn_cart_list" href="/checkoutwithoutlogin/cart" class="btn p-0 position-relative header-wishlist bg_buton_cart" style="z-index: 99">
+                                                <i class="text-white" data-feather="shopping-cart"></i>
+                                                <span id="cart_item_count" class="count_item_pr_custom"></span>
+                                            </a>
+
+                                        }
+                                        else
+                                        {
+                                            <a href="/checkout/cart" class="btn p-0 position-relative header-wishlist bg_buton_cart" style="z-index: 99">
+                                                <i class="text-white" data-feather="shopping-cart"></i>
+                                                <span id="cart_item_count" class="count_item_pr_custom"></span>
+                                            </a>
+                                        }
+                                        @*<div class="onhover-div">
+                                        <ul class="cart-list">
+                                        <li class="product-box-contain">
+                                        <div class="drop-cart">
+                                        <a href="product-left-thumbnail.html" class="drop-image">
+                                        <img src="../assets/images/vegetable/product/1.png"
+                                        class="blur-up lazyload" alt="">
+                                        </a>
+
+                                        <div class="drop-contain">
+                                        <a href="product-left-thumbnail.html">
+                                        <h5>Fantasy Crunchy Choco Chip Cookies</h5>
+                                        </a>
+                                        <h6><span>1 x</span> $80.58</h6>
+                                        <button class="close-button close_button">
+                                        <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                        </div>
+                                        </div>
+                                        </li>
+
+                                        <li class="product-box-contain">
+                                        <div class="drop-cart">
+                                        <a href="product-left-thumbnail.html" class="drop-image">
+                                        <img src="../assets/images/vegetable/product/2.png"
+                                        class="blur-up lazyload" alt="">
+                                        </a>
+
+                                        <div class="drop-contain">
+                                        <a href="product-left-thumbnail.html">
+                                        <h5>
+                                        Peanut Butter Bite Premium Butter Cookies 600 g
+                                        </h5>
+                                        </a>
+                                        <h6><span>1 x</span> $25.68</h6>
+                                        <button class="close-button close_button">
+                                        <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                        </div>
+                                        </div>
+                                        </li>
+                                        </ul>
+
+                                        <div class="price-box">
+                                        <h5>Total :</h5>
+                                        <h4 class="theme-color fw-bold">$106.58</h4>
+                                        </div>
+
+                                        <div class="button-group">
+                                        <a href="cart.html" class="btn btn-sm cart-button">View Cart</a>
+                                        <a href="checkout.html" class="btn btn-sm cart-button theme-bg-color
+                                        text-white">Checkout</a>
+                                        </div>
+                                        </div>*@
+                                    </div>
+                                </li>
+                                @if (identity.IsAuthenticated)
+                                {
+                                    <li class="right-side onhover-dropdown">
+                                        <div class="delivery-login-box">
+                                            <div class="delivery-icon" style="width: 40px;height: 40px">
+                                                <img src="@avatar" class="lazyload mx-2 w-100 h-100" alt="Avatar"
+                                                     onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';" style="border-radius: 21px; width: 40px;object-fit: cover;" />
+                                            </div>
+                                            <div class="d-none d-md-block mx-4">
+                                                <h5 class="text-white clamp_name_avata text-truncate" style="align-items: center;max-width: 100px;">
+                                                    @name
+                                                </h5>
+                                            </div>
+                                        </div>
+
+                                        <div class="onhover-div onhover-div-login">
+                                            <ul class="user-box-name">
+                                                @* <li class="product-box-contain">
+                                            <i></i>
+                                            <a href="">Đơn hàng</a>
+                                            </li>*@
+
+                                                <li class="product-box-contain">
+                                                    <a href="/account/profile">Thông tin cá nhân</a>
+                                                </li>
+
+                                                <li class="product-box-contain">
+                                                    <a id="btn_sig" data-toggle="modal" onclick="$('#modal_signout').modal('show')" href="javascript:void(0)">Đăng xuất</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="right-side onhover-dropdown">
+                                        <div class="delivery-login-box">
+                                            <div class="delivery-icon">
+                                                <i class="text-white" data-feather="user" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="delivery-detail">
+                                                <h5 class="text-white">Tài khoản</h5>
+                                            </div>
+                                        </div>
+
+                                        <div class="onhover-div onhover-div-login">
+                                            <ul class="user-box-name">
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href="/account/signin">Đăng nhập</a>
+                                                </li>
+
+                                                <li class="product-box-contain">
+                                                    <a href="/account/register">Đăng ký</a>
+                                                </li>
+                                                <li class="product-box-contain">
+                                                    <a href="javascript:void(0)" id="btn_load_order_without_account_desktop">Tra cứu đơn hàng</a>
+                                                </li>
+
+
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="container-fluid-lg bg-header_green">
+    <div class="row">
+    <div class="col-12">
+    <div class="header-nav">
+    <div class="header-nav-left">
+    <button class="dropdown-category d-md-none d-lg-none d-xl-block div_cate_none">
+    <i data-feather="align-left"></i>
+    <span>Danh mục</span>
+    </button>
+
+    <div class="category-dropdown">
+
+    <ul class="category-list">
+    @if (listCat != null && listCat.Any())
+    {
+    foreach (var item in listCat)
+    {
+    <li class="onhover-category-list">
+    <a href="/san-pham?c1=@item.id" class="category-name">
+    <img src="@(!string.IsNullOrEmpty(item.imageObj?.smallUrl) ? item.imageObj?.smallUrl : "/img_dev/error/avatar.png")" alt=""
+    onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';">
+    <h6>@item.name</h6>
+    <i class="fa-solid fa-angle-right d-none d-md-block"></i>
+    </a>
+
+    <div class="onhover-category-box w-100 div_height_category" style="height: 300px;">
+    <div class="list-1">
+    @if(item.childMenu != null && item.childMenu.Any())
+    {
+    foreach (var value in item.childMenu)
+    {
+
+    <ul class="div_custom mb-2">
+    <li class="div_custom_style">
+    <a href="/san-pham?c1=@item.id & c2=@value.id">@value.name</a>
+    </li>
+    </ul>
+    }
+    }
+
+    </div>
+    </div>
+    </li>
+    }
+    }
+
+    </ul>
+    </div>
+    </div>
+
+    <div class="header-nav-middle">
+    <div class="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
+    <div class="offcanvas offcanvas-collapse order-xl-2" id="primaryMenu">
+    <div class="offcanvas-header navbar-shadow">
+    <h5>Danh mục</h5>
+    <button class="btn-close lead" type="button" data-bs-dismiss="offcanvas"
+    aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body mt-md-3 offcanvas_css">
+    <ul class="navbar-nav">
+    <li class="nav-item ">
+    <a class="nav-link disable_icon_dropdown fs-5" href="/"
+    data-bs-toggle="" style="font-weight: 700;color: white">Trang Chủ</a>
+    </li>
+    <li class="nav-item dropdown d-none d-md-block">
+    <a class="nav-link dropdown-toggle fs-5" href="/san-pham" style="font-weight: 700;color: white">Sản Phẩm</a>
+
+    <ul class="dropdown-menu">
+    @if (listCategory != null && listCategory.Any())
+    {
+    foreach (var item in listCategory)
+    {
+    <li class="sub-dropdown-hover">
+
+    <a href="/san-pham?c1=@item.id" class="dropdown-item disable_icon_dropdown d-flex align-items-center">
+    <img src="@item.imageObj?.smallUrl" alt="" style="width: 30px; height: 30px; margin-right: 10px;" onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';">
+    <h6 class="flex-grow-1" style="margin-right: 10px;">@item.name</h6>
+    <i class="fa-solid fa-angle-right"></i>
+    </a>
+
+
+
+    @if (item.childMenu != null && item.childMenu.Any())
+    {
+    <ul class="sub-menu">
+    @foreach (var value in item.childMenu)
+    {
+    <li>
+    <a href="/san-pham?c1=@item.id&c2=@value.id">@value.name</a>
+    </li>
+    }
+
+    </ul>
+    }
+
+
+    </li>
+    }
+    }
+
+    </ul>
+    </li>
+    <li class="nav-item dropdown nav_product_v2 d-block d-md-none">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="/san-pham">
+    Sản Phẩm
+    </a>
+
+    <ul class="dropdown-menu">
+    @if (listCategory != null && listCategory.Any())
+    {
+    foreach (var item in listCategory)
+    {
+    <li class="sub-dropdown-hover">
+
+    <a href="/san-pham?c1=@item.id" class="dropdown-item disable_icon_dropdown d-flex align-items-center">
+    <img src="@item.imageObj?.smallUrl" alt="" style="width: 30px; height: 30px; margin-right: 10px;" onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';">
+    <h6 class="flex-grow-1" style="margin-right: 10px;">@item.name</h6>
+    <i class="fa-solid fa-angle-right d-none d-md-block"></i>
+    </a>
+    @if (item.childMenu != null && item.childMenu.Any())
+    {
+    <ul class="sub-menu">
+    @foreach (var value in item.childMenu)
+    {
+    <li>
+    <a href="/san-pham?c1=@item.id & c2=@value.id">@value.name</a>
+    </li>
+    }
+
+    </ul>
+    }
+
+    </li>
+    }
+    }
+
+    </ul>
+    </li>
+
+    <li class="nav-item">
+    <a class="nav-link disable_icon_dropdown" href="/gioi-thieu"
+    data-bs-toggle="">Giới Thiệu</a>
+
+    </li>
+
+    <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="/tin-tuc"
+    data-bs-toggle="dropdown">Tin Tức</a>
+
+    <ul class="dropdown-menu">
+    @if (newsCategory != null && newsCategory.Any())
+    {
+    foreach (var item in newsCategory)
+    {
+    <li>
+    <a href="/tin-tuc/@item.nameSlug" class="dropdown-item">
+    @item.name
+    </a>
+    </li>
+    }
+    }
+
+    </ul>
+    </li>
+
+    <li class="nav-item">
+    <a class="nav-link disable_icon_dropdown fs-5" href="/lien-he" style="font-weight: 700;color: white">Liên Hệ</a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="header-nav-right">
+    <a class="btn deal-button" href="#div_product_discount">
+    <i class="flashit" data-feather="zap"></i>
+    <span class="text-white">Giảm giá sốc</span>
+    </a>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+</header>
+<div class="mobile-menu d-md-none d-block mobile-cart" style="background: #339538;z-index: 999;">
+    <ul>
+        <li class="">
+            <a href="/">
+                <i class="iconly-Home icli"></i>
+                <span>Trang Chủ</span>
+            </a>
+        </li>
+
+        <li>
+            @*<a onclick="onclick=" $('#modal_show_search').fadeIn();"" class="search-box">
+            <i class="iconly-Search icli"></i>
+            <span>Tìm Kiếm</span>
+            </a*@
+            <a href="/san-pham" class="search-box">
+                <i class="fa-solid fa-box-archive" style="color: #ffffff;font-size: 22px"></i>
+                <span>Sản phẩm</span>
+            </a>
+        </li>
+
+        @if (!identity.IsAuthenticated)
+        {
+            <li>
+                <a href="/checkoutwithoutlogin/cart">
+                    <i class="iconly-Bag-2 icli fly-cate"></i>
+                    <span>Giỏ hàng</span>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="/checkout/cart">
+                    <i class="iconly-Bag-2 icli fly-cate"></i>
+                    <span>Giỏ hàng</span>
+                </a>
+            </li>
+        }
+
+
+        <li class="mobile-category">
+            <a href="/lien-he">
+                <i class="fa-solid fa-phone-volume" style="color: #ffffff;font-size: 22px"></i>
+
+                <span>Liên hệ</span>
+            </a>
+        </li>
+
+
+    </ul>
+</div>

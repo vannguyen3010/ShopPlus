@@ -1,0 +1,137 @@
+﻿@{
+    int categoryId = Convert.ToInt32(ViewBag.categoryId);
+    string categoryTitle = ViewBag.categoryTitle;
+    var breadCrumb = new VM_BreadCrumb
+            {
+                currentName = string.IsNullOrEmpty(categoryTitle) ? "Giới thiệu" : categoryTitle,
+                lv1Name = !string.IsNullOrEmpty(categoryTitle) ? "Giới thiệu" : categoryTitle,
+                lv1Url = string.IsNullOrEmpty(categoryTitle) ? "" : "/gioi-thieu",
+            };
+    var introduceCate = ViewBag.IntroduceCategory as List<M_NewsCategory>;
+
+}
+@section MetaHead{
+    <meta name="robots" content="noodp,noydir,index,follow" />
+}
+@section Scripts{
+    <script src="~/controllers/introduce.js" asp-append-version="true"></script>
+}
+@section Styles{
+    <link href="~/css/introduce.css" rel="stylesheet" asp-append-version="true" />
+}
+
+<input type="hidden" id="input_keyword" value="@ViewBag.keyword" />
+<input type="hidden" id="input_category_id" value="@ViewBag.categoryId" />
+<input type="hidden" id="input_page" value="@ViewBag.page" />
+<input type="hidden" id="input_record" value="@ViewBag.record" />
+<partial name="_P_Breadcrumb" model="breadCrumb" />
+<!-- Blog Section Start -->
+<section class="blog-section section-b-space">
+    <div class="container-fluid-lg">
+        <div class="row g-4">
+            <div class="col-xxl-9 col-xl-8 col-lg-7 order-lg-2">
+                <div class="row g-4">
+                    <div id="div_main_data">
+                    </div>
+
+                </div>
+
+                <nav class="custome-pagination">
+                    <ul class="pagination justify-content-center" id="ul_main_pagination">
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-xxl-3 col-xl-4 col-lg-5 order-lg-1">
+                <div class="left-sidebar-box wow fadeInUp">
+
+                    <div class="accordion left-accordion-box" id="accordionPanelsStayOpenExample">
+                      @*  <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                        aria-controls="panelsStayOpen-collapseOne">
+                                    Bài viết gần đây
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                                 aria-labelledby="panelsStayOpen-headingOne">
+                                <div class="accordion-body pt-0">
+                                    @if (introduceCate != null && introduceCate.Any())
+                                    {
+                                        foreach (var item in introduceCate)
+                                        {
+                                            <div class="recent-post-box">
+                                                <div class="recent-box">
+                                                    <a href="blog-detail.html" class="recent-image">
+                                                        <img src="../assets/images/inner-page/blog/1.jpg"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    </a>
+
+                                                    <div class="recent-detail">
+                                                        <a href="@item.nameSlug">
+                                                            <h5 class="recent-name">@item.name</h5>
+                                                        </a>
+                                                        <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>*@
+
+                        @if (introduceCate != null && introduceCate.Any())
+                        {
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                            aria-controls="panelsStayOpen-collapseThree">
+                                        Danh mục bài viết
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse collapse show"
+                                     aria-labelledby="panelsStayOpen-headingThree">
+                                    <div class="accordion-body pt-0">
+                                        <div class="product-tags-box">
+                                            <ul>
+                                                @foreach (var item in introduceCate)
+                                                {
+                                                    <li>
+                                                        <a href="/gioi-thieu?c=@item.id">@item.name</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false"
+                                        aria-controls="panelsStayOpen-collapseFour">
+                                    Sản phẩm mới
+                                </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse collapse show"
+                                 aria-labelledby="panelsStayOpen-headingFour">
+                                <div id="div_load_list_news_product">
+                                   
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Section End -->

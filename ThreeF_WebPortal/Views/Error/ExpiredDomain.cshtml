@@ -1,0 +1,118 @@
+﻿@{ Layout = null; }
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Security-Policy">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dịch vụ hết hạn">
+    <meta name="keywords" content="Dịch vụ hết hạn">
+    <meta name="author" content="H2AITS">
+    <link rel="icon" id="favicon-shop" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" id="faviconShortcut-shop" href="/favicon.ico" type="image/x-icon">
+    <title>Dịch vụ hết hạn</title>
+
+    <!--Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/fontawesome.css">
+
+    <!-- Animate icon -->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/animate.css">
+
+    <!-- Themify icon -->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/themify-icons.css">
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/vendors/bootstrap.css">
+
+    <!-- Theme css -->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+    <style>
+        .template-password.expired-domain {
+            background: url("/img/expired-domain.jpg");
+            background-size: cover;
+            height: 100vh;
+        }
+        @@media only screen and (max-width: 600px) {
+            .template-password.expired-domain {
+                height: 100%;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="theme-color-11">
+
+    <div class="template-password expired-domain">
+        <div class="container">
+            <div id="container" class="text-center" style="height: 100%;">
+                <div>
+                    <div id="login" style="margin-top: 20px;">
+                        <div>
+                            <div class="logo mb-4 d-none d-md-block">
+                                <a href="https://h2aits.com">
+                                    <img src="/img/logoh2a_2.png" alt="H2A IT SOLUTION" class="img-fluid" style="height:100px;" />
+                                </a>
+                            </div>
+                            <h2 class="mb-3" style="font-size:24px; text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white; font-weight:500;">
+                                Tên miền <span class="text-lowercase domain_name" style="color: #81ba00; word-break: break-word;"></span> của bạn đang hết hạn
+                            </h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 mb-4">
+                                <div class="col-md-12 mt-2">
+                                    <h3 class="text-white" style="font-weight:600;text-shadow:0 0 0.2em #f87, 0 0 0.2em #f87;">Thực hiện thanh toán theo thông tin bên dưới hoặc liên hệ chúng tôi hỗ trợ.</h3>
+                                </div>
+                                <div class="col-md-12 mt-2 p-2" style="background-color: #cfc09f70;border-radius:15px;">
+                                    <p class="text-white font-weight-bold">660.000đ / tháng + 10% VAT = <span class="text-danger bg-white">726.000đ</span></p>
+                                    <p class="text-white font-weight-bold">1.800.000đ / 03 tháng + 10% VAT = <span class="text-danger bg-white">1.980.000đ</span></p>
+                                    <p class="text-white font-weight-bold">3.500.000đ / 06 tháng + 10% VAT = <span class="text-danger bg-white">3.850.000đ</span></p>
+                                    <p class="text-white font-weight-bold mb-0">5.500.000đ / 01 năm + 10% VAT = <span class="text-danger bg-white">6.050.000đ</span></p>
+                                </div>
+                                <div class="col-md-12 mt-2 p-2 mb-1" style="background-color: #cfc09f70; border-radius: 15px;">
+                                    <p class="text-white font-weight-bold">Số tài khoản: <span class="text-success bg-white">117002868043</span></p>
+                                    <p class="text-white font-weight-bold">Tên người nhận: CTCP GIAI PHAP CONG NGHE H2A VIET NAM</p>
+                                    <p class="text-white font-weight-bold">Ngân hàng TMCP Công Thương Việt Nam - VietinBank</p>
+                                    <p class="text-white font-weight-bold mb-2">Nội dung chuyển khoản: </p>
+                                    <p class="text-white font-weight-bold mb-0"><span class="text-danger bg-white">gia han <span class="domain_name"></span></span></p>
+                                </div>
+                                <div class="form-row row">
+                                    <div class="col-md-12">
+                                        <div class="actions">
+                                            <a href="https://h2aits.com" class="btn btn-solid">Liên hệ</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="powered" style="position:inherit !important;">
+                        <p class="text-white">Copyright © <a class="text-warning font-weight-bold" href="https://h2aits.com/" target="_blank">H2A IT Solution</a>. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap js-->
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        var x = document.getElementsByClassName('domain_name');
+        for (var i = 0; i < x.length; i++) {
+            x[i].innerHTML = location.host;
+        }
+    </script>
+
+</body>
+
+</html>

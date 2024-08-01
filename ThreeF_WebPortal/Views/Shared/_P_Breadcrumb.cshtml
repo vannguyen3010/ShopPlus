@@ -1,0 +1,107 @@
+﻿@model VM_BreadCrumb
+
+
+
+@if (Model != null)
+{
+    <section class="breadscrumb-section pt-0 breadcrumb_active_div breadcrumb_background">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadscrumb-contain breadcrumb">
+                        @*<h2>Bộ lọc sản phẩm</h2>*@
+                        <nav>
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="/">
+                                        <i class="fa-solid fa-house text-white"></i>
+                                    </a>
+                                </li>
+
+                                @if (!string.IsNullOrEmpty(Model.lv1Name))
+                                {
+                                    <li class="breadcrumb-item">
+                                        <a class="text-white" href="@Model.lv1Url">
+                                            @(Model.lv1Name.Length > 50 ? Model.lv1Name.Substring(0, 50) + "..." : Model.lv1Name)
+                                        </a>
+                                    </li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.lv2Name))
+                                {
+                                    <li class="breadcrumb-item">
+                                        <a class="text-white" href="@Model.lv2Url">
+                                            @(Model.lv2Name.Length > 50 ? Model.lv2Name.Substring(0, 50) + "..." : Model.lv2Name)
+                                        </a>
+                                    </li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.lv3Name))
+                                {
+                                    <li class="breadcrumb-item">
+                                        <a class="text-white" href="@Model.lv3Url">
+                                            @(Model.lv3Name.Length > 50 ? Model.lv3Name.Substring(0, 50) + "..." : Model.lv3Name)
+                                        </a>
+                                    </li>
+                                }
+                                <li style="color: #00ff0d !important;" class="breadcrumb-item active" aria-current="page"> @(Model.currentName.Length > 50 ? Model.currentName.Substring(0, 50) + "..." : Model.currentName)</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <section class="breadscrumb-section pt-0">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadscrumb-contain">
+                        <h2>Bộ lọc sản phẩm</h2>
+                        <nav>
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item active" aria-current="page">Trang chủ</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+<style>
+    .breadcrumb {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .breadcrumb-item {
+        margin-right: 5px;
+    }
+
+        .breadcrumb-item:last-child {
+            font-weight: bold;
+        }
+
+        .breadcrumb-item a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+            .breadcrumb-item a:hover {
+                color: #666;
+            }
+
+        .breadcrumb-item::after {
+            /*content: "›";*/
+            margin-left: 5px;
+            color: #999;
+        }
+
+</style>

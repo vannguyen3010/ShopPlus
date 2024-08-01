@@ -1,0 +1,139 @@
+﻿.image_css
+{
+    width: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+    height: 200px;
+}
+
+
+.img__wrapper{
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+.sold_out {
+    top: 0.1em;
+    left: -5em;
+    color: #fff;
+    display: block;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: .06em;
+    background-color: #A00;
+    padding: 0.5em 5em 0.4em 5em;
+    text-shadow: 0 0 0.75em #444;
+    box-shadow: 0 0 0.5em rgba(0,0,0,0.5);
+    font: bold 16px/1.2em Arial, Sans-Serif;
+    -webkit-text-shadow: 0 0 0.75em #444;
+    -webkit-box-shadow: 0 0 0.5em rgba(0,0,0,0.5);
+    -webkit-transform: rotate(-45deg) scale(0.75,1);
+    z-index: 1;
+}
+
+    .sold_out:before {
+        content: '';
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        margin: -0.3em -5em;
+        transform: scale(0.7);
+        -webkit-transform: scale(0.7);
+        border: 2px rgba(255,255,255,0.7) dashed;
+    }
+
+
+.spotlight {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+    .spotlight:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        background-color: rgba(255, 255, 255, 0.5);
+        -webkit-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, -120%, 0);
+        -moz-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, -120%, 0);
+        -ms-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, -120%, 0);
+        -o-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, -120%, 0);
+        transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, -120%, 0);
+        -webkit-transition: all 0.6s ease;
+        -moz-transition: all 0.6s ease;
+        transition: all 0.6s ease;
+    }
+
+    .spotlight:hover:before {
+        -webkit-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, 120%, 0);
+        -moz-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, 120%, 0);
+        -ms-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, 120%, 0);
+        -o-transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, 120%, 0);
+        transform: scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, 120%, 0);
+    }
+
+.div_btn_bg {
+    background: #0da487;
+}
+.product_clamp_description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Số dòng tối đa */
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+.price_product_popular{
+    font-size: 15px;
+    color: red;
+}
+.del {
+    font-size: 14px;
+    color: #aaa;
+    font-weight: 400;
+}
+.categoryName {
+    background: rgba(23, 184, 193, 0.15);
+    color: #0da487;
+    font-size: 13px;
+    padding: 3px;
+    border-radius: 4px;
+}
+
+
+.filter_div_css {
+    border: 2px solid aqua;
+    padding: 10px;
+    border-radius: 18px;
+}
+.custom_count{
+    padding: 10px;
+}
+select#select_record_search {
+    font-size: 17px;
+    color: #8dd545;
+    cursor: pointer;
+    border: none;
+}
+select#select_type_search {
+    cursor: pointer;
+    border: none;
+    color: #8dd545;
+    font-size: 17px;
+}
+.img__wrapper{
+    z-index: 0;
+}
+
+/*------------product slider hot--------------*/

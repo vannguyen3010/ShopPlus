@@ -1,0 +1,225 @@
+﻿.product-thumbnail {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    background: #fff;
+    position: relative;
+}
+
+.product-thumbnail__wrapper {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.product-thumbnail__quantity {
+    font-size: .78em;
+    white-space: nowrap;
+    padding: 0 0.62em;
+    border-radius: 2em;
+    background-color: #2a9dcc;
+    color: #fff;
+    position: absolute;
+    right: -0.9em;
+    top: -0.55em;
+    z-index: 3;
+    box-sizing: border-box;
+    min-width: 1.75em;
+    height: 1.75em;
+    text-align: center;
+    line-height: 1.75em;
+}
+
+
+/*product gift*/
+
+.cate-item {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    height: 130px;
+    width: 130px;
+    border: 3px solid rgba(229,229,229,0.34);
+    border-radius: 50%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+   /* margin: 0 auto 5px;*/
+    overflow: hidden;
+}
+
+.image {
+    display: flex;
+    height: 130px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+}
+
+.cate-item .image:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: #000;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    opacity: 0;
+}
+
+.cate-item .image img {
+    max-width: 100%;
+    transition: all 0.5s;
+}
+
+.cate-item .hiden {
+    display: none;
+    position: absolute;
+    color: #fff;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.cate-item:hover .hiden {
+    display: block;
+}
+
+.cate-item .hiden .count_sp {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cate-item .hiden span {
+    display: block;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
+.flashit_animation {
+    color: #ca6b2f;
+    -webkit-animation: flash linear 1s infinite;
+    animation: flash linear 1s infinite;
+    width: 30px px;
+    height: 30px;
+}
+
+@-webkit-keyframes flash {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/*#div_product_gift_wrapper::-webkit-scrollbar {
+    width: 10px;
+}*/
+.price_css_div {
+    border-radius: 4px;
+    width: auto;
+    padding: 0 11px;
+    margin: 0 13px;
+    background: #d36c0a;
+    color: white;
+    font-size: 11px;
+}
+.clamp_name {
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+/*.div_product_gift::-webkit-scrollbar{
+    width: 10px;
+}*/
+
+
+
+
+/**------------------------------*/
+
+.coupon .kanan {
+    border-left: 1px dashed #ddd;
+    width: 40% !important;
+    position: relative;
+}
+
+    .coupon .kanan .info::after, .coupon .kanan .info::before {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: #dedede;
+        border-radius: 100%;
+    }
+
+    .coupon .kanan .info::before {
+        top: -10px;
+        left: -10px;
+    }
+
+    .coupon .kanan .info::after {
+        bottom: -10px;
+        left: -10px;
+    }
+
+.coupon .time {
+    font-size: 1.6rem;
+}
+
+#div_body_modal_add_address::-webkit-scrollbar{
+    width: 10px;
+}
+
+#div_no_address {
+    text-align: center;
+    font-size: 15px;
+    color: red;
+    font-weight: 500;
+}
+/*------------------------*/
+.feeship_clamp_description {
+    max-width: 190px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    cursor: pointer;
+}

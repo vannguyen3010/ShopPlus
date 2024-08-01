@@ -1,0 +1,162 @@
+﻿@*@section Styles{
+    <link href="~/css/search.css" rel="stylesheet" asp-append-version="true"/>
+}
+*@
+
+<div id="modal_show_search" class="modal_show_search">
+    <a onclick="$('#modal_show_search').fadeOut();" class="close div_close_btn"><i class="fa-solid fa-xmark"></i></a>
+    <div class="nd-header-search nd-searchs modal_content_div">
+        
+        <form action="/product/search" method="get" class="nd-header-search-form" role="search">
+            <input id="input_keyword_product" type="text" name="keyword" class="search-auto form-control" placeholder="Tìm kiếm sản phẩm muốn tìm ..." maxlength="50" autocomplete="off"
+                   aria-expanded="true" required>
+            <input type="hidden" name="type" value="product">
+            <button id="btnStartSpeak" class="btn btn-default" onclick="RunSpeech()" type="submit" aria-label="Tìm kiếm">
+                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="">
+                    <path d="M20.7608 19.6062L15.6358 14.4813C16.9097 12.9494 17.6772 10.9823 17.6772 8.83887C17.6772 3.9651 13.7122 0 8.83865 0C3.96499 0 0 3.9651 0 8.83887C0 13.7123 3.96499 17.6771 8.83865 17.6771C10.9819 17.6771 12.9492 16.9097 14.4811 15.6358L19.6062 20.7608C19.7656 20.9203 19.9746 21 20.1835 21C20.3924 21 20.6014 20.9203 20.7609 20.7608C21.0798 20.442 21.0798 19.9251 20.7608 19.6062ZM1.63294 8.83887C1.63294 4.8655 4.86539 1.63294 8.83865 1.63294C12.8118 1.63294 16.0441 4.8655 16.0441 8.83887C16.0441 12.8119 12.8118 16.0441 8.83865 16.0441C4.86539 16.0441 1.63294 12.8119 1.63294 8.83887Z" fill="white"></path>
+                </svg>
+            </button>
+            <ul class="list-group scroll_css" id="list_product_quick_search">
+            </ul>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade theme-modal exit-modal" id="listen-voice-modal" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal_content_div">
+            <div class="modal-body modal1">
+                <div class="container-fluid p-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="modal-bg text-center">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="StopSpeech()"><span aria-hidden="true">×</span></button>
+                                <h4 class="w-100 text-center" id="titleSpeech">Nhấn để nói</h4>
+
+                                <div class="container-micro">
+                                    <button class="micro_listening micro_listening-type2" id="btnStartSpeak" onclick="RunSpeech()">
+                                        <div class="micro-pulse-ring"></div>
+                                        <i class="fa fa-microphone" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <p class="mt-3 mb-2 text-center"><span id="contentSpeech" style="word-break:break-word;"></span> <button type="button" onclick="SubmitSearchProductForm()" class="btn btn-solid btn-sm btn-xs" id="btnSearchVoice" title="Tìm kiếm" style="border-radius:100%;display:none;"><i class="ti-search"></i></button></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .scroll_css{
+        overflow-y: auto;
+        max-height: 500px;
+    }
+
+        .scroll_css::-webkit-scrollbar{
+            width: 10px;
+        }
+
+    .div_close_btn{
+        background: white;
+        padding: 0px 8px;
+        border-radius: 5px;
+        font-size: 21px;
+        color: var(--primaryColor);
+        right: 3%;
+        top: 2%;
+        cursor: pointer;
+    }
+    .close {
+        top: 0;
+        position: absolute;
+        right: 8px;
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .modal_show_search {
+        display: none;
+        position: fixed;
+        z-index: 99;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal_content_div {
+        top: 7%;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 35px;
+        margin: 15% auto;
+        /*padding: 20px;*/
+       /* width: 40%;*/
+    }
+
+        .nd-header-search form {
+            margin-bottom: 0;
+            position: relative;
+        }
+
+            .nd-header-search form input {
+                width: 100%;
+                margin-bottom: 0;
+                height: 55px;
+                min-height: 55px;
+                line-height: 55px;
+                background: transparent;
+                outline: none;
+                padding: 0 65px 0 20px;
+                border: none;
+                overflow: hidden;
+                border-radius: 30px !important;
+                font-size: 16px;
+                font-style: italic;
+                color: #6e7673;
+                border: 1px solid #c4c4c4;
+            }
+
+            .nd-header-search form input {
+                width: 100%;
+                margin-bottom: 0;
+                height: 55px;
+                min-height: 55px;
+                line-height: 55px;
+                background: transparent;
+                outline: none;
+                padding: 0 65px 0 20px;
+                border: none;
+                overflow: hidden;
+                border-radius: 30px !important;
+                font-size: 16px;
+                font-style: italic;
+                color: #6e7673;
+                border: 1px solid #c4c4c4;
+            }
+
+            .nd-header-search form button {
+                position: absolute;
+                right: 3px;
+                height: 49px;
+                width: 49px;
+                top: 3px;
+                border-radius: 50%;
+                text-align: center;
+                padding: 0;
+                padding-left: 2px;
+                background: var(--primaryColor);
+            }
+
+                .nd-header-search form button svg {
+                    width: 21px;
+                    height: 21px;
+                }
+
+</style>

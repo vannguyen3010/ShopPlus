@@ -1,0 +1,81 @@
+﻿@model ThreeF_WebPortal.Models.M_News
+@{
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+    var breadCrumb = new ThreeF_WebPortal.ViewModels.VM_BreadCrumb
+    {
+        currentName = Model.title,
+        lv1Name = "Tin tức",
+        lv1Url = "/tin-tuc",
+        lv2Name = Model.categoryObj?.name,
+        lv2Url = $"/tin-tuc?c={Model.categoryId}",
+    };
+}
+@section MetaHead{
+    <meta name="robots" content="noodp,noydir,index,follow" />
+}
+@section Styles{
+    <link href="~/css/news.css" rel="stylesheet" asp-append-version="true" />
+}
+@section Scripts{
+    <script src="~/controllers/news_detail.js" asp-append-version="true"></script>
+}
+<input type="hidden" id="input_news_id" value="@Model.id" />
+<input type="hidden" id="input_category_id" value="@Model.categoryId" />
+<!-- breadcrumb start -->
+@await Html.PartialAsync("_P_BreadCrumb", breadCrumb)
+<!-- breadcrumb end -->
+<!-- content section start -->
+<section class="blog-detail-page section-b-space ratio2_3 blog-page blog_page">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 blog-detail blog_detail_item_css">
+                <img src="@(string.IsNullOrEmpty(Model.imageObj?.relativeUrl) ? "/img_dev/error/avatar.png" : Model.imageObj?.relativeUrl)"
+                     class="img-fluid blur-up lazyload w-100" alt="@Model.title"
+                     onerror="this.onerror=null;this.src='/img_dev/error/avatar.png';"
+                     style="display:block;margin-left:auto;margin-right:auto;max-width: 100%; width: auto !important; max-height: 500px;">
+                <h3>@Model.title</h3>
+                <ul class="post-social">
+                    <li>@Model.createdAt?.ToString("dd-MM-yyyy")</li>
+                </ul>
+                <p>
+                    @Html.Raw(Model.detail)
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Section Start -->
+<section id="new_ishot_js">
+    <div class="container-fluid-lg">
+        <div class="title">
+            <h2>Tin tức liên quan</h2>
+            <span class="title-leaf">
+                <svg class="icon-width">
+                    <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
+                </svg>
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="ratio_87" id="div_news_related">
+                   @* <div>
+                        <div class="blog-box">
+                            <div class="blog-box-image">
+                                <a href="blog-detail.html" class="blog-image">
+                                    <img src="../assets/images/veg-2/blog/1.jpg" class="bg-img blur-up lazyload"
+                                         alt="">
+                                </a>
+                            </div>
+
+                            <div class="blog-detail">
+                                <h6>Farmart</h6>
+                                <h5>Fresh Meat Saugage</h5>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Section End -->

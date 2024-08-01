@@ -1,0 +1,54 @@
+﻿@{
+    var bannerTop = ViewBag.BannerTop as List<VM_Banner>;
+}
+
+<section class="home-section-2 home-section-bg pt-0 overflow-hidden" style="margin-top: -25px;">
+    <div class="container-fluid p-0">
+        <div class="row">
+            @if (bannerTop != null && bannerTop.Any())
+            {
+                <div class="col-12">
+                    <div class="slider_banner_mid_heder">
+                        @foreach (var item in bannerTop)
+                        {
+                            <div>
+                                <div class="home-contain rounded-0 p-0 div_mobile_res_banner_header">
+                                    <img src="@(!string.IsNullOrEmpty(item.imageUrl) ? item.imageUrl : "/img_dev/error/banner.png")"
+                                         class="img-fluid bg-img lazyload" @* blur-up*@
+                                         onerror="this.onerror=null;this.src='/img_dev/error/banner.png';" alt="@item.title">
+                                    <div class="home-detail home-big-space p-center-left  position-relative">
+                                        @*  home-overlay*@
+                                        <div class="container-fluid-lg">
+                                            <div>
+                                                <h1 class="heding-2" style="color: @item.titleColor;text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">@item.title</h1>
+                                                <h2 class="content-2" style="color: @item.descShortColor; text-shadow: rgb(255, 255, 255) -1px -1px 0px, rgb(255, 255, 255) 1px -1px 0px, rgb(255, 255, 255) -1px 1px 0px, rgb(255, 255, 255) 1px 1px 0px;">@item.descShort</h2>
+                                                @if (!string.IsNullOrEmpty(item.url))
+                                                {
+                                                    <a style="width: 140px;" class="btn theme-bg-color btn-md text-white fw-bold mt-md-4 mt-2 mend-auto"
+                                                       href="@item.url" target="_blank">
+                                                        Xem thêm <i class="fa-solid fa-arrow-right icon"></i>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn theme-bg-color btn-md text-white fw-bold mt-md-4 mt-2 mend-auto d-none"
+                                                       href="" target="_blank">
+                                                        Xem thêm <i class="fa-solid fa-arrow-right icon"></i>
+                                                    </a>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>

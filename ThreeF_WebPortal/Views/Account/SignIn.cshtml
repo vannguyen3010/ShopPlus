@@ -1,0 +1,100 @@
+﻿@model EM_AccountSignIn
+@{
+    var breadCrumb = new ThreeF_WebPortal.ViewModels.VM_BreadCrumb
+            {
+                currentName = "Đăng nhập",
+            };
+}
+@section MetaHead{
+    <meta name="robots" content="noodp,noydir,index,follow" />
+}
+@section Styles{
+    <link href="~/lib/parsleyjs/parsley.css" rel="stylesheet" />
+    <link href="~/lib/microtip-master/microtip.min.css" rel="stylesheet" />
+    <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/css/checkbox_custom_2.css" rel="stylesheet" />*@
+    <link href="~/lib/pretty-checkbox/pretty-checkbox.min.css" rel="stylesheet" />
+
+   @* <link href="~/css/animation.css" rel="stylesheet" asp-append-version="true" />*@
+    <link href="~/css/account.css" rel="stylesheet" asp-append-version="true" />
+}
+@section Scripts{
+    <script src="~/assets/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/assets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/ladda/spin.min.js"></script>
+    <script src="~/lib/ladda/ladda.min.js"></script>
+    <script src="~/lib/parsleyjs/i18n/vn.js"></script>
+    <script src="~/controllers/account_sign_in.js" asp-append-version="true"></script>
+}
+<partial name="_P_Breadcrumb" model="breadCrumb" />
+
+<section class="log-in-section background-image-2 section-b-space">
+
+    <div class="container-fluid-lg w-100">
+        <div class="row">
+            <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
+               
+                <div class="log-in-box">
+                    <div class="log-in-title">
+                        <h5 class="css_text_sigin">Đăng nhập</h5>
+                    </div>
+
+                    <div class="input-box">
+                        <form id="form_data" asp-antiforgery="true" class="row g-4 needs-validation" method="post" validation>
+                            <div class="col-12">
+                                <div class="form-floating theme-form-floating log-in-form">
+                                    <input asp-for="userName" type="number" class="form-control" id="email" placeholder="Nhập số điện thoại" maxlength=" 12" pattern="^[0-9]{1,20}$" onkeypress="return IsNumberKey(event)" required>
+                                    <label asp-for="userName">Số điện thoại</label>
+                                    <span asp-validation-for="userName" class="invalid-feedback"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-floating theme-form-floating log-in-form">
+                                    <input asp-for="password" type="password" class="form-control" id="password"
+                                           placeholder="Password" maxlength="50" pattern="^([^'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳýỵỷỹ\-\s]+)$" required>
+                                    <label asp-for="password">Mật khẩu</label>
+                                    <span class="fa fa-eye-slash field-icon" data-forcus="#password" onclick="ShowPassword(this)"></span>
+                                    <span asp-validation-for="password" class="invalid-feedback"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="forgot-box">
+                                    <div class="form-check ps-0 m-0 remember-box">
+                                        <input class="checkbox_animated check-box" asp-for="stayLoggedIn" type="checkbox"
+                                               id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault" asp-for="stayLoggedIn">Duy trì đăng nhập</label>
+                                    </div>
+                                    <a href="/account/forgot-password" class="forgot-password">Quên mật khẩu?</a>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button class="btn btn-animation w-100 justify-content-center" id="btn_submit_form" type="submit">
+                                    Đăng nhập
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                    <div class="other-log-in">
+                        <h6></h6>
+                    </div>
+
+                    <div class="sign-up-box">
+                        <h4>Nếu bạn chưa có tài khoản?</h4>
+                        <a href="/account/register">Đăng ký tại đây!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+  

@@ -1,0 +1,131 @@
+﻿@model ThreeF_WebPortal.Models.EM_DeliveryAddress
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+@*<script src="https://maps.googleapis.com/maps/api/js?key=@ViewData["KeyGoogleMap"]&callback=initMap&libraries=places&v=weekly" async defer></script>*@
+
+<form action="/Address/P_Add" method="post" class="theme-form" data-parsley-validate id="form_data_add_address" asp-antiforgery="true">
+    <input type="hidden" asp-for="longitude" />
+    <input type="hidden" asp-for="latitude" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            <div class="col-12 mb-3">
+                <label class="font-weight-bold" asp-for="name">Tên: <span class="text-danger">(*)</span></label>
+                <input asp-for="name" class="form-control" placeholder="Nhập tên" maxlength="50" />
+                <ul class="parsley-errors-list filled" style="display:none;" id="ul_parsley_name" aria-hidden="false">
+                    <li class="parsley-required">Thông tin bắt buộc.</li>
+                </ul>
+            </div>
+            <div class="col-12 mb-2">
+                <label class="font-weight-bold" asp-for="phoneNumber">Điện thoại: <span class="text-danger">(*)</span></label>
+                <input asp-for="phoneNumber" class="form-control"
+                       placeholder="Nhập điện thoại" maxlength="12" onkeypress="return IsNumberKey(event)" />
+                <ul class="parsley-errors-list filled" id="ul_parsley_phonenumber" aria-hidden="false">
+                    <li class="parsley-required" style="display:none;">Thông tin bắt buộc.</li>
+                    <li class="parsley-required" style="display:none;">Điện thoại không hợp lệ.</li>
+                </ul>
+            </div>
+            <div class="col-12 pt-1" style="margin-bottom:12px;">
+                <label class="font-weight-bold" asp-for="provinceId">Tỉnh/Thành phố: <span class="text-danger">(*)</span></label>
+                <select asp-for="provinceId" asp-items="ViewBag.ProvinceId" onchange="OnChangeProvinceFormEvent(this)"
+                        class="selectpicker form-control show-tick" data-style="border" data-live-search="true" data-size="10">
+                    <option value="0">--Chọn--</option>
+                </select>
+                <ul class="parsley-errors-list filled" style="display:none;" id="ul_parsley_province" aria-hidden="false">
+                    <li class="parsley-required">Thông tin bắt buộc.</li>
+                </ul>
+            </div>
+            <div class="col-12 pt-1" style="margin-bottom:12px;">
+                <label class="font-weight-bold" asp-for="districtId">Quận/Huyện: <span class="text-danger">(*)</span></label>
+                <div class="position-relative" id="div_zone_district">
+                    <select asp-for="districtId" onchange="OnChangeDistrictFormEvent(this)" disabled
+                            class="selectpicker form-control show-tick" data-style="border" data-live-search="true" data-size="10">
+                    </select>
+                    <ul class="parsley-errors-list filled" style="display:none;" id="ul_parsley_district" aria-hidden="false">
+                        <li class="parsley-required">Thông tin bắt buộc.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 pt-1" style="margin-bottom:12px;">
+                <label class="font-weight-bold" asp-for="wardId">Phường/Xã: <span class="text-danger">(*)</span></label>
+                <div class="position-relative" id="div_zone_ward">
+                    <select asp-for="wardId" disabled class="selectpicker form-control show-tick" data-style="border" data-live-search="true" data-size="10">
+                    </select>
+                    <ul class="parsley-errors-list filled" style="display:none;" id="ul_parsley_ward" aria-hidden="false">
+                        <li class="parsley-required">Thông tin bắt buộc.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 mb-2">
+                <label class="font-weight-bold" asp-for="addressText">Số nhà/Đường: <span class="text-danger">(*)</span></label>
+                <input asp-for="addressText" class="form-control"
+                       placeholder="eg: 93B Hưng Đạo Vương" maxlength="100" />
+                <ul class="parsley-errors-list filled" style="display:none;" id="ul_parsley_addresstext" aria-hidden="false">
+                    <li class="parsley-required">Thông tin bắt buộc.</li>
+                </ul>
+            </div>
+            <div class="col-12 mt-1 mb-2">
+                <input asp-for="isAddNew" class="checkbox-effect checkbox-effect-1" type="checkbox"
+                       onchange="$(this).is(':checked') ? $('.div_is_add_new').slideDown(200) : $('.div_is_add_new').slideUp(200)" />
+                <label asp-for="isAddNew" class="mb-0">Thêm vào sổ địa chỉ</label>
+            </div>
+            <div class="col-12 mt-2 row div_is_add_new" style="display:none;">
+                <div class="d-flex col-4">
+                    <div>
+                        <div class="pretty p-default p-round">
+                            <input type="radio" asp-for="typeId" id="input_address_type_1" value="1" checked />
+                            <div class="state p-primary-o">
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div><label for="input_address_type_1">Nhà riêng</label></div>
+                </div>
+                <div class="d-flex col-4">
+                    <div>
+                        <div class="pretty p-default p-round">
+                            <input type="radio" asp-for="typeId" id="input_address_type_2" value="2" />
+                            <div class="state p-primary-o">
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div><label for="input_address_type_2">Văn phòng</label></div>
+                </div>
+                <div class="d-flex col-4">
+                    <div>
+                        <div class="pretty p-default p-round">
+                            <input type="radio" asp-for="typeId" id="input_address_type_3" value="0" />
+                            <div class="state p-primary-o">
+                                <label></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div><label for="input_address_type_3">Khác</label></div>
+                </div>
+            </div>
+            <div class="col-12 mt-2 mb-3 div_is_add_new" style="display:none;">
+                <input asp-for="isDefault" class="checkbox-effect checkbox-effect-1" type="checkbox" />
+                <label asp-for="isDefault" class="mb-0">Sử dụng làm địa chỉ mặc định</label>
+            </div>
+        </div>
+        <div class="col-12 col-lg-8">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="box-inner-map" style="width: 100%; height: 470px;">Google Map</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label style="font-size: 13px; color: #FF6600;">&#10043; Có thể nhấn chọn trên bản đồ để lấy địa chỉ; Để di chuyển nhấn giữ địa điểm và di chuyển đến vị trí mới.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row float-right">
+        <button type="button" class="btn btn-outline" data-bs-dismiss="modal" style="border-radius:50px;">Hủy</button>
+        <button type="submit" class="btn btn-solid ladda-button" dir="ltr" data-style="expand-left" id="btn_submit_form_add_address" style="border-radius:50px;">Lưu</button>
+    </div>
+</form>

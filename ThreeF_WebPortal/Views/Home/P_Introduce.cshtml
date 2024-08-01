@@ -1,0 +1,40 @@
+﻿@using ThreeF_WebPortal.Lib;
+
+@{
+    var supplierInfo = ViewBag.SupplierInfo as M_Supplier;
+}
+
+@if (supplierInfo?.supplierServiceObj?.serviceObj?.serviceCode == CommonConstants.CODE_SERVICE_MINISHOP_PLUS || supplierInfo?.supplierServiceObj?.serviceObj?.serviceCode == CommonConstants.CODE_SERVICE_MINISHOP_PLUS_TRIAL)
+{
+    <section id="js_introduce">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="about-us-title text-center">
+                        <h4>BÀI VIẾT VỀ CHÚNG TÔI</h4>
+                       @* <h2 class="center">CÁC SẢN PHẨM NÔNG SẢN TƯƠI - SẠCH</h2>*@
+                    </div>
+                    <div id="div_list_introduce_js" class="arrow-slider ratio_65">
+                        @*   <div>
+                    <div class="offer-banner hover-effect">
+                    <img src="../assets/images/veg-3/value/1.png" class="img-fluid bg-img blur-up lazyload"
+                    alt="">
+                    <div class="banner-detail">
+                    <h5 class="theme-color">Buy more, Save more</h5>
+                    <h6>Fresh Vegetable</h6>
+                    </div>
+                    <div class="offer-box">
+                    <a href="" class="btn-category btn theme-bg-color text-white">
+                    Xem thêm
+                    </a>
+                    </div>
+                    </div>
+                    </div>*@
+
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center p-3 mt-2"><a href="/tin-tuc">Xem thêm</a></div>
+        </div>
+    </section>
+}

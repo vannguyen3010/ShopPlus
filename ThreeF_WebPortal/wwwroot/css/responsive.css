@@ -1,0 +1,232 @@
+﻿/*Banner Header*/
+/*.height-banner {
+    height: 200px;
+}
+
+.banner-right {
+    height: 100px;
+}*/
+
+/*--------Mobile----------*/
+@media (max-width: 480px)
+{
+    .cookie-bar-box {
+        margin-bottom: 62px;
+    }
+}
+/*--------Tablet - air ----------*/
+@media (min-width:320px) and (max-width:800px) {
+    .offcanvas_css {
+        padding: 45px 24px;
+        background: #58d250fc;
+    }
+    .cookie-bar-box {
+        right: 38px;
+        bottom: 77px;
+    }
+    /*.banner_right{
+        height: 100px;
+    }*/
+    .product-border {
+        padding: 0;
+    }
+    .addtocart_btn {
+        display: none;
+    }
+    .product_css {
+        height: 250px;
+        /*width: 50%;*/
+        margin: 5px;
+    }
+    .div_width_product{
+        width: 100%;
+    }
+    .product_image_1 {
+        /*width: 140px;*/
+        text-align: center;
+    }
+    .product_img_2 {
+        height: 170px;
+    }
+    .price_css_div{
+        font-size:13px;
+    }
+    .product-img-3 {
+        height: 150px;
+    }
+    .product-new {
+        height: 250px;
+    }
+    .css_product_title{
+        text-align: center;
+    }
+    /*.div_bg_header {
+        height: 220px;
+    }*/
+    .price_product_popular {
+        color: red;
+        font-size: 12px;
+    }
+
+    /*product */
+    .css_header_drop {
+        display: flex;
+        justify-content: space-between;
+    }
+    button.btn.btn-md.bg-dark.cart-button.text-white.w-100.button_animation_css {
+        font-size: 15px;
+        min-width: 50px;
+    }
+    /*End*/
+
+    .banner_respon{
+        display: none;
+    }
+
+    /*button.btn.btn-animation.btn_change_pass {
+        width: 136px;
+    }*/
+    
+    a.span-name.product_clamp_description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+    }
+    .css_mobile_none{
+        display: block;
+    }
+    .input-group.group-quantity-custom{
+        width: 80px;
+    }
+    .desktop_none{
+        display: block;
+    }
+    .div_res_mobile{
+        height: 200px;
+    }
+    .nd-header-search{
+        width: auto;
+    }
+    .modal_content_div{
+        width: auto;
+        margin: 20%;
+    }
+    .css_mobile_fax{
+        width: 150px;
+
+    }
+    .css_mobile_fax h5{
+        word-wrap: break-word;
+    }
+    .div_mobile_res_banner_header{
+        height: 350px;
+    }
+    .mobile_css_custom{
+        width: 100%;
+    }
+    .bg-header_green:before{
+        top: 67px;
+    }
+    .div_desktop_custom {
+        width: auto;
+    }
+    .res_mobile_btn_cart{
+        font-size: 11px;
+    }
+    .div_product_gift{
+        margin-top: 20px;
+    }
+    .btn_change_pass,
+    .btn_change_pass_update {
+        font-size: 8px;
+    }
+    .div_upload_img_css{
+        border-left: none;
+    }
+    .image_css{
+        height: 166px;
+    }
+    /*.res_css_news{
+        height: 500px !important;
+    }*/
+
+}
+/*--------Large Tablet - pro----------*/
+@media (min-width:769px) and (max-width:1079px) {
+    .img_css_width_mb{
+        width: 70%;
+    }
+    .offcanvas_css {
+        background: #58d250fc;
+    }
+    .group-quantity-custom{
+        width: 80px;
+    }
+   
+}
+@media screen and (min-width: 768px) {
+    .div_res_mobile {
+        height: 200px;
+    }
+    .div_mobile_res_banner_header{
+        height: 550px;
+    }
+    .div_upload_img_css{
+        border-left: unset;
+    }
+   
+}
+/*--------Small Laptop - 14inch----------*/
+@media (min-width:1080px) and (max-width:1800px) {
+    .modal_content_div {
+        width: 40%;
+    }
+    .offcanvas_css {
+        padding: 45px 24px;
+        background: #339538;
+    }
+    
+    }
+/*--------------------Large Desktop - My Laptop 15.6inch --------------------*/
+@media (max-width:1199px) {
+  /*  .div_product_respon_dekstop {
+        display: none;
+    }
+    .div_product_respon_mobile{
+        display:block
+    }*/
+    .div_product_respon_dekstop {
+        display: none;
+    }
+    .div_product_respon_mobile {
+        display: block;
+    }
+   /* .res_css_news {
+        height: 470px !important;
+    }*/
+}
+@media (min-width:1199px){
+    .modal_content_div {
+        width: 50%;
+    }
+    .div_product_respon_dekstop {
+        display: block;
+    }
+
+    .div_product_respon_mobile {
+        display: none;
+    }
+}
+/*-------custom Navbar----------*/
+@media (min-width:1080px) and (max-width:1499px) {
+    .nd-header-search {
+        position: relative;
+        width: 500px;
+    }
+}
+
+
+

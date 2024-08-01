@@ -1,0 +1,434 @@
+﻿
+@section MetaHead{
+    <meta name="robots" content="noindex, nofollow">
+}
+@section Styles{
+    <link href="~/lib/parsleyjs/parsley.css" rel="stylesheet" />
+    <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-select-fix/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/css/loading_small.css" rel="stylesheet" />
+    <link href="~/css/pages/order.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="~/lib/ladda/spin.min.js"></script>
+    <script src="~/lib/ladda/ladda.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/lib/bootstrap-select-fix/bootstrap-select.min.js"></script>
+    <script src="~/lib/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    @*<script src="~/controllers/order.js" asp-append-version="true"></script>*@
+}
+<!-- content section start -->
+<section class="dashboard-section section-b-space bg_custom_1" style="padding-top:0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 bg-white" id="div_zone_order_list">
+                <div class="faq-content tab-content" id="top-tabContent">
+                    <div class="tab-pane fade show active" id="products">
+                        <section class="tab-product pt-0 mt-4">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12">
+                                    <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
+                                        <li class="nav-item li_status_order" data-id="-2">
+                                            <a class="nav-link active"
+                                               data-bs-toggle="tab" href="#" role="tab" aria-selected="true">
+                                                <i class="icofont icofont-ui-home"></i>Tất cả
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="0">
+                                            <a class="nav-link "
+                                               data-bs-toggle="tab" href="#" role="tab" aria-selected="true">
+                                                <i class="icofont icofont-ui-home"></i>Chờ xác nhận
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="1">
+                                            <a class="nav-link"
+                                               data-bs-toggle="tab" href="#" role="tab"
+                                               aria-selected="false">
+                                                <i class="icofont icofont-man-in-glasses"></i>Đã tiếp nhận
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="2">
+                                            <a class="nav-link"
+                                               data-bs-toggle="tab" href="#" role="tab"
+                                               aria-selected="false">
+                                                <i class="icofont icofont-contacts"></i>Đang vận chuyển
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="3">
+                                            <a class="nav-link"
+                                               data-bs-toggle="tab" href="#" role="tab"
+                                               aria-selected="false">
+                                                <i class="icofont icofont-contacts"></i>Đã giao
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="4">
+                                            <a class="nav-link"
+                                               data-bs-toggle="tab" href="#" role="tab"
+                                               aria-selected="false">
+                                                <i class="icofont icofont-contacts"></i>Đã hủy
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                        <li class="nav-item li_status_order" data-id="5">
+                                            <a class="nav-link"
+                                               data-bs-toggle="tab" href="#" role="tab"
+                                               aria-selected="false">
+                                                <i class="icofont icofont-contacts"></i>Trả hàng
+                                            </a>
+                                            <div class="material-border"></div>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content nav-material">
+                                        <div class="tab-pane fade show active" role="tabpanel"
+                                             aria-labelledby="top-home-tab">
+                                            <div class="mt-0">
+                                                <div class="top-sec">
+                                                    <label style="padding-right:6px;">Hiển thị: </label>
+                                                    <select class="selectpicker show-tick" id="select_show_records_search"
+                                                            data-style="btn-outline p-1">
+                                                        <option value="1" selected>7 ngày gần đây</option>
+                                                        <option value="2">1 tháng gần đây</option>
+                                                        <option value="3">6 tháng gần đây</option>
+                                                        <option value="4">Tất cả đơn hàng</option>
+                                                    </select>
+                                                    <label id="label_count_order_item" style="padding-left:6px;color:#ea9310;"> </label>
+                                                </div>
+
+                                                <div class="div_order_list_custom row" id="div_order_list">
+
+                                                    @*<a href="#" class="col-12 div_zone_order_item">
+                                                            <div class="col-12 orderTitle">
+                                                                <span class="mb-0">#20210523015959997TYB <small class="text-dark">09/30/2021</small></span>
+                                                                <span class="mb-0 badge badge-grey-color float-right">Đã giao</span>
+                                                            </div>
+                                                            <div class="col-12 row m-0 p-2">
+                                                                <div class="col-auto p-0">
+                                                                    <img src="../assets/images/pro3/2.jpg" style="width:60px; height:60px;" alt="">
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="div_desktop_custom text-muted">
+                                                                        Nguyễn Nguyễn Nguyễn Nguyễn Nguyễn Nguyễ...
+                                                                        <span class="col-auto badge badge-grey-color">Size S</span>
+                                                                        <span class="col-auto badge badge-default">Màu Xanh</span>
+                                                                    </div>
+                                                                    <div class="mobile-cart-content text-center row">
+                                                                        <span class="col-12 text-muted">Nguyễn Nguyễn Nguyễn Nguyễn Nguyễn Nguyễ...</span>
+                                                                        <span class="col-auto badge badge-grey-color">Size S</span>
+                                                                        <span class="col-auto badge badge-default">Màu Xanh</span>
+                                                                        <div class="col-12 row">
+                                                                            <div class="col">
+                                                                                <small>SL: 9999</small>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <small class="m-0">100.000.000.000đ</small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2 col-lg-2 col-xl-2 div_desktop_custom">
+                                                                    <small class="text-muted">SL: 9999</small>
+                                                                </div>
+                                                                <div class="col-auto div_desktop_custom">
+                                                                    <span class="m-0">100.000.100.000đ</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>*@
+
+                                                </div>
+
+                                                <div class="product-pagination product-pagination_no_border mt-4 mb-4">
+                                                    <div class="theme-paggination-block">
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                                                <nav aria-label="Page navigation">
+                                                                    <ul class="pagination float-right" id="ul_pagination_order_list">
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 pb-2 bg-white" id="div_zone_order_view_detail" style="display:none;">
+                <div class="faq-content tab-content">
+                    <div class="tab-pane fade show active">
+                        <section class="tab-product pt-0">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12">
+                                    <div class="tab-content nav-material">
+                                        <div class="tab-pane fade show active" role="tabpanel"
+                                             aria-labelledby="top-home-tab">
+                                            <div class="mt-0" id="div_order_detail">
+
+                                                @*<div class="col-12 border p-2">
+                                                        <h5 class="mb-0 text-dark font-weight-bold">
+                                                            Đơn hàng #20214567987981
+                                                            <a href="javascript:void(0)" onclick="CloseDetailPanel()" title="Đóng" class="float-right" style="line-height:0;"><i class="fa fa-times-circle text-danger"></i></a>
+                                                        </h5>
+                                                        <span class="mb-0 text-muted col-12">Ngày đặt hàng: 15:20 21/07/2021</span>
+                                                        <br /><span class="mb-0 text-success col-12" style="font-weight:500;">Ngày nhận hàng: 15:20 21/07/2021</span>
+                                                    </div>
+
+                                                    <div class="div_order_list_custom row mt-2">
+
+                                                        <div class="col-12 col-md-12 col-lg-4 p-1">
+                                                            <div class="p-2 h-100 div_zone_order_item">
+                                                                <div>
+                                                                    <p class="text-uppercase border-bottom" style="font-weight:500;font-size:14px;">Địa chỉ nhận hàng</p>
+                                                                </div>
+                                                                <div>
+                                                                    <b class="text-break">Lê nhật nam</b>
+                                                                </div>
+                                                                <div>
+                                                                    <span>
+                                                                        <i class="fa fa-map-marker text-success"></i>
+                                                                        <span class="text-break"> Biên hòa đồng naiBiên hòa đồng naiBiên hòa đồng nai</span>
+                                                                    </span>
+                                                                </div>
+                                                                <div>
+                                                                    <span><i class="fa fa-phone text-success"></i> 0516546798</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-12 col-lg-4 p-1">
+                                                            <div class="p-2 h-100 div_zone_order_item">
+                                                                <div>
+                                                                    <p class="text-uppercase border-bottom" style="font-weight:500;font-size:14px;">Hình thức giao hàng</p>
+                                                                </div>
+                                                                <div>
+                                                                    <b class="text-break">Giao hàng tiêu chuẩn</b>
+                                                                </div>
+                                                                <div>
+                                                                    <span>
+                                                                        <span class="text-break">Phí vận chuyển: NCC liên hệ</span>
+                                                                    </span>
+                                                                </div>
+                                                                <div>
+                                                                    <span>Giao vào 13/07</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-12 col-lg-4 p-1">
+                                                            <div class="p-2 h-100 div_zone_order_item">
+                                                                <div>
+                                                                    <p class="text-uppercase border-bottom" style="font-weight:500;font-size:14px;">Hình thức thanh toán</p>
+                                                                </div>
+                                                                <div>
+                                                                    <b class="text-break">Thanh toán tiền mặt khi nhận hàng</b>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="div_order_list_custom row mt-2">
+
+                                                        <div class="col-12 div_zone_order_item">
+                                                            <div class="col-12 orderTitle">
+                                                                <span class="mb-0"><img src="/assets/images/icon/shops.png" width="17" height="17" alt="" /> Shop A <a style="padding-left:6px;" href="#"><i class="fa fa-link"></i></a></span>
+                                                                <span class="mb-0 badge badge-grey-color float-right">Đã giao</span>
+                                                                <a href="javascript:void(0)" class="float-right text-danger" onclick="ShowCancelModal(this)"
+                                                                   style="width:24px;font-size:12px;text-decoration:underline;">Hủy</a>
+                                                            </div>
+                                                            <div class="col-12 row m-0 p-2">
+                                                                <div class="col-auto p-0">
+                                                                    <a href="#">
+                                                                        <img src="../assets/images/pro3/2.jpg" style="width:60px; height:60px;" alt="" loading="lazy"
+                                                                             onerror="this.onerror=null;this.src='/assets/images/error/product_1x1_medium.png';">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <a href="#">
+                                                                        <div class="div_desktop_custom text-muted">
+                                                                            Nguyễn Nguyễn Nguyễn Nguyễn Nguyễn Nguyễ...
+                                                                            <span class="col-auto badge badge-grey-color">Size S</span>
+                                                                            <span class="col-auto badge badge-default">Màu Xanh</span>
+                                                                        </div>
+                                                                        <div class="mobile-cart-content text-center row">
+                                                                            <span class="col-12 text-muted">Nguyễn Nguyễn Nguyễn Nguyễn Nguyễn Nguyễ...</span>
+                                                                            <span class="col-auto badge badge-grey-color">Size S</span>
+                                                                            <span class="col-auto badge badge-default">Màu Xanh</span>
+                                                                            <div class="col-12 m-0 row">
+                                                                                <div class="col">
+                                                                                    <small>SL: 9999</small>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <small class="m-0">100.000.000.000đ</small>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-md-2 col-lg-2 col-xl-2 div_desktop_custom">
+                                                                    <small class="text-muted">SL: 9999</small>
+                                                                </div>
+                                                                <div class="col-auto div_desktop_custom">
+                                                                    <span class="m-0">100.000.100.000đ</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="checkout-details">
+                                                        <div class="order-box">
+                                                            <ul class="qty">
+                                                                <li class="text-muted">
+                                                                    Tạm tính (<b style="font-weight:normal;" id="countCartItem">0</b> sản phẩm)
+                                                                    <span class="float-right" id="totalPriceAllItem">0đ</span>
+                                                                </li>
+                                                                <li class="text-muted">
+                                                                    Phí vận chuyển
+                                                                    <span class="float-right" id="transportFee">NCC liên hệ</span>
+                                                                </li>
+                                                            </ul>
+                                                            <ul class="total">
+                                                                <li class="m-0">Tổng cộng <span class="count" id="totalPricePayment">0đ</span></li>
+                                                                <li> <span class="text-muted" style="font-size:12px;"><i>(Đã bao gồm VAT)</i></span></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="payment-box pt-2">
+                                                            <div class="text-start">
+                                                                <a href="javascript:void(0)" onclick="CloseDetailPanel()"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> Quay lại</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- content section end -->
+<!-- Modal cancel start -->
+<div class="modal fade" id="modal_cancel_item" tabindex="-1" role="dialog" aria-labelledby="modal_cancel_item" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="padding:50px 0;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <b class="text-uppercase">Hủy đơn hàng</b>
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:1.5rem;font-weight:700;line-height:1;margin-top:-8px;padding-bottom:0;"
+                        aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body p-0" style="overflow-x:hidden;">
+                <div class="dashboard-section section-b-space" style="padding-bottom:0px;">
+
+                    <div class="faq-content tab-content">
+                        <div class="tab-pane fade show active">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="dashboard-table mt-0">
+                                        <div class="table-responsive-md">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" colspan="2">Sản phẩm</th>
+                                                        <th scope="col">Lý do</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbody_modal_cancel_oderitem">
+                                                    @*<tr>
+                                                            <td class="col-1">
+                                                                <div class="d-flex align-items-center">
+                                                                    <input type="checkbox" name="input_order_item_cancel" data-id="1" id="input_order_item_cancel_${value.id}" />
+                                                                    <label for="input_order_item_cancel_${value.id}"> </label>
+                                                                    <img src="../assets/images/pro3/2.jpg" style="width:50px; height:50px;" alt=""
+                                                                         onerror="this.onerror=null;this.src='/assets/images/error/product_1x1_medium.png';">
+                                                                </div>
+                                                            </td>
+                                                            <td class="col" style="text-align:left;">
+                                                                <label for="input_order_item_cancel_${value.id}">
+                                                                    basdsadasdas asd asd a dsad as das asdas aaas aaa
+                                                                    <span class="badge badge-grey-color">${sizeTmp}</span>
+                                                                    <span class="badge badge-default">${colorTmp}</span>
+                                                                </label>
+                                                            </td>
+                                                            <td class="col-4">
+                                                                <select name="ReasonId" id="ReasonId_1" data-none-results-text="Không tìm thấy kết quả phù hợp"
+                                                                        data-none-selected-text="Vui lòng chọn lý do" title="Vui lòng chọn lý do"
+                                                                        class="selectpicker form-control show-tick reasonList" data-style="border" data-live-search="false" data-size="10">
+
+                                                                </select>
+                                                            </td>
+                                                        </tr>*@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12" style="padding: 10px 24px 10px 24px;">
+                                    <label class="font-weight-bold" for="textarea_description_cancel">Mô tả: </label>
+                                    <textarea name="textarea_description_cancel" id="textarea_description_cancel" rows="3" class="form-control" placeholder="Nhập nội dung" maxlength="150"></textarea>
+                                </div>
+
+                                <div class="col-12" style="padding: 0 24px 10px 24px;">
+                                    <b>Lưu ý:</b>
+                                    <p>1. Không thể hủy khi đơn hàng đã xác nhận, liên hệ SHOP để được hỗ trợ.</p>
+                                    <p>2. Khi bạn xác nhận hủy đơn hàng, chúng tôi sẽ không thể khôi phục lại đơn hàng khi đã hủy.</p>
+                                    <p>3. Nếu đơn hàng đã được thanh toán, SHOP sẽ liên hệ bạn để hoàn trả tiền.</p>
+                                    <p>4. Nếu đơn hàng của bạn có nhiều sản phẩm. Để hủy đơn hàng toàn bộ, hãy chọn tất cả sản phẩm.</p>
+                                    <p>5. HappyGreen không giải quyết bất cứ vấn đề nào liên quan đến quá trình hủy đơn và hoàn tiền.</p>
+                                    <i> Bằng cách "XÁC NHẬN" hủy đơn hàng, tôi đã đồng ý tất cả các chính sách nêu trên.</i>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-solid ladda-button" dir="ltr" data-style="expand-left" id="btn_submit_cancel_item">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal cancel end -->
+<!-- Modal bank list start -->
+<div class="modal fade" id="modal_bank_list" tabindex="-1" role="dialog" aria-labelledby="modal_bank_list" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="padding:50px 0;">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                <h4 class="modal-title">
+                    <b class="text-uppercase"></b>
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:1.5rem;font-weight:700;line-height:1;"
+                        aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body register-page pt-0" id="div_body_modal_bank_list">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-solid" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal bank list end -->

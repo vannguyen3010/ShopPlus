@@ -1,0 +1,35 @@
+﻿@section scripts{
+    <script src="~/controllers/home.js" asp-append-version="true"></script>
+}
+
+
+
+
+<section >
+    <div class="container-fluid-lg">
+        <div class="title">
+            <h2 style="text-transform: uppercase">Sản phẩm phổ biến </h2>
+            <span class="title-leaf">
+                <svg class="icon-width">
+                    <use xlink:href="../assets/svg/leaf.svg#leaf"></use>
+                </svg>
+            </span>
+        </div>
+        <div class="product-border border-row">
+            <div class=" no-arrow">
+                <div class="row m-0 div_width_product">
+                  @*  <div class="col-12 px-0 slider_product" id="div_popular_product">
+                       
+                    </div>*@
+                    <div class="slider_product" id="div_popular_product">
+
+                    </div>
+                   
+                </div>
+                <div class="row text-center p-3 mt-2"><a href="/san-pham?type=1">Xem thêm</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

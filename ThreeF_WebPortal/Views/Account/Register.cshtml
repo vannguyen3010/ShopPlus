@@ -1,0 +1,203 @@
+﻿@model EM_AccountRegister
+
+@{
+    var breadCrumb = new VM_BreadCrumb
+            {
+                currentName = "Đăng ký",
+            };
+    var supplierInfo = ViewBag.SupplierInfo as M_Supplier;
+}
+@section MetaHead{
+    <meta name="robots" content="noodp,noydir,index,follow" />
+}
+@section Styles{
+    <link href="/assets/lib/bootstrap-select-fix/bootstrap-fix-select-modal.css" rel="stylesheet" />
+@*    <link href="~/lib/parsleyjs/parsley.css" rel="stylesheet" />*@
+@*    <link href="~/lib/microtip-master/microtip.min.css" rel="stylesheet" />*@
+    <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/account.css" rel="stylesheet" asp-append-version="true" />
+}
+@section Scripts{
+    <script src="~/assets/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/assets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/ladda/spin.min.js"></script>
+    <script src="~/lib/ladda/ladda.min.js"></script>
+    <script src="~/lib/parsleyjs/parsley.min.js"></script>
+    <script src="~/lib/parsleyjs/i18n/vn.js"></script>
+    <script src="~/controllers/account_register.js" asp-append-version="true"></script>
+}
+
+<partial name="_P_Breadcrumb" model="breadCrumb" />
+
+<section class="log-in-section section-b-space" id="div_register_form">
+    <div class="container-fluid-lg w-100">
+        <div class="row">
+           @* <div class="col-xxl-4 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
+                <div class="image-contain">
+                    <img src="../assets/images/inner-page/sign-up.png" class="img-fluid" alt="">
+                </div>
+            </div>*@
+
+            <div class="col-xxl-6 col-xl-5 col-lg-6 col-sm-8 mx-auto">
+                <div class="log-in-box">
+                    <div class="log-in-title">
+                        <h3 class="css_text_register">Đăng ký tài khoản</h3>
+                    </div>
+
+                    <div class="input-box" @*id="div_register_form"*@>
+                        <form id="form_data" asp-antiforgery="true" class="row g-4 needs-validation" method="post" validation>
+                            <div class="col-6">
+                                <div class="form-floating theme-form-floating">
+                                    <input asp-for="lastName" type="text" class="form-control" placeholder="Nhập họ" maxlength="30" required>
+                                    <label asp-for="lastName" >Họ và tên đệm<span class="text-danger">*</span></label>
+                                    <span asp-validation-for="lastName" class="invalid-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating theme-form-floating">
+                                    <input asp-for="firstName" type="text" class="form-control" placeholder="Nhập tên" maxlength="30" required>
+                                    <label asp-for="firstName">Tên<span class="text-danger">*</span></label>
+                                    <span asp-validation-for="firstName" class="invalid-feedback"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-floating theme-form-floating" >
+                                    <input asp-for="phoneNumber" type="number" class="form-control" pattern="^[0-9]{3,12}$" autocomplete="new-password" placeholder="Nhập số điện thoại" maxlength="12" onkeypress="return IsNumberKey(event)" required>
+                                    <label asp-for="phoneNumber">Số điện thoại<span class="text-danger">*</span></label>
+                                    <span asp-validation-for="phoneNumber" class="invalid-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating theme-form-floating">
+                                    <input type="password" asp-for="password" class="form-control" autocomplete="new-password" placeholder="Nhập mật khẩu" maxlength="50" pattern="^([^'ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳýỵỷỹ\-\s]+)$" required />
+                                    <label asp-for="password">
+                                        Mật khẩu   <span class="text-danger" aria-label="Mật khẩu không được chứa ký tự có dấu và khoảng trắng."
+                                                         data-microtip-position="top" data-microtip-align="center" data-microtip-size="medium" role="tooltip">
+                                                        *
+                                                    </span>
+                                    </label>
+                                    <span class="fa fa-eye-slash" data-forcus="#password" onclick="ShowPassword(this)"></span>
+                                    <span asp-validation-for="password" class="invalid-feedback"></span>
+
+
+                                </div>
+                                
+                            </div>
+                            <div class="col-6 form-group">
+                                <select asp-for="gender" class="form-control" onkeypress="return IsNumberKey(event)" required>
+                                    @*<option value="">---Chọn giới tính---</option>*@
+                                    <option value="0">Nam</option>
+                                    <option value="1">Nữ</option>
+                                </select>
+                            </div>
+                            <div class="form-check collection-filter-checkbox">
+                                <input id="div_check_input_register" type="checkbox" style="font-size: 16px" class="form-check-input">
+                                <label for="div_check_input_register" data-toggle="tooltip" data-placement="top" title="" class="form-check-label" style="font-size: 16px">
+                                    Tôi đã đồng ý với các điều khoản và chính sách
+                                    </label>
+                                    <label class="form-check-label">
+                                    @if (!string.IsNullOrEmpty(supplierInfo.roleFileUrl))
+                                    {
+                                        <a href="@supplierInfo.roleFileUrl" style="font-weight: 600;" class="font-weight-bold text-danger" target="_blank">Điều Khoản Sử Dụng</a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(supplierInfo.securityFileUrl))
+                                    {
+                                        <a href="@supplierInfo.securityFileUrl" style="font-weight: 600;" class="font-weight-bold text-danger" target="_blank">, Chính Sách Bảo Mật</a>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(supplierInfo.shippingPolicyUrl))
+                                    {
+                                        <a href="@supplierInfo.shippingPolicyUrl" style="font-weight: 600;" class="font-weight-bold text-danger" target="_blank">, Chính Sách Vận Chuyển</a>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(supplierInfo.refundPolicyUrl))
+                                    {
+                                        <a href="@supplierInfo.refundPolicyUrl" style="font-weight: 600;" class="font-weight-bold text-danger" target="_blank">, Chính Sách Đổi Trả</a>
+                                    }
+                                    @if (!string.IsNullOrEmpty(supplierInfo.operatingRegulationUrl))
+                                    {
+                                        <a href="@supplierInfo.operatingRegulationUrl" style="font-weight: 600;" class="font-weight-bold text-danger" target="_blank">,Quy chế Hoạt Động</a>
+                                    }
+                                    của <span style="color: #24af00;font-weight: 600;">@supplierInfo.name</span>
+                                    </label>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-animation w-100" id="btn_submit_form" type="submit">Đăng ký</button>
+                            </div>
+                          
+                        </form>
+                        <div class="sign-up-box">
+                            <h4>Bạn đã có tài khoản ?</h4>
+                            <a href="/account/signin">Đăng nhập</a>
+                        </div>
+                    </div>
+
+
+                    
+                  @*  <div class="col-xxl-12 col-lg-4 col-md-6" id="div_verified_code" style="display:none;">
+
+                        <h4 class="font-weight-bold text-uppercase" style="text-decoration:underline;">Xác thực tài khoản</h4>
+                        <div class="form-group mt-3 mb-1">
+                            <label for="VerifiedCode">Mã xác thực đã được gửi về điện thoại của bạn</label>
+                            <input type="text" name="VerifiedCode" id="input_verified_code" placeholder="Nhập mã xác thực" class="form-control" maxlength="6" pattern="^[0-9]{0,6}$" onkeypress="return IsNumberKey(event)" />
+                            <p class="text-danger" id="p_error_input_verified"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <a href="javascript:void(0)" onclick="ResendCode(this)" class="text-warning">Tôi không nhận được mã xác thực. Gửi lại.</a>
+                        </div>
+
+                        <div class="form-group mb-0 text-center">
+                            <button class="btn btn-success btn-block ladda-button" style="background-color: #1abc9c"
+                                    dir="ltr" data-style="expand-left" id="btn_verified_code" type="submit">
+                                <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>XÁC THỰC
+                            </button>
+                        </div>
+
+                    </div>*@
+                </div>
+            </div>
+          
+        </div>
+    </div>
+</section>
+<section class="log-in-section otp-section section-b-space" id="div_verified_code" style="display:none;">
+    <div class="container-fluid-lg">
+        <div class="row mx-auto">
+            <div class="col-xxl-4 col-xl-5 text-center col-lg-6 col-sm-8 mx-auto">
+                <div class="d-flex align-items-center justify-content-center h-100">
+                    <div class="log-in-box">
+                        @*<h4 class="font-weight-bold text-uppercase" style="text-decoration:underline;">Xác thực tài khoản</h4>*@
+                        <div class="log-in-title">
+                            <h3 class="text-title" for="VerifiedCode">Mã xác thực đã được gửi về điện thoại của bạn</h3>
+                        </div>
+
+                        <div id="otp" class="inputs d-flex flex-row justify-content-center">
+                            <input type="text" id="input_verified_code_1" placeholder="0" class="text-center form-control rounded div_css_veritify" maxlength="1" pattern="^[0-9]{0,6}$" onkeypress="return IsNumberKey(event)" />
+                            <input type="text" id="input_verified_code_2" placeholder="0" class="text-center form-control rounded div_css_veritify" maxlength="1" pattern="^[0-9]{0,6}$" onkeypress="return IsNumberKey(event)" />
+                            <input type="text" id="input_verified_code_3" placeholder="0" class="text-center form-control rounded div_css_veritify" maxlength="1" pattern="^[0-9]{0,6}$" onkeypress="return IsNumberKey(event)" />
+                            <input type="text" id="input_verified_code_4" placeholder="0" class="text-center form-control rounded div_css_veritify" maxlength="1" pattern="^[0-9]{0,6}$" onkeypress="return IsNumberKey(event)" />
+                            <input type="text" id="input_verified_code_5" placeholder="0" class="text-center form-control rounded div_css_veritify" maxlength="1" pattern="^[0-9]{0,6}$" onkeypress="return IsNumberKey(event)" />
+                            
+                        </div>
+                        <p class="text-danger mt-3" id="p_error_input_verified"></p>
+
+                        <div class="send-box pt-4">
+                            <h5>
+                                Tôi không nhận được mã xác thực <a href="javascript:void(0)" onclick="ResendCode(this)" class="theme-color fw-bold">
+                                    .Gửi lại
+                                </a>
+                            </h5>
+                        </div>
+
+                        <button class="btn btn-animation w-100 mt-3 ladda-button" style="background-color: #1abc9c"
+                                dir="ltr" data-style="expand-left" id="btn_verified_code" type="submit">
+                            <i class="mdi mdi-checkbox-marked-circle-outline mr-1"></i>XÁC THỰC
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

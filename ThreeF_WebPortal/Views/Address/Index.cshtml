@@ -1,0 +1,95 @@
+﻿
+@section MetaHead{
+    <meta name="robots" content="noindex, nofollow">
+}
+
+@section Styles{
+    <link href="~/lib/parsleyjs/parsley.css" rel="stylesheet" />
+    <link href="~/lib/ladda/ladda-themeless.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/lib/pretty-checkbox/pretty-checkbox.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-select-fix/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/css/loading_small.css" rel="stylesheet" />
+    <link href="~/css/checkbox_custom_1.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="~/assets/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/assets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/ladda/spin.min.js"></script>
+    <script src="~/lib/ladda/ladda.min.js"></script>
+    <script src="~/lib/parsleyjs/parsley.min.js"></script>
+    <script src="~/lib/parsleyjs/i18n/vn.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/lib/bootstrap-select-fix/bootstrap-select.min.js"></script>
+    <script src="~/lib/bootstrap-select-fix/i18n/defaults-vi_VN.min.js"></script>
+    <script src="~/lib/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/i18n/vi.js"></script>
+    <script src="~/js/gmaps.min.js"></script>
+    <script src="~/js/jsMcAoPmSmGoOnOGLE.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@ViewData["KeyGoogleMap"]"></script>
+    <script src="~/controllers/address.js" asp-append-version="true"></script>
+}
+<!-- content section start-->
+<section class="dashboard-section section-b-space bg_custom_1" style="padding-top:0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                @await Html.PartialAsync("_P_MenuAccount", 3)
+            </div>
+            <div class="col-lg-9 bg-white">
+                <div class="faq-content tab-content" id="div_main_table">
+                    <div class="tab-pane fade show active">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card dashboard-table mt-2 bg-white">
+                                    <div class="card-body table-responsive-md">
+                                        <div class="top-sec">
+                                            <h3 class="text-uppercase">Sổ địa chỉ</h3>
+                                            <button type="button" class="btn btn-sm btn-solid ladda-button" dir="ltr" data-style="zoom-in" onclick="ShowAddModal(this)" style="padding: 10px 14px;">
+                                                <i class="fa fa-plus d-block d-md-none"></i>
+                                                <span class="d-none d-md-block"><i class="fa fa-plus"></i> Thêm địa chỉ mới</span>
+                                            </button>
+                                        </div>
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Tên</th>
+                                                    <th scope="col">Địa chỉ</th>
+                                                    <th scope="col">Điện thoại</th>
+                                                    <th scope="col">Vị trí</th>
+                                                    <th scope="col"> </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbody_main_table">
+                                                @*<tr>
+                                                        <td>Le Nhat Nam</td>
+                                                        <td><span class="badge badge-success">Mặc định</span> 32 to 9, Phường An Bình, Thành phố Biên Hòa, Đồng Nai</td>
+                                                        <td>0945524725</td>
+                                                        <td><span class="badge badge-danger">Văn phòng</span></td>
+                                                        <td>
+                                                            <a href="javascript:void(0)" onclick="ShowEditModal(this,'111')">
+                                                                <i class="fa fa-pencil-square-o text-success m-1" aria-hidden="true"></i>
+                                                            </a>
+                                                            <a href="javascript:void(0)" onclick="Delete(this,'111')">
+                                                                <i class="fa fa-trash-o text-danger m-1" aria-hidden="true"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>*@
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4" id="div_view_panel" style="display:none;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- content section end-->
